@@ -1,43 +1,19 @@
 const router = require('express').Router();
-const { restoreUser } = require('../../utils/auth.js');
+const sessionRouter = require('./session.js');
+const usersRouter = require('./users.js');
+const { restoreUser } = require("../../utils/auth.js");
 
-const { setTokenCookie } = require('../../utils/auth.js');
-const { requireAuth } = require('../../utils/auth.js');
-const { User } = require('../../db/models');
-
+// Connect restoreUser middleware to the API router
+  // If current user session is valid, set req.user to the user in the database
+  // If current user session is not valid, set req.user to null
 router.use(restoreUser);
 
-// router.post('/test', function(req, res) {
-//     res.json({ requestBody: req.body });
-//   });
+router.use('/session', sessionRouter);
 
-// // GET /api/set-token-cookie
-// router.get('/set-token-cookie', async (_req, res) => {
-//   const user = await User.findOne({
-//       where: {
-//         username: 'Demo-lition'
-//       }
-//     });
-//   setTokenCookie(res, user);
-//   return res.json({ user });
-// });
+router.use('/users', usersRouter);
 
-// // GET /api/require-auth
-// // this checks if there is a token
-// router.get(
-//   '/require-auth',
-//   requireAuth,
-//   (req, res) => {
-//     return res.json(req.user);
-//   }
-// );
-
-// // this restores the cookie
-// router.get(
-//   '/restore-user',
-//   (req, res) => {
-//     return res.json(req.user);
-//   }
-// );
+router.post('/test', (req, res) => {
+  res.json({ requestBody: req.body });
+});
 
 module.exports = router;
