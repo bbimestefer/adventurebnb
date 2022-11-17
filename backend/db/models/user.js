@@ -12,6 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     validatePassword(password) {
       return bcrypt.compareSync(password, this.hashedPassword.toString());
     }
+
+    
     static async signup({ username, email, password }) {
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({
