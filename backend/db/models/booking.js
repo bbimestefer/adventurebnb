@@ -16,18 +16,45 @@ module.exports = (sequelize, DataTypes) => {
         { foreignKey: 'userId' }
       )
       Booking.belongsTo(
-        models.Spots,
+        models.Spot,
         { foreignKey: 'spotId' }
       )
     }
   }
   Booking.init({
-    spotId: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER,
-    startDate: DataTypes.DATE,
-    endDate: DataTypes.DATE,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE
+    spotId: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+    },
+    userId: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+    },
+    startDate: {
+      allowNull: false,
+      type: DataTypes.DATE,
+      validate: {
+        checkStartDate(value) {
+          let date = new Date()
+          if(this.startDate < date) throw new Error("Start date must be after today's date!")
+        }
+      }
+    },
+    endDate: {
+      allowNull: false,
+      type: DataTypes.DATE,
+      validate: {
+        checkDate(value){
+          if(value < this.startDate) throw new Error('End date must be after start date!')
+        }
+      }
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+    },
+    updatedAt: {
+      type: DataTypes.DATE
+    }
   }, {
     sequelize,
     modelName: 'Booking',
