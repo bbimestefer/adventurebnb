@@ -100,7 +100,10 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
 
     if(!spot){
         res.status(404)
-        res.json('Spot could not be found')
+        res.json({
+            message: 'Spot could not be found',
+            "statusCode": 404
+        })
     } else if (spot.id !== req.user.id){
         res.status(403)
         res.json({
@@ -140,6 +143,62 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
         url: createdSpotImage.url,
         preview: createdSpotImage.preview
     })
+})
+
+router.put('/:spotId', requireAuth, async (req, res, next) => {
+    const { address, city, state, country, lat, lng, name, description, price } = req.body
+
+    const spot = await Spot.findByPk(req.params.spotId)
+
+    if(!spot){
+        res.status(404)
+        res.json({
+            message: 'Spot could not be found',
+            "statusCode": 404
+        })
+    } else if (spot.id !== req.user.id){
+        res.status(403)
+        res.json({
+            "message": "Forbidden",
+            "statusCode": 403
+        })
+    }
+
+    if(!address || !city || !state || !country || !lat || !lng || !name || !description || !price){
+        res.status(400)
+        res.json({
+            "message": "Validation Error",
+            "statusCode": 400,
+            "errors": {
+              "address": "Street address is required",
+              "city": "City is required",
+              "state": "State is required",
+              "country": "Country is required",
+              "lat": "Latitude is not valid",
+              "lng": "Longitude is not valid",
+              "name": "Name must be less than 50 characters",
+              "description": "Description is required",
+              "price": "Price per day is required"
+            }
+          })
+    }
+
+    spot.set({
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price
+    })
+
+    await spot.save()
+
+    res.json(spot)
+
 })
 
 
