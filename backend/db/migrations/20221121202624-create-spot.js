@@ -55,20 +55,20 @@ module.exports = {
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
       }
     }, options);
-    await queryInterface.addIndex(
-      'Spots',
-      ['address', 'city', 'state', 'country'],
-      {
-        unique: true
-      }
-    );
+    // await queryInterface.addIndex(
+    //   'Spots',
+    //   ['address', 'city', 'state', 'country'],
+    //   {
+    //     unique: true
+    //   }
+    // );
   },
   down: async (queryInterface, Sequelize) => {
     options.tableName = 'Spots';
     await queryInterface.dropTable(options, options);
-    await queryInterface.removeIndex(
-      'Spots',
-      ['address', 'city', 'state', 'country']
-    );
+    // await queryInterface.removeIndex(
+    //   'Spots',
+    //   ['address', 'city', 'state', 'country']
+    // );
   }
 };
