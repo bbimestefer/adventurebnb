@@ -34,12 +34,23 @@ router.get('/', restoreUser, (req, res) => {
 router.post('/', validateLogin, async (req, res, next) => {
     const { credential, password } = req.body;
 
+    if(!credential || !password){
+      const err = new Error('Login failed');
+      err.status = 400;
+      err.title = 'Invalid credentials';
+      err.errors = {
+        "credential": 'Email or username is required.',
+        "password": 'Password is required'
+      };
+      return next(err);
+    }
+
     const user = await User.login({ credential, password });
 
     if (!user) {
       const err = new Error('Login failed');
       err.status = 401;
-      err.title = 'Login failed';
+      err.title = 'Invalid credentials';
       err.errors = ['The provided credentials were invalid.'];
       return next(err);
     }
