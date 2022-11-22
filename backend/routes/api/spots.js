@@ -122,7 +122,24 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
         })
     }
 
-    res.json(createdSpotImage)
+    const imageForSpot = await SpotImage.findOne({
+        where: {
+            spotId: req.params.spotId
+        }
+    })
+
+    if(!imageForSpot) {
+        res.status(404)
+        res.json({
+            message: 'Image for spot was not created'
+        })
+    }
+
+    res.json({
+        id: createdSpotImage.id,
+        url: createdSpotImage.url,
+        preview: createdSpotImage.preview
+    })
 })
 
 
