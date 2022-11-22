@@ -55,8 +55,19 @@ module.exports = {
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
       }
     }, options);
+    await queryInterface.addIndex(
+      'Spots',
+      ['address', 'city', 'state', 'country'],
+      {
+        unique: true
+      }
+    );
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Spots', options);
+    await queryInterface.removeIndex(
+      'Spots',
+      ['address', 'city', 'state', 'country']
+    );
   }
 };
