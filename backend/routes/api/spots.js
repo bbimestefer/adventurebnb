@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const sequelize = require('sequelize');
+const { requireAuth } = require("../../utils/auth.js");
 const { User, Spot, SpotImage, ReviewImage, Review } = require('../../db/models');
 
 router.get('/', async (req, res, next) => {
@@ -42,6 +43,36 @@ router.get('/', async (req, res, next) => {
     res.json(spotList)
 })
 
+router.post('/', requireAuth,  async (req, res, next) => {
+    const ownerId = req.user.id
+
+    const createdSpot = Spot.create({
+        ownerId,
+        address: req.body.address,
+        city: req.body.city,
+        state: req.body.state,
+        country: req.body.country,
+        lat: req.body.lat,
+        lng: req.body.lng,
+        name: req.body.name,
+        description: req.body.description,
+        price: req.body.price,
+    })
+
+    res.json(createdSpot)
+})
+
+router.get('/current', requireAuth, async(req, res, next) => {
+    const spotsOfUser = await Spot.findAll({
+        where: {
+            ownerId: req.user.id
+        }
+    })
+
+    res.json(spotsOfUser)
+})
+
+
 router.get('/:spotId', async (req, res, next) => {
     let spot = await Spot.findOne({
         where: {
@@ -80,6 +111,7 @@ router.get('/:spotId', async (req, res, next) => {
     spot.avgStarRating = starRatings / starCount
 
     spot.SpotImages = await SpotImage.findAll({
+        attributes: ['id', 'url', 'preview'],
         where: {
             spotId: req.params.spotId
         }
