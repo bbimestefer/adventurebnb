@@ -1,0 +1,98 @@
+const express = require('express')
+const router = express.Router();
+const sequelize = require('sequelize');
+const { User, Spot, SpotImage, ReviewImage, Review } = require('../../db/models');
+
+router.get('/', async (req, res, next) => {
+    const spots = await Spot.findAll({
+        include: [
+            {
+                model: SpotImage
+            },
+            {
+                model: Review
+            }
+        ]
+    })
+
+    let spotList = []
+    spots.forEach(spot => {
+        spotList.push(spot.toJSON())
+    });
+
+    spotList.forEach(spot => {
+        spot.SpotImages.forEach(image => {
+            if(image.preview === true){
+                console.log(image)
+                spot.previewImage = image.url
+            }
+        })
+        if(!spot.previewImage){
+            spot.previewImage = 'no preview image found'
+        }
+        delete spot.SpotImages
+        let total = 0
+        spot.Reviews.forEach(review => {
+            total += review.stars
+        })
+        spot.avgRating = total / spot.Reviews.length
+        delete spot.Reviews
+    })
+
+    res.json(spotList)
+})
+
+router.get('/:spotId', async (req, res, next) => {
+    let spot = await Spot.findOne({
+        where: {
+            id: req.params.spotId
+        }
+    })
+
+    if(!spot){
+        const err = new Error("Spot couldn't be found");
+        err.status = 404;
+        err.title = "No spot";
+        err.errors = ["Spot couldn't be found"];
+        return next(err);
+    }
+
+    spot = spot.toJSON()
+
+    spot.numReviews = await Review.count({
+        where: {
+            spotId: req.params.spotId
+        }
+    })
+
+    const starRatings = await Review.sum('stars',{
+        where: {
+            spotId: req.params.spotId
+        }
+    })
+
+    const starCount = await Review.count({
+        where: {
+            spotId: req.params.spotId
+        }
+    })
+
+    spot.avgStarRating = starRatings / starCount
+
+    spot.SpotImages = await SpotImage.findAll({
+        where: {
+            spotId: req.params.spotId
+        }
+    })
+
+    spot.Owner = await User.findOne({
+        attributes: ['id', 'firstName', 'lastName'],
+        where: {
+            id: req.params.spotId
+        },
+    })
+
+    res.json(spot)
+})
+
+module.exports = router;
