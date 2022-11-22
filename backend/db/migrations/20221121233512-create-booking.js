@@ -41,8 +41,19 @@ module.exports = {
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
       }
     }, options);
+    await queryInterface.addIndex(
+      'Bookings',
+      ['spotId', 'startDate', 'endDate'],
+      {
+        unique: true
+      }
+    );
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Bookings', options);
+    await queryInterface.removeIndex(
+      'Bookings',
+      ['spotId', 'startDate', 'endDate'],
+    );
   }
 };

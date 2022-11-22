@@ -25,9 +25,6 @@ module.exports = (sequelize, DataTypes) => {
     url: {
       allowNull: false,
       type: DataTypes.STRING,
-      validate: {
-        isURL: true
-      }
     },
     createdAt: {
       type: DataTypes.DATE,
