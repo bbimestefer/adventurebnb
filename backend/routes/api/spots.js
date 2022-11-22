@@ -94,6 +94,38 @@ router.get('/current', requireAuth, async(req, res, next) => {
 })
 
 
+router.post('/:spotId/images', requireAuth, async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId)
+    const { url, preview } = req.body
+
+    if(!spot){
+        res.status(404)
+        res.json('Spot could not be found')
+    } else if (spot.id !== req.user.id){
+        res.status(403)
+        res.json({
+            "message": "Forbidden",
+            "statusCode": 403
+        })
+    }
+
+    const createdSpotImage = await SpotImage.create({
+        spotId: spot.id,
+        url,
+        preview
+    })
+
+    if(!createdSpotImage){
+        res.status(400)
+        res.json({
+            message: 'Need to provide url and preview values'
+        })
+    }
+
+    res.json(createdSpotImage)
+})
+
+
 router.get('/:spotId', async (req, res, next) => {
     let spot = await Spot.findOne({
         where: {
