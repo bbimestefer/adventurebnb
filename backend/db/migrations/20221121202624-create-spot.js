@@ -64,7 +64,8 @@ module.exports = {
     );
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Spots', options);
+    options.tableName = 'Spots';
+    await queryInterface.dropTable(options, options);
     await queryInterface.removeIndex(
       'Spots',
       ['address', 'city', 'state', 'country']

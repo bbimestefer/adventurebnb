@@ -5,6 +5,8 @@ if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
 }
 
+options.tableName = 'Bookings';
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Bookings', {
@@ -50,7 +52,7 @@ module.exports = {
     );
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Bookings', options);
+    await queryInterface.dropTable(options, options);
     await queryInterface.removeIndex(
       'Bookings',
       ['spotId', 'startDate', 'endDate'],
