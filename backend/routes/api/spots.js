@@ -46,17 +46,38 @@ router.get('/', async (req, res, next) => {
 router.post('/', requireAuth,  async (req, res, next) => {
     const ownerId = req.user.id
 
-    const createdSpot = Spot.create({
+    const { address, city, state, country, lat, lng, name, description, price } = req.body
+
+    if(!address || !city || !state || !country || !lat || !lng || !name || !description || !price){
+        res.status(400)
+        res.json({
+            "message": "Validation Error",
+            "statusCode": 400,
+            "errors": {
+              "address": "Street address is required",
+              "city": "City is required",
+              "state": "State is required",
+              "country": "Country is required",
+              "lat": "Latitude is not valid",
+              "lng": "Longitude is not valid",
+              "name": "Name must be less than 50 characters",
+              "description": "Description is required",
+              "price": "Price per day is required"
+            }
+          })
+    }
+
+    const createdSpot = await Spot.create({
         ownerId,
-        address: req.body.address,
-        city: req.body.city,
-        state: req.body.state,
-        country: req.body.country,
-        lat: req.body.lat,
-        lng: req.body.lng,
-        name: req.body.name,
-        description: req.body.description,
-        price: req.body.price,
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price
     })
 
     res.json(createdSpot)
