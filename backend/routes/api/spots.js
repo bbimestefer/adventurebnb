@@ -254,7 +254,7 @@ router.get('/:spotId', async (req, res, next) => {
     spot.Owner = await User.findOne({
         attributes: ['id', 'firstName', 'lastName'],
         where: {
-            id: req.params.spotId
+            id: spot.ownerId
         },
     })
 
