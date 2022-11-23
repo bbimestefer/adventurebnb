@@ -24,7 +24,6 @@ router.get('/', async (req, res, next) => {
     spotList.forEach(spot => {
         spot.SpotImages.forEach(image => {
             if(image.preview === true){
-                console.log(image)
                 spot.previewImage = image.url
             }
         })
@@ -32,6 +31,7 @@ router.get('/', async (req, res, next) => {
             spot.previewImage = 'no preview image found'
         }
         delete spot.SpotImages
+        
         let total = 0
         spot.Reviews.forEach(review => {
             total += review.stars
@@ -104,7 +104,7 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
             message: 'Spot could not be found',
             "statusCode": 404
         })
-    } else if (spot.id !== req.user.id){
+    } else if (spot.ownerId !== req.user.id){
         res.status(403)
         res.json({
             "message": "Forbidden",
