@@ -8,6 +8,11 @@ router.get('/current', requireAuth, async (req, res, next) => {
     const userId = req.user.id
 
     const bookingsOfUser = await Booking.findAll({
+        include: [
+            {
+                model: Spot
+            },
+        ],
         where: {
             userId
         }
