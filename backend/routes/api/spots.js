@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router();
 const sequelize = require('sequelize');
 const { requireAuth } = require("../../utils/auth.js");
-const { User, Spot, SpotImage, ReviewImage, Review } = require('../../db/models');
+const { User, Spot, Booking, SpotImage, ReviewImage, Review } = require('../../db/models');
 
 router.get('/', async (req, res, next) => {
     const spots = await Spot.findAll({
@@ -31,7 +31,7 @@ router.get('/', async (req, res, next) => {
             spot.previewImage = 'no preview image found'
         }
         delete spot.SpotImages
-        
+
         let total = 0
         spot.Reviews.forEach(review => {
             total += review.stars
@@ -83,7 +83,7 @@ router.post('/', requireAuth,  async (req, res, next) => {
     res.json(createdSpot)
 })
 
-router.get('/current', requireAuth, async(req, res, next) => {
+router.get('/current', requireAuth, async (req, res, next) => {
     const spotsOfUser = await Spot.findAll({
         where: {
             ownerId: req.user.id
@@ -91,6 +91,42 @@ router.get('/current', requireAuth, async(req, res, next) => {
     })
 
     res.json(spotsOfUser)
+})
+
+router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
+    const spot = await Spot.findOne({
+        where: {
+            id: req.params.spotId
+        },
+        include: [
+            {
+                model: Booking,
+                // attributes: [ 'spotId', 'startDate', 'endDate' ],
+                include: [
+                    {
+                        model: User,
+                        attributes: [ 'id', 'firstName', 'lastName' ]
+                    }
+                ]
+            }
+        ]
+    })
+
+    if(!spot){
+        res.status(404)
+        res.json({
+            message: 'Spot could not be found',
+            "statusCode": 404
+        })
+    } else if (spot.ownerId !== req.user.id){
+        res.json({
+            Bookings: { spotId: spot.Bookings.spotId, startDate: spot.Bookings.startDate, endDate: spot.Bookings.endDate }
+        })
+    }
+
+    res.json({
+        Bookings: spot.Bookings
+    })
 })
 
 
