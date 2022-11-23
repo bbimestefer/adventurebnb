@@ -270,20 +270,21 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
             message: 'Spot could not be found',
             "statusCode": 404
         })
-    } else if (spot.id !== req.user.id){
+    } else if (spot.ownerId !== req.user.id){
         res.status(403)
         res.json({
             "message": "Forbidden",
             "statusCode": 403
         })
+    } else {
+        await spot.destroy()
+
+        res.json({
+            "message": "Successfully deleted",
+            "statusCode": 200
+        })
     }
 
-    await spot.destroy()
-
-    res.json({
-        "message": "Successfully deleted",
-        "statusCode": 200
-      })
 })
 
 
