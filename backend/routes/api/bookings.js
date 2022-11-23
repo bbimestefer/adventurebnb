@@ -8,17 +8,19 @@ router.get('/current', requireAuth, async (req, res, next) => {
     const userId = req.user.id
 
     const bookingsOfUser = await Booking.findAll({
+        where: {
+            userId
+        },
         include: [
             {
                 model: Spot
             },
-        ],
-        where: {
-            userId
-        }
+        ]
     })
 
-    res.json(bookingsOfUser)
+    res.json({
+        Bookings: bookingsOfUser
+    })
 })
 
 module.exports = router;
