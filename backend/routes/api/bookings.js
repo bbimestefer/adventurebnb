@@ -13,13 +13,37 @@ router.get('/current', requireAuth, async (req, res, next) => {
         },
         include: [
             {
-                model: Spot
+                model: Spot,
+                attributes: [ 'id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price' ],
+                include: [
+                    {
+                        model: SpotImage,
+                        attributes: ['url']
+                    }
+                ]
             },
         ]
     })
 
+    let bookingList = []
+    bookingsOfUser.forEach(booking => {
+        bookingList.push(booking.toJSON())
+    })
+
+
+    const newBookings = []
+    bookingList.forEach((booking) => {
+        booking.Spot.previewImage = booking.Spot.SpotImages[0].url
+
+        delete booking.Spot.SpotImages
+        console.log(booking)
+        newBookings.push(booking)
+    });
+
+
+
     res.json({
-        Bookings: bookingsOfUser
+        Bookings: newBookings
     })
 })
 
