@@ -104,33 +104,48 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
     const booking = await Booking.findOne({
         where: {
             id: req.params.bookingId
-        },
-        include: [
-            {
-                model: Spot,
-            }
-        ]
+        }
     })
-    const userId = req.user.id
-    const spotOwnerId = booking.Spot.ownerId
-
-    console.log(spotOwnerId)
 
     if(!booking){
         res.status(404)
         res.json({
-            message: 'booking could not be found',
+            message: 'Booking could not be found',
             "statusCode": 404
         })
-    } else if (booking.id !== userId && spotOwnerId !== userId){
+    }
+
+    const spot = await Spot.findOne({
+        where: {
+            id: booking.spotId
+        }
+    })
+
+    const userId = req.user.id
+    const spotOwnerId = spot.ownerId
+    const bookingStartDate = new Date(booking.startDate)
+    const today = new Date()
+
+    if (userId !== booking.userId && userId !== spotOwnerId){
         res.status(403)
         res.json({
             "message": "Forbidden",
             "statusCode": 403
         })
+    } else if(today.getTime() >= bookingStartDate.getTime()) {
+        res.status(403)
+        res.json({
+            "message": "Past bookings can't be modified",
+            "statusCode": 403
+          })
     }
 
-    res.json('through')
+    await booking.destroy()
+
+    res.json({
+        "message": "Successfully deleted",
+        "statusCode": 200
+      })
 })
 
 module.exports = router;
