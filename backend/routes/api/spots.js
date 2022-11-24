@@ -152,6 +152,37 @@ router.get('/current', requireAuth, async (req, res, next) => {
     res.json(spotsOfUser)
 })
 
+router.get('/:spotId/reviews', requireAuth, async (req, res, next) => {
+    const reviews = await Review.findAll({
+        where: {
+            spotId: req.params.spotId
+        },
+        include: [
+            {
+                model: User,
+                attributes: [ 'id', 'firstName', 'lastName' ]
+            },
+            {
+                model: ReviewImage,
+                attributes: [ 'id', 'url' ]
+            }
+        ]
+    })
+
+    // need to change this becuase it throws error when no reviews on spot----------------
+    if(!reviews.length) {
+        res.status(404)
+        res.json({
+            message: 'Spot could not be found',
+            "statusCode": 404
+        })
+    }
+
+    res.json({
+        Reviews: reviews
+    })
+})
+
 router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const spot = await Spot.findOne({
         where: {
@@ -186,6 +217,59 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     res.json({
         Bookings: spot.Bookings
     })
+})
+
+router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
+    const { review, stars } = req.body
+    const userId = req.user.id
+    const spot = await Spot.findOne({
+        where: {
+            id: req.params.spotId
+        },
+        include: [
+            {
+                model: Review
+            }
+        ]
+    })
+
+
+    spot.Reviews.forEach(review => {
+        if(review.userId === req.user.id) {
+            res.status(404)
+            res.json({
+                "message": "User already has a review for this spot",
+                "statusCode": 403
+              })
+        }
+    });
+
+    if(!spot){
+        res.status(404)
+        res.json({
+            message: 'Spot could not be found',
+            "statusCode": 404
+        })
+    } else if(!review || stars > 5 || stars < 1){
+        res.status(400)
+        res.json({
+            "message": "Validation error",
+            "statusCode": 400,
+            "errors": {
+              "review": "Review text is required",
+              "stars": "Stars must be an integer from 1 to 5",
+            }
+          })
+    }
+
+    const createdReview = await Review.create({
+        spotId: spot.id,
+        userId,
+        review,
+        stars
+    })
+
+    res.json(createdReview)
 })
 
 router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
