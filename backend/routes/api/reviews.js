@@ -54,5 +54,97 @@ router.get('/current', requireAuth, async (req, res, next) => {
     })
 })
 
+router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
+    const userId = req.user.id
+    const { url } = req.body
+    const review = await Review.findOne({
+        where: {
+            id: req.params.reviewId
+        },
+        include: [
+            {
+                model: ReviewImage
+            }
+        ]
+    })
+
+    console.log(review.ReviewImages.length)
+
+    if(review.ReviewImages.length > 10){
+        res.status(403)
+        res.json({
+            "message": "Maximum number of images for this resource was reached",
+            "statusCode": 403
+          })
+    } else if (!review){
+        res.status(404)
+        res.json({
+            "message": "Review couldn't be found",
+            "statusCode": 404
+          })
+    } else if(review.userId !== userId) {
+        res.status(403)
+        res.json({
+            "message": "Forbidden",
+            "statusCode": 403
+        })
+    }
+
+    const createdReviewImage = await ReviewImage.create({
+        reviewId: review.id,
+        url
+    })
+
+    res.json({
+        id: createdReviewImage.id,
+        url: createdReviewImage.url
+    })
+
+})
+
+router.put('/:reviewId', requireAuth, async (req, res, next) => {
+    const userId = req.user.id
+    const { review, stars } = req.body
+    const reviewToFind = await Review.findOne({
+        where: {
+            id: req.params.reviewId
+        }
+    })
+
+    // console.log(reviewToFind.userId, userId)
+
+    if (!reviewToFind){
+        res.status(404)
+        res.json({
+            "message": "Review couldn't be found",
+            "statusCode": 404
+          })
+    } else if(reviewToFind.userId !== userId) {
+        res.status(403)
+        res.json({
+            "message": "Forbidden",
+            "statusCode": 403
+        })
+    } else if(!review || stars > 5 || stars < 1){
+        res.status(400)
+        res.json({
+            "message": "Validation error",
+            "statusCode": 400,
+            "errors": {
+              "review": "Review text is required",
+              "stars": "Stars must be an integer from 1 to 5",
+            }
+        })
+    }
+
+    reviewToFind.set({
+        review,
+        stars
+    })
+
+    await reviewToFind.save()
+
+    res.json(reviewToFind)
+})
 
 module.exports = router;
