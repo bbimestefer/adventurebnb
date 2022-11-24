@@ -100,5 +100,37 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
     res.json(booking)
 })
 
+router.delete('/:bookingId', requireAuth, async (req, res, next) => {
+    const booking = await Booking.findOne({
+        where: {
+            id: req.params.bookingId
+        },
+        include: [
+            {
+                model: Spot,
+            }
+        ]
+    })
+    const userId = req.user.id
+    const spotOwnerId = booking.Spot.ownerId
+
+    console.log(spotOwnerId)
+
+    if(!booking){
+        res.status(404)
+        res.json({
+            message: 'booking could not be found',
+            "statusCode": 404
+        })
+    } else if (booking.id !== userId && spotOwnerId !== userId){
+        res.status(403)
+        res.json({
+            "message": "Forbidden",
+            "statusCode": 403
+        })
+    }
+
+    res.json('through')
+})
 
 module.exports = router;
