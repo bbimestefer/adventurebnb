@@ -222,9 +222,28 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
 router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
     const { review, stars } = req.body
     const userId = req.user.id
-    const spot = await Spot.findByPk(req.params.spotId)
+    const spot = await Spot.findOne({
+        where: {
+            id: req.params.spotId
+        },
+        include: [
+            {
+                model: Review
+            }
+        ]
+    })
 
-    // STILL HAVE TO CHECK IF THERE IS A REVIEW FOR USER-----------------------------
+
+    spot.Reviews.forEach(review => {
+        if(review.userId === req.user.id) {
+            res.status(404)
+            res.json({
+                "message": "User already has a review for this spot",
+                "statusCode": 403
+              })
+        }
+    });
+
     if(!spot){
         res.status(404)
         res.json({
