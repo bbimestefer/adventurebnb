@@ -1,11 +1,62 @@
 const express = require('express')
 const router = express.Router();
 const sequelize = require('sequelize');
+const { Op } = require('sequelize');
 const { requireAuth } = require("../../utils/auth.js");
 const { User, Spot, Booking, SpotImage, ReviewImage, Review } = require('../../db/models');
 
 router.get('/', async (req, res, next) => {
+
+    const pagination = {}
+    const where = {}
+    let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query
+
+    if(!page) page = 1
+    if(page > 10) page = 10
+    if(!size || size > 20) size = 20
+
+    if(parseInt(page) >= 1 && parseInt(size) >=1){
+        pagination.limit = size
+        pagination.offset = size * (page - 1)
+    }
+
+    console.log(typeof minLat, isNaN(minLat))
+    console.log(maxLat)
+
+    if(page < 1 || size < 1 || isNaN(minLat) && minLat !== undefined || isNaN(maxLat) && maxLat !== undefined || isNaN(minLng) && minLng !== undefined || isNaN(maxLng) && maxLng !== undefined || minPrice < 0 || maxPrice < 0){
+        res.status(400)
+        res.json({
+            "message": "Validation Error",
+            "statusCode": 400,
+            "errors": {
+              "page": "Page must be greater than or equal to 1",
+              "size": "Size must be greater than or equal to 1",
+              "maxLat": "Maximum latitude is invalid",
+              "minLat": "Minimum latitude is invalid",
+              "minLng": "Maximum longitude is invalid",
+              "maxLng": "Minimum longitude is invalid",
+              "minPrice": "Maximum price must be greater than or equal to 0",
+              "maxPrice": "Minimum price must be greater than or equal to 0"
+            }
+          })
+    } else {
+        if(minLat && maxLat) where.lat = { [Op.between]: [ minLat, maxLat ] }
+        else if(minLat) where.lat = { [Op.gte]: minLat }
+        else if(maxLat) where.lat = { [Op.lte]: maxLat }
+
+        if(minLng && maxLng) where.lng = { [Op.between]: [ minLng, maxLng ] }
+        else if(minLng) where.lng = { [Op.gte]: minLng }
+        else if(maxLng) where.lng = { [Op.lte]: maxLng }
+
+        if(minPrice && maxPrice) where.price = { [Op.between]: [ minPrice, maxPrice ] }
+        else if(minPrice) where.price = { [Op.gte]: minPrice }
+        else if(maxPrice) where.price = { [Op.lte]: maxPrice }
+    }
+
+    console.log(where)
+
     const spots = await Spot.findAll({
+        where,
         include: [
             {
                 model: SpotImage
@@ -13,7 +64,8 @@ router.get('/', async (req, res, next) => {
             {
                 model: Review
             }
-        ]
+        ],
+        ...pagination
     })
 
     let spotList = []
@@ -40,7 +92,14 @@ router.get('/', async (req, res, next) => {
         delete spot.Reviews
     })
 
-    res.json(spotList)
+    page = Number(page)
+    size = Number(size)
+
+    res.json({
+        spotList,
+        page,
+        size
+    })
 })
 
 router.post('/', requireAuth,  async (req, res, next) => {
