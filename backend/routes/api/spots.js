@@ -234,15 +234,6 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
     })
 
 
-    spot.Reviews.forEach(review => {
-        if(review.userId === req.user.id) {
-            res.status(404)
-            res.json({
-                "message": "User already has a review for this spot",
-                "statusCode": 403
-              })
-        }
-    });
 
     if(!spot){
         res.status(404)
@@ -256,11 +247,21 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
             "message": "Validation error",
             "statusCode": 400,
             "errors": {
-              "review": "Review text is required",
-              "stars": "Stars must be an integer from 1 to 5",
+                "review": "Review text is required",
+                "stars": "Stars must be an integer from 1 to 5",
             }
-          })
+        })
     }
+    
+    spot.Reviews.forEach(review => {
+        if(review.userId === req.user.id) {
+            res.status(404)
+            res.json({
+                "message": "User already has a review for this spot",
+                "statusCode": 403
+              })
+        }
+    });
 
     const createdReview = await Review.create({
         spotId: spot.id,
@@ -444,7 +445,7 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
             message: 'Spot could not be found',
             "statusCode": 404
         })
-    } else if (spot.id !== req.user.id){
+    } else if (spot.ownerid !== req.user.id){
         res.status(403)
         res.json({
             "message": "Forbidden",
