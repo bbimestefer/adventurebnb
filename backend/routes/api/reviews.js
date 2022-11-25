@@ -68,19 +68,17 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
         ]
     })
 
-    console.log(review.ReviewImages.length)
-
-    if(review.ReviewImages.length > 10){
-        res.status(403)
-        res.json({
-            "message": "Maximum number of images for this resource was reached",
-            "statusCode": 403
-          })
-    } else if (!review){
+    if (!review){
         res.status(404)
         res.json({
             "message": "Review couldn't be found",
             "statusCode": 404
+          })
+    } else if(review.ReviewImages.length > 10){
+        res.status(403)
+        res.json({
+            "message": "Maximum number of images for this resource was reached",
+            "statusCode": 403
           })
     } else if(review.userId !== userId) {
         res.status(403)
