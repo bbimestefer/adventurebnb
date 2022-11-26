@@ -53,18 +53,20 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
     const dateEnd = new Date(endDate)
     const booking = await Booking.findByPk(req.params.bookingId)
 
-    const bookingStartDate = new Date(booking.startDate)
-    const bookingEndDate = new Date(booking.endDate)
-
-    const today = new Date()
-
     if(!booking){
         res.status(404)
         res.json({
             "message": "Booking couldn't be found",
             "statusCode": 404
-          })
-    } else if(today.getTime() >= bookingEndDate.getTime()) {
+        })
+    }
+
+    const bookingStartDate = new Date(booking.startDate)
+    const bookingEndDate = new Date(booking.endDate)
+
+    const today = new Date()
+
+    if(today.getTime() >= bookingEndDate.getTime()) {
         res.status(403)
         res.json({
             "message": "Past bookings can't be modified",
