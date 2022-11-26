@@ -20,9 +20,6 @@ router.get('/', async (req, res, next) => {
         pagination.offset = size * (page - 1)
     }
 
-    console.log(typeof minLat, isNaN(minLat))
-    console.log(maxLat)
-
     if(page < 1 || size < 1 || isNaN(minLat) && minLat !== undefined || isNaN(maxLat) && maxLat !== undefined || isNaN(minLng) && minLng !== undefined || isNaN(maxLng) && maxLng !== undefined || minPrice < 0 || maxPrice < 0){
         res.status(400)
         res.json({
@@ -52,8 +49,6 @@ router.get('/', async (req, res, next) => {
         else if(minPrice) where.price = { [Op.gte]: minPrice }
         else if(maxPrice) where.price = { [Op.lte]: maxPrice }
     }
-
-    console.log(where)
 
     const spots = await Spot.findAll({
         where,
@@ -96,7 +91,7 @@ router.get('/', async (req, res, next) => {
     size = Number(size)
 
     res.json({
-        spotList,
+        Spots: spotList,
         page,
         size
     })
@@ -146,10 +141,31 @@ router.get('/current', requireAuth, async (req, res, next) => {
     const spotsOfUser = await Spot.findAll({
         where: {
             ownerId: req.user.id
-        }
+        },
+        include: [
+            {
+                model: SpotImage
+            }
+        ]
     })
 
-    res.json(spotsOfUser)
+    const spots = []
+    spotsOfUser.forEach(spot => {
+        spots.push(spot.toJSON())
+    });
+
+    spots.forEach(spot => {
+        spot.SpotImages.forEach(image => {
+            if(image.preview === true){
+                spot.previewImage = image.url
+            }
+        })
+        delete spot.SpotImages
+    })
+
+    res.json({
+        Spots: spots
+    })
 })
 
 router.get('/:spotId/reviews', requireAuth, async (req, res, next) => {
@@ -486,7 +502,7 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
             message: 'Spot could not be found',
             "statusCode": 404
         })
-    } else if (spot.ownerid !== req.user.id){
+    } else if (spot.ownerId !== req.user.id){
         res.status(403)
         res.json({
             "message": "Forbidden",
