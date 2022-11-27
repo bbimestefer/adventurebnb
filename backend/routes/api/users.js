@@ -31,6 +31,45 @@ const validateSignup = [
 // Sign up
 router.post('/', validateSignup, async (req, res) => {
     const { firstName, lastName, email, password, username } = req.body;
+
+    if(!email || !username || !firstName || !lastName) {
+      res.status(400)
+      res.json({
+        "message": "Validation error",
+        "statusCode": 400,
+        "errors": {
+          "email": "Invalid email",
+          "username": "Username is required",
+          "firstName": "First Name is required",
+          "lastName": "Last Name is required"
+        }
+      })
+    }
+
+    const users = await User.findAll()
+
+    users.forEach(user => {
+      if(username === user.username){
+        res.status(403)
+        res.json({
+          "message": "User already exists",
+          "statusCode": 403,
+          "errors": {
+            "email": "User with that username already exists"
+          }
+        })
+      } else if(email === user.email) {
+        res.status(403)
+        res.json({
+          "message": "User already exists",
+          "statusCode": 403,
+          "errors": {
+            "email": "User with that email already exists"
+          }
+        })
+      }
+    });
+
     const user = await User.signup({ firstName, lastName, email, username, password });
 
     await setTokenCookie(res, user);
