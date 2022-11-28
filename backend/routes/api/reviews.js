@@ -74,7 +74,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
             "message": "Review couldn't be found",
             "statusCode": 404
           })
-    } else if(review.ReviewImages.length > 10){
+    } else if(review.ReviewImages.length >= 10){
         res.status(403)
         return res.json({
             "message": "Maximum number of images for this resource was reached",
