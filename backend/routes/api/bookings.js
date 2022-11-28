@@ -34,7 +34,9 @@ router.get('/current', requireAuth, async (req, res, next) => {
     const newBookings = []
     bookingList.forEach((booking) => {
         // verify that there is a spotimage
-        booking.Spot.previewImage = booking.Spot.SpotImages[0].url
+        if(booking.Spot.SpotImages.length){
+            booking.Spot.previewImage = booking.Spot.SpotImages[0].url
+        }
 
         delete booking.Spot.SpotImages
         console.log(booking)
