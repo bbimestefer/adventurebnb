@@ -49,7 +49,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
     });
 
 
-    res.json({
+    return res.json({
         Reviews: reviewList
     })
 })
@@ -70,19 +70,19 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
 
     if (!review){
         res.status(404)
-        res.json({
+        return res.json({
             "message": "Review couldn't be found",
             "statusCode": 404
           })
     } else if(review.ReviewImages.length > 10){
         res.status(403)
-        res.json({
+        return res.json({
             "message": "Maximum number of images for this resource was reached",
             "statusCode": 403
           })
     } else if(review.userId !== userId) {
         res.status(403)
-        res.json({
+        return res.json({
             "message": "Forbidden",
             "statusCode": 403
         })
@@ -93,7 +93,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
         url
     })
 
-    res.json({
+    return res.json({
         id: createdReviewImage.id,
         url: createdReviewImage.url
     })
@@ -113,19 +113,19 @@ router.put('/:reviewId', requireAuth, async (req, res, next) => {
 
     if (!reviewToFind){
         res.status(404)
-        res.json({
+        return res.json({
             "message": "Review couldn't be found",
             "statusCode": 404
           })
     } else if(reviewToFind.userId !== userId) {
         res.status(403)
-        res.json({
+        return res.json({
             "message": "Forbidden",
             "statusCode": 403
         })
     } else if(!review || stars > 5 || stars < 1){
         res.status(400)
-        res.json({
+        return res.json({
             "message": "Validation error",
             "statusCode": 400,
             "errors": {
@@ -142,7 +142,7 @@ router.put('/:reviewId', requireAuth, async (req, res, next) => {
 
     await reviewToFind.save()
 
-    res.json(reviewToFind)
+    return res.json(reviewToFind)
 })
 
 router.delete('/:reviewId', requireAuth, async (req, res, next) => {
@@ -150,20 +150,20 @@ router.delete('/:reviewId', requireAuth, async (req, res, next) => {
 
     if(!review){
         res.status(404)
-        res.json({
+        return res.json({
             message: 'Review could not be found',
             "statusCode": 404
         })
     } else if (review.userId !== req.user.id){
         res.status(403)
-        res.json({
+        return res.json({
             "message": "Forbidden",
             "statusCode": 403
         })
     } else {
         await review.destroy()
 
-        res.json({
+        return res.json({
             "message": "Successfully deleted",
             "statusCode": 200
         })

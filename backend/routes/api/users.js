@@ -34,7 +34,7 @@ router.post('/', validateSignup, async (req, res) => {
 
     if(!email || !username || !firstName || !lastName) {
       res.status(400)
-      res.json({
+      return res.json({
         "message": "Validation error",
         "statusCode": 400,
         "errors": {
@@ -51,7 +51,7 @@ router.post('/', validateSignup, async (req, res) => {
     users.forEach(user => {
       if(username === user.username){
         res.status(403)
-        res.json({
+        return res.json({
           "message": "User already exists",
           "statusCode": 403,
           "errors": {
@@ -60,7 +60,7 @@ router.post('/', validateSignup, async (req, res) => {
         })
       } else if(email === user.email) {
         res.status(403)
-        res.json({
+        return res.json({
           "message": "User already exists",
           "statusCode": 403,
           "errors": {
