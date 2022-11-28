@@ -22,7 +22,7 @@ router.get('/', async (req, res, next) => {
 
     if(page < 1 || size < 1 || isNaN(minLat) && minLat !== undefined || isNaN(maxLat) && maxLat !== undefined || isNaN(minLng) && minLng !== undefined || isNaN(maxLng) && maxLng !== undefined || minPrice < 0 || maxPrice < 0){
         res.status(400)
-        res.json({
+        return res.json({
             "message": "Validation Error",
             "statusCode": 400,
             "errors": {
@@ -90,7 +90,7 @@ router.get('/', async (req, res, next) => {
     page = Number(page)
     size = Number(size)
 
-    res.json({
+    return res.json({
         Spots: spotList,
         page,
         size
@@ -104,7 +104,7 @@ router.post('/', requireAuth,  async (req, res, next) => {
 
     if(!address || !city || !state || !country || !lat || !lng || !name || !description || !price){
         res.status(400)
-        res.json({
+        return res.json({
             "message": "Validation Error",
             "statusCode": 400,
             "errors": {
@@ -134,7 +134,8 @@ router.post('/', requireAuth,  async (req, res, next) => {
         price
     })
 
-    res.json(createdSpot)
+    res.status(201)
+    return res.json(createdSpot)
 })
 
 router.get('/current', requireAuth, async (req, res, next) => {
@@ -163,7 +164,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         delete spot.SpotImages
     })
 
-    res.json({
+    return res.json({
         Spots: spots
     })
 })
@@ -188,13 +189,13 @@ router.get('/:spotId/reviews', requireAuth, async (req, res, next) => {
     // need to change this becuase it throws error when no reviews on spot----------------
     if(!reviews.length) {
         res.status(404)
-        res.json({
+        return res.json({
             message: 'Spot could not be found',
             "statusCode": 404
         })
     }
 
-    res.json({
+    return res.json({
         Reviews: reviews
     })
 })
@@ -221,7 +222,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
     if(!spot){
         res.status(404)
-        res.json({
+        return res.json({
             message: 'Spot could not be found',
             "statusCode": 404
         })
@@ -238,7 +239,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
             }
         })
 
-        res.json({
+        return res.json({
             Bookings: bookings
         })
     }
@@ -250,7 +251,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
         attributes: [ 'spotId', 'startDate', 'endDate' ]
     })
 
-    res.json({
+    return res.json({
         Bookings: bookings
     })
 
@@ -294,13 +295,13 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
 
     if(!spot){
         res.status(404)
-        res.json({
+        return res.json({
             message: 'Spot could not be found',
             "statusCode": 404
         })
     } else if(!review || stars > 5 || stars < 1){
         res.status(400)
-        res.json({
+        return res.json({
             "message": "Validation error",
             "statusCode": 400,
             "errors": {
@@ -313,7 +314,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
     spot.Reviews.forEach(review => {
         if(review.userId === req.user.id) {
             res.status(404)
-            res.json({
+            return res.json({
                 "message": "User already has a review for this spot",
                 "statusCode": 403
               })
@@ -327,7 +328,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
         stars
     })
 
-    res.json(createdReview)
+    return res.json(createdReview)
 })
 
 router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
@@ -350,30 +351,28 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
     if(!spot){
         res.status(404)
-        res.json({
+        return res.json({
             message: 'Spot could not be found',
             "statusCode": 404
         })
     } else if( Date.parse(startDate) > Date.parse(endDate) ) {
         res.status(400)
-        res.json({
+        return res.json({
             "message": "Validation error",
             "statusCode": 400,
             "errors": {
               "endDate": "endDate cannot be on or before startDate"
             }
           })
-          return
     } else if (userId === spot.ownerId){
         res.status(400)
-        res.json({
+        return res.json({
             "message": "Validation error",
             "statusCode": 400,
             "errors": {
               "endDate": "You cannot create a booking as owner"
             }
           })
-          return
     }
 
     const bookings = await Booking.findAll({
@@ -382,20 +381,19 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         }
     })
 
+    let taken = false
+
     bookings.forEach(booking => {
 
         const bookingStartDate = new Date(booking.startDate)
         const bookingEndDate = new Date(booking.endDate)
-        console.log(booking.toJSON())
-
-        console.log(bookingStartDate)
-        console.log(dateStart)
 
         if(dateStart.getTime() >= bookingStartDate.getTime() && dateStart.getTime() <= bookingEndDate.getTime() ||
         dateEnd.getTime() >= bookingStartDate.getTime() && dateEnd.getTime() <= bookingEndDate.getTime() ||
         dateStart.getTime() <= bookingStartDate.getTime() && dateEnd.getTime() >= bookingEndDate.getTime()) {
+            taken = true
             res.status(403)
-            res.json({
+            return res.json({
                 "message": "Sorry, this spot is already booked for the specified dates",
                 "statusCode": 403,
                 "errors": {
@@ -406,37 +404,16 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         }
     });
 
-    // spot.Bookings.forEach(booking => {
-    //     const startDateOfBooking = booking.startDate.toDateString()
-    //     const endDateOfBooking = booking.endDate.toDateString()
+    if(!taken){
+        const createdBooking = await Booking.create({
+            spotId: spot.id,
+            userId,
+            startDate,
+            endDate,
+        })
 
-    //     console.log('Start date given by user:', dateStart.getTime())
-    //     console.log('End date given by user:', dateEnd.getTime())
-
-    //     console.log(startDateOfBooking,'--------------', endDateOfBooking)
-
-
-    //     // if( ){
-    //     //         res.status(403)
-    //     //         res.json({
-    //     //             "message": "Sorry, this spot is already booked for the specified dates",
-    //     //             "statusCode": 403,
-    //     //             "errors": {
-    //     //               "startDate": "Start date conflicts with an existing booking",
-    //     //               "endDate": "End date conflicts with an existing booking"
-    //     //             }
-    //     //           })
-    //     //     }
-    // });
-
-    const createdBooking = await Booking.create({
-        spotId: spot.id,
-        userId,
-        startDate,
-        endDate,
-    })
-
-    res.json(createdBooking)
+        return res.json(createdBooking)
+    }
 })
 
 
@@ -446,13 +423,13 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
 
     if(!spot){
         res.status(404)
-        res.json({
+        return res.json({
             message: 'Spot could not be found',
             "statusCode": 404
         })
     } else if (spot.ownerId !== req.user.id){
         res.status(403)
-        res.json({
+        return res.json({
             "message": "Forbidden",
             "statusCode": 403
         })
@@ -466,7 +443,7 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
 
     if(!createdSpotImage){
         res.status(400)
-        res.json({
+        return res.json({
             message: 'Need to provide url and preview values'
         })
     }
@@ -479,12 +456,12 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
 
     if(!imageForSpot) {
         res.status(404)
-        res.json({
+        return res.json({
             message: 'Image for spot was not created'
         })
     }
 
-    res.json({
+    return res.json({
         id: createdSpotImage.id,
         url: createdSpotImage.url,
         preview: createdSpotImage.preview
@@ -498,13 +475,13 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
 
     if(!spot){
         res.status(404)
-        res.json({
+        return res.json({
             message: 'Spot could not be found',
             "statusCode": 404
         })
     } else if (spot.ownerId !== req.user.id){
         res.status(403)
-        res.json({
+        return res.json({
             "message": "Forbidden",
             "statusCode": 403
         })
@@ -512,7 +489,7 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
 
     if(!address || !city || !state || !country || !lat || !lng || !name || !description || !price){
         res.status(400)
-        res.json({
+        return res.json({
             "message": "Validation Error",
             "statusCode": 400,
             "errors": {
@@ -543,7 +520,7 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
 
     await spot.save()
 
-    res.json(spot)
+    return res.json(spot)
 
 })
 
@@ -562,7 +539,7 @@ router.get('/:spotId', async (req, res, next) => {
         // err.errors = ["Spot couldn't be found"];
         // return next(err);
         res.status(404)
-        res.json({
+        return res.json({
             "message": "Spot couldn't be found",
             "statusCode": 404
         })
@@ -604,7 +581,7 @@ router.get('/:spotId', async (req, res, next) => {
         },
     })
 
-    res.json(spot)
+    return res.json(spot)
 })
 
 router.delete('/:spotId', requireAuth, async (req, res, next) => {
@@ -612,20 +589,20 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
 
     if(!spot){
         res.status(404)
-        res.json({
+        return res.json({
             message: 'Spot could not be found',
             "statusCode": 404
         })
     } else if (spot.ownerId !== req.user.id){
         res.status(403)
-        res.json({
+        return res.json({
             "message": "Forbidden",
             "statusCode": 403
         })
     } else {
         await spot.destroy()
 
-        res.json({
+        return res.json({
             "message": "Successfully deleted",
             "statusCode": 200
         })

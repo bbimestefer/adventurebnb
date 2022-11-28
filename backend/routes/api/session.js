@@ -45,7 +45,7 @@ router.post('/', validateLogin, async (req, res, next) => {
       return next(err);
     }
 
-    const user = await User.login({ credential, password });
+    let user = await User.login({ credential, password });
 
     if (!user) {
       const err = new Error('Login failed');
@@ -56,6 +56,10 @@ router.post('/', validateLogin, async (req, res, next) => {
     }
 
     await setTokenCookie(res, user);
+
+    user = user.toSafeObject()
+
+    user.token = ""
 
     return res.json({
       user: user
