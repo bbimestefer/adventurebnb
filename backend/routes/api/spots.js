@@ -381,6 +381,8 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         }
     })
 
+    let taken = false
+
     bookings.forEach(booking => {
 
         const bookingStartDate = new Date(booking.startDate)
@@ -389,6 +391,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         if(dateStart.getTime() >= bookingStartDate.getTime() && dateStart.getTime() <= bookingEndDate.getTime() ||
         dateEnd.getTime() >= bookingStartDate.getTime() && dateEnd.getTime() <= bookingEndDate.getTime() ||
         dateStart.getTime() <= bookingStartDate.getTime() && dateEnd.getTime() >= bookingEndDate.getTime()) {
+            taken = true
             res.status(403)
             return res.json({
                 "message": "Sorry, this spot is already booked for the specified dates",
@@ -401,37 +404,16 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         }
     });
 
-    // spot.Bookings.forEach(booking => {
-    //     const startDateOfBooking = booking.startDate.toDateString()
-    //     const endDateOfBooking = booking.endDate.toDateString()
+    if(!taken){
+        const createdBooking = await Booking.create({
+            spotId: spot.id,
+            userId,
+            startDate,
+            endDate,
+        })
 
-    //     console.log('Start date given by user:', dateStart.getTime())
-    //     console.log('End date given by user:', dateEnd.getTime())
-
-    //     console.log(startDateOfBooking,'--------------', endDateOfBooking)
-
-
-    //     // if( ){
-    //     //         res.status(403)
-    //     //         res.json({
-    //     //             "message": "Sorry, this spot is already booked for the specified dates",
-    //     //             "statusCode": 403,
-    //     //             "errors": {
-    //     //               "startDate": "Start date conflicts with an existing booking",
-    //     //               "endDate": "End date conflicts with an existing booking"
-    //     //             }
-    //     //           })
-    //     //     }
-    // });
-
-    const createdBooking = await Booking.create({
-        spotId: spot.id,
-        userId,
-        startDate,
-        endDate,
-    })
-
-    return res.json(createdBooking)
+        return res.json(createdBooking)
+    }
 })
 
 

@@ -68,6 +68,13 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
     const bookingEndDate = new Date(booking.endDate)
 
     const today = new Date()
+    const allBookings = await Booking.findAll({
+        where: {
+            spotId: booking.spotId
+        }
+    })
+
+    let taken = false
 
     if(today.getTime() >= bookingEndDate.getTime()) {
         res.status(403)
@@ -75,18 +82,6 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
             "message": "Past bookings can't be modified",
             "statusCode": 403
           })
-    } else if(dateStart.getTime() >= bookingStartDate.getTime() && dateStart.getTime() <= bookingEndDate.getTime() ||
-    dateEnd.getTime() >= bookingStartDate.getTime() && dateEnd.getTime() <= bookingEndDate.getTime() ||
-    dateStart.getTime() <= bookingStartDate.getTime() && dateEnd.getTime() >= bookingEndDate.getTime()) {
-        res.status(403)
-        return res.json({
-            "message": "Sorry, this spot is already booked for the specified dates",
-            "statusCode": 403,
-            "errors": {
-            "startDate": "Start date conflicts with an existing booking",
-            "endDate": "End date conflicts with an existing booking"
-            }
-        })
     } else if(booking.userId !== req.user.id){
         res.status(403)
         return res.json({
@@ -95,14 +90,38 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
         })
     }
 
-    booking.set({
-        startDate,
-        endDate
-    })
+    allBookings.forEach(bookingindex => {
 
-    await booking.save()
+        const bookingStartDate = new Date(bookingindex.startDate)
+        const bookingEndDate = new Date(bookingindex.endDate)
 
-    return res.json(booking)
+        if(dateStart.getTime() >= bookingStartDate.getTime() && dateStart.getTime() <= bookingEndDate.getTime() ||
+        dateEnd.getTime() >= bookingStartDate.getTime() && dateEnd.getTime() <= bookingEndDate.getTime() ||
+        dateStart.getTime() <= bookingStartDate.getTime() && dateEnd.getTime() >= bookingEndDate.getTime()) {
+            taken = true
+            res.status(403)
+            return res.json({
+                "message": "Sorry, this spot is already booked for the specified dates",
+                "statusCode": 403,
+                "errors": {
+                "startDate": "Start date conflicts with an existing booking",
+                "endDate": "End date conflicts with an existing booking"
+                }
+            })
+        }
+    });
+
+    if(!taken) {
+        booking.set({
+            startDate,
+            endDate
+        })
+
+        await booking.save()
+
+        return res.json(booking)
+    }
+
 })
 
 router.delete('/:bookingId', requireAuth, async (req, res, next) => {
