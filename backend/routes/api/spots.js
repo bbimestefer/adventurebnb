@@ -134,6 +134,7 @@ router.post('/', requireAuth,  async (req, res, next) => {
         price
     })
 
+    res.status(201)
     return res.json(createdSpot)
 })
 
