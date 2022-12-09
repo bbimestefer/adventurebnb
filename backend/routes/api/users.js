@@ -29,44 +29,54 @@ const validateSignup = [
 ];
 
 // Sign up
-router.post('/', validateSignup, async (req, res) => {
+router.post('/', validateSignup, async (req, res, next) => {
     const { firstName, lastName, email, password, username } = req.body;
 
-    if(!email || !username || !firstName || !lastName) {
-      res.status(400)
-      return res.json({
-        "message": "Validation error",
-        "statusCode": 400,
-        "errors": {
-          "email": "Invalid email",
-          "username": "Username is required",
-          "firstName": "First Name is required",
-          "lastName": "Last Name is required"
-        }
-      })
+    const errors = []
+
+
+    if(!email){
+      errors.push('Invalid email')
+    }
+    if(!username){
+      errors.push('Username is required')
+    }
+    if(!firstName){
+      errors.push('First Name is required')
+    }
+    if(!lastName){
+      errors.push('Last Name is required')
+    }
+
+
+    console.log(errors)
+
+    if(errors.length) {
+      console.log('in the errors.length')
+      const error = new Error()
+      error.errors = errors
+      error.statusCode = 400
+      error.message = "Validation error"
+      return next(error)
     }
 
     const users = await User.findAll()
 
     users.forEach(user => {
       if(username === user.username){
-        res.status(403)
-        return res.json({
-          "message": "User already exists",
-          "statusCode": 403,
-          "errors": {
-            "email": "User with that username already exists"
-          }
-        })
+        errors.push("User with that username already exists")
+        const error = new Error()
+        error.errors = errors
+        error.statusCode = 403
+        error.message = "User already exists"
+        return next(error)
       } else if(email === user.email) {
-        res.status(403)
-        return res.json({
-          "message": "User already exists",
-          "statusCode": 403,
-          "errors": {
-            "email": "User with that email already exists"
-          }
-        })
+        errors.push("User with that email already exists")
+        const error = new Error()
+        error.errors = errors
+        error.statusCode = 403
+        error.message = "User already exists"
+        return next(error)
       }
     });
 
