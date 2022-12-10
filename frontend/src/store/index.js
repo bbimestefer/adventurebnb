@@ -1,11 +1,13 @@
 //this is the setup for the store (boilerplate)
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import sessionReducer from './session';
+import spotsReducer from './spots';
 import thunk from 'redux-thunk';
 
 
 const rootReducer = combineReducers({
-  session: sessionReducer
+  session: sessionReducer,
+  spots: spotsReducer
 });
 
 let enhancer;
