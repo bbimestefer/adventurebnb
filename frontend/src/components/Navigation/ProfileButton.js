@@ -5,6 +5,7 @@ import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import './ProfileButton.css'
+import DemoUserLogin from "./DemoUserLogin";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ function ProfileButton({ user }) {
   return (
     <>
       <button onClick={openMenu} className="profile-button">
-      <i class="fa-sharp fa-solid fa-bars profile-menu-button"></i>
+      <i className="fa-sharp fa-solid fa-bars profile-menu-button"></i>
       <i className="fas fa-user-circle" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
@@ -68,6 +69,7 @@ function ProfileButton({ user }) {
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}
             />
+            <DemoUserLogin />
           </>
         )}
       </ul>
