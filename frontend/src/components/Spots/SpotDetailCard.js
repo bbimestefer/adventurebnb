@@ -1,17 +1,21 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import './SpotDetailCard.css'
+import image from '../images/sample-image.png'
 
 function SpotDetailCard(spot) {
     if(!spot) return null
     return (
         <div className="spot-card">
             <NavLink to={`/api/spots/${spot.id}`}>
-                <h3>{spot.name}</h3>
-                <h4>{spot.address}</h4>
-                <h4>{spot.city}</h4>
-                <h4>{spot.state}</h4>
-                <p>{spot.description}</p>
+                <img className={'image'} src={image} alt="sample"></img>
+                <p style={{'font-weight': 'bold', 'font-size': '14px'}}>{spot.city}, {spot.state}</p>
+                <div style={{'font-size': '12px'}}>
+                    <span style={{'font-weight': 'bold', 'font-size': '13px'}}>
+                        ${spot.price} {" "}
+                    </span>
+                    night
+                </div>
             </NavLink>
         </div>
     )
