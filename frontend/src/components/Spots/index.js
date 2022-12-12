@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux'
 import SpotDetailCard from './SpotDetailCard'
 import './index.css'
 
+
+
 function Spots() {
     const spots = useSelector(state => state.spots.allSpots.Spots)
     if(!spots) return null

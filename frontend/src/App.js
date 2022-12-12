@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import * as spotActions from './store/spots'
 import Navigation from "./components/Navigation";
@@ -19,9 +19,11 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route exact to={'/'}>
+            <Spots />
+          </Route>
         </Switch>
       )}
-      <Spots />
     </>
   );
 }
