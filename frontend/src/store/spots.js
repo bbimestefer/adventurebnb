@@ -1,4 +1,5 @@
 // const CREATE = 'spots/CREATE'
+const SINGLE = 'spots/SINGLE'
 const LOAD = 'spots/LOAD'
 // const UPDATE = 'spots/UPDATE'
 // const DELETE = 'spots/DELETE'
@@ -14,6 +15,13 @@ const loadSpots = (spots) => {
     return {
         type: LOAD,
         spots
+    }
+}
+
+const oneSpot = (spot) => {
+    return {
+        type: SINGLE,
+        spot
     }
 }
 
@@ -40,8 +48,18 @@ export const getAllSpots = () => async dispatch => {
     }
 }
 
+export const getSpotById = (id) => async dispatch => {
+    const response = await fetch(`/api/spots/${id}`)
 
-const initialState = { allSpots: {}, singleSpot: { Owner: {}}}
+    if(response.ok){
+        const spot = await response.json()
+        dispatch(oneSpot(spot))
+        return spot
+    }
+}
+
+
+const initialState = { allSpots: {}, singleSpot: {}}
 
 const spotsReducer = (state = initialState, action) => {
     let newState;
@@ -50,6 +68,10 @@ const spotsReducer = (state = initialState, action) => {
         case LOAD:
             newState = {...state}
             newState.allSpots = action.spots
+            return newState
+        case SINGLE:
+            newState = {...state}
+            newState.singleSpot = action.spot
             return newState
         // case UPDATE:
         // case DELETE:

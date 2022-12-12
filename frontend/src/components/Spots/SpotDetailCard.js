@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import './SpotDetailCard.css'
 import image from '../images/sample-image.png'
 
@@ -8,7 +8,7 @@ function SpotDetailCard(spot) {
     if(!spot) return null
     return (
         <div className="spot-card">
-        <NavLink to={`/api/spots/${spot.id}`}>
+        <Link to={`/api/spots/${spot.id}`}>
             <img className={'image'} src={image} alt="sample"></img>
             <p style={{'fontWeight': 'bold', 'fontSize': '14px'}}>{spot.city}, {spot.state}</p>
             <div style={{'fontSize': '12px'}}>
@@ -17,7 +17,7 @@ function SpotDetailCard(spot) {
                 </span>
                 night
             </div>
-        </NavLink>
+        </Link>
         </div>
     )
 }
