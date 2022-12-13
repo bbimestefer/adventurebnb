@@ -6,6 +6,7 @@ import * as spotActions from './store/spots'
 import Navigation from "./components/Navigation";
 import Spots from "./components/Spots";
 import SingleSpot from "./components/Spots/SingleSpot/SingleSpot";
+import CreateSpotForm from "./components/Spots/CreateSpotForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,6 +27,10 @@ function App() {
 
           <Route path='/api/spots/:id'>
             <SingleSpot isLoaded={isLoaded}/>
+          </Route>
+
+          <Route path='/new'>
+            <CreateSpotForm />
           </Route>
 
           <Route>

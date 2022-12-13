@@ -13,9 +13,14 @@ function Navigation({ isLoaded }){
         <NavLink exact to="/">adventurebnb</NavLink>
       {/* </li> */}
       {isLoaded && (
-        // <li>
+        <div style={{"display": 'flex', 'alignItems': 'center', 'gap':'10px'}}>
+          <div>
+            { sessionUser && (
+              <NavLink to='/new'>Host your home</NavLink>
+            )}
+          </div>
           <ProfileButton user={sessionUser} />
-        // </li>
+        </div>
       )}
     </div>
   );

@@ -1,3 +1,5 @@
+import { csrfFetch } from "./csrf"
+
 const CREATE = 'spots/CREATE'
 const SINGLE = 'spots/SINGLE'
 const LOAD = 'spots/LOAD'
@@ -39,9 +41,9 @@ const remove = (id) => {
     }
 }
 
-export const createSpot = (id, spot) => async dispatch => {
+export const createSpot = (spot) => async dispatch => {
     // need to implement spotImage and seperate data
-    const response = await fetch(`/api/spots/${id}`, {
+    const response = await csrfFetch(`/api/spots`, {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(spot)
@@ -51,6 +53,20 @@ export const createSpot = (id, spot) => async dispatch => {
         const spot = await response.json()
         dispatch(create(spot))
         return spot
+    }
+}
+
+export const createSpotImage = (spotId, spotImage) => async dispatch => {
+    const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(spotImage)
+      })
+
+    if(response.ok) {
+        const image = response.json()
+        dispatch(getAllSpots())
+        return image
     }
 }
 

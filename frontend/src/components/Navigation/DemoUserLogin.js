@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import * as sessionActions from "../../store/session";
 
 function DemoUserLogin() {
-    const credential = 'Demo-lition'
+    const credential = 'commonUser'
     const password = 'password'
     const dispatch = useDispatch()
     const demoLogin = () => {
