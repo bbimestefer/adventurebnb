@@ -40,6 +40,7 @@ const remove = (id) => {
 }
 
 export const createSpot = (id, spot) => async dispatch => {
+    // need to implement spotImage and seperate data
     const response = await fetch(`/api/spots/${id}`, {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
