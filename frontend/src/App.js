@@ -30,7 +30,7 @@ function App() {
             <SingleSpot isLoaded={isLoaded}/>
           </Route>
 
-          <Route path={'/account'}>
+          <Route path='/account'>
             <Account />
           </Route>
 

@@ -1,13 +1,14 @@
-import { useEffect } from "react"
+// import { useEffect } from "react"
 import { NavLink, Route, Switch } from "react-router-dom"
+import EditUserSpot from "./EditUserSpot"
 import SpotsOfUser from './SpotsOfUser'
 import UserReviews from "./UserReviews"
 
 export default function Account () {
 
-    useEffect(() => {
-        // dispatch the get current reviews or users with if statement
-    })
+    // useEffect(() => {
+    //     // dispatch the get current reviews or users with if statement
+    // })
 
 
     return (
@@ -19,12 +20,16 @@ export default function Account () {
             <div>
 
             <Switch>
-                <Route path={'/account/spots'}>
+                <Route exact path='/account/spots'>
                     <SpotsOfUser />
                 </Route>
 
-                <Route path={'/account/reviews'}>
+                <Route path='/account/reviews'>
                     <UserReviews />
+                </Route>
+
+                <Route path='/account/spots/edit/:id'>
+                    <EditUserSpot />
                 </Route>
             </Switch>
             </div>
