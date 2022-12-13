@@ -58,6 +58,15 @@
     flex-direction: column;
     width: fit-content;
     border: 1px solid gray;
+    border-radius: 10px;
     box-sizing: border-box;
     box-shadow: 1px 1px 5px gray;
+}
+
+.spacing {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 100px;
+    padding-top: 15px;
 }

@@ -5,11 +5,14 @@ export default function ReserveForm (spot) {
     const [ checkIn, setCheckIn ] = useState()
     const [ checkout, setCheckout ] = useState()
     const [ guest, setGuest ] = useState(1)
+    const date = new Date()
+    const today = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    const futureDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + 5}`
 
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        console.log(checkIn, checkout)
+        console.log(checkIn, checkout, guest)
     }
     return (
         <div className="form-container" style={{"paddingRight": "10px", "paddingLeft": "10px"}}>
@@ -30,8 +33,8 @@ export default function ReserveForm (spot) {
                         <input type={'date'}
                         name={'check-in'}
                         placeholder={'Add date'}
-                        // value={checkIn}
-                        // onChange={(e) => setCheckIn(e.target.value)}
+                        value={checkIn ? checkIn : today.toString()}
+                        onChange={(e) => setCheckIn(e.target.value)}
                         />
                     </label>
                     <label>
@@ -39,8 +42,8 @@ export default function ReserveForm (spot) {
                         <input type={'date'}
                         name={'checkout'}
                         placeholder={'Add date'}
-                        // value={checkout}
-                        // onChange={(e) => setCheckout(e.target.value)}
+                        value={checkout ? checkout : futureDate.toString()}
+                        onChange={(e) => setCheckout(e.target.value)}
                         />
                     </label>
                     </div>
@@ -60,13 +63,24 @@ export default function ReserveForm (spot) {
             <div>
                 You will not be charged yet
             </div>
-            <section>
                 <div>
                     {checkIn && checkout && (
-                        <div>calcutlating price...</div>
+                        <>
+                            <div className="spacing">
+                                <span>${spot.price} x 5 nights</span>
+                                <span>${spot.price * 5}</span>
+                            </div>
+                            <div className="spacing">
+                                <span>Cleaning Fee</span>
+                                <span>${35 * 5}</span>
+                            </div>
+                            <div className="spacing">
+                                <span>Service Fee</span>
+                                <span>${25 * 5}</span>
+                            </div>
+                        </>
                     )}
                 </div>
-            </section>
         </div>
     )
 }
