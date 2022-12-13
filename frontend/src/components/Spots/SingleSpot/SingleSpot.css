@@ -34,18 +34,30 @@
 .details {
     display: flex;
     flex-direction: row;
-    padding-top: 40px;
-    padding-bottom: 20px;
-    border-bottom: solid 1px rgb(192, 192, 192);
 }
 
 .host {
+    display: flex;
+    justify-content: space-between;
     margin: 0px;
-    width: 500px;
+    width: 1200px;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    border-bottom: solid 1px rgb(192, 192, 192);
 }
 
 .reserve-form {
     display: flex;
     justify-content: right;
     width: 100%;
+}
+
+.form-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: fit-content;
+    border: 1px solid gray;
+    box-sizing: border-box;
+    box-shadow: 1px 1px 5px gray;
 }
