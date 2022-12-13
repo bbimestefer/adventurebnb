@@ -6,6 +6,7 @@ import ReserveForm from "./ReserveForm";
 import "./SingleSpot.css"
 
 function SingleSpot () {
+
     const dispatch = useDispatch()
     const { id } = useParams()
 

@@ -6,7 +6,10 @@ import './index.css'
 
 
 function Spots() {
-    const spots = useSelector(state => state.spots.allSpots.Spots)
+    const spotsObj = useSelector(state => state.spots.allSpots)
+    console.log('obj of', spotsObj)
+    const spots = Object.values(spotsObj)
+    console.log('spots', spots)
     if(!spots) return null
     return (
         <div className='main-wrapper'>
