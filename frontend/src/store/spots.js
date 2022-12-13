@@ -79,6 +79,15 @@ export const getAllSpots = () => async dispatch => {
     }
 }
 
+export const getSpotsOfUser = () => async dispatch => {
+    const response = await fetch('/api/spots/current')
+
+    if(response.ok){
+        const spots = await response.json()
+        return spots
+    }
+}
+
 export const getSpotById = (id) => async dispatch => {
     const response = await fetch(`/api/spots/${id}`)
 
@@ -103,7 +112,7 @@ export const updateSpot = (id, spot) => async dispatch => {
 }
 
 export const removeSpot = (id) => async dispatch => {
-    const response = await fetch(`/api/spots/${id}`, {
+    const response = await csrfFetch(`/api/spots/${id}`, {
         method: 'DELETE',
         headers: {"Content-Type": "application/json"}
       })
