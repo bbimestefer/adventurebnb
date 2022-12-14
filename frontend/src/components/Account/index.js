@@ -1,8 +1,8 @@
 // import { useEffect } from "react"
 import { NavLink, Route, Switch } from "react-router-dom"
-import EditUserSpot from "./EditUserSpot"
-import Profile from "./Profile"
-import SpotsOfUser from './SpotsOfUser'
+import Profile from "./Profile/index"
+import EditUserSpot from "./UserSpots/EditUserSpot"
+import SpotsOfUser from './UserSpots'
 import UserReviews from "./UserReviews"
 
 export default function Account () {

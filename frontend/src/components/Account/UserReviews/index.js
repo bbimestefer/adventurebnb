@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import * as reviewActions from "../../store/reviews";
+import * as reviewActions from "../../../store/reviews";
 import UserReviewDetails from "./UserReviewDetails";
 
 

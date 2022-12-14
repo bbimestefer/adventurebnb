@@ -1,7 +1,7 @@
 // import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
-import { removeReview } from "../../store/reviews"
+import { removeReview } from "../../../store/reviews"
 
 export default function UserReviewDetails (review) {
     const dispatch = useDispatch()

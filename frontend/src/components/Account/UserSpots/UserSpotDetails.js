@@ -1,7 +1,7 @@
 // import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
-import { removeSpot } from "../../store/spots"
+import { removeSpot } from "../../../store/spots"
 
 export default function UserSpotDetails (spot) {
     const dispatch = useDispatch()
