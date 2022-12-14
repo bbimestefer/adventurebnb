@@ -170,6 +170,17 @@ router.get('/current', requireAuth, async (req, res, next) => {
 })
 
 router.get('/:spotId/reviews', requireAuth, async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId)
+
+
+    if(!spot) {
+        res.status(404)
+        return res.json({
+            message: 'Spot could not be found',
+            "statusCode": 404
+        })
+    }
+
     const reviews = await Review.findAll({
         where: {
             spotId: req.params.spotId
@@ -185,16 +196,7 @@ router.get('/:spotId/reviews', requireAuth, async (req, res, next) => {
             }
         ]
     })
-
-    // need to change this becuase it throws error when no reviews on spot----------------
-    if(!reviews.length) {
-        res.status(404)
-        return res.json({
-            message: 'Spot could not be found',
-            "statusCode": 404
-        })
-    }
-
+    
     return res.json({
         Reviews: reviews
     })
