@@ -64,7 +64,7 @@ export const createSpotImage = (spotId, spotImage) => async dispatch => {
       })
 
     if(response.ok) {
-        const image = response.json()
+        const image = await response.json()
         dispatch(getAllSpots())
         return image
     }
