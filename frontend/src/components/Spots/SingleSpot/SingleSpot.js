@@ -5,6 +5,7 @@ import * as spotActions from '../../../store/spots'
 import * as reviewActions from "../../../store/reviews";
 import ReserveForm from "./ReserveForm";
 import "./SingleSpot.css"
+import ReviewDetails from "./Reviews/ReviewDetails";
 
 function SingleSpot () {
 
@@ -17,6 +18,7 @@ function SingleSpot () {
     }, [id, dispatch])
 
     const spot = useSelector(state => state.spots.singleSpot)
+    const reviews = Object.values(useSelector(state => state.reviews.spot))
 
     if(!spot) return null
     return (
@@ -44,6 +46,11 @@ function SingleSpot () {
                     <div>profile pic</div>
                 </div>
                 <div className="reserve-form"><ReserveForm {...spot} /></div>
+            </div>
+            <div>
+                {reviews.map(review => (
+                    <ReviewDetails key={review.id} {...review}/>
+                ))}
             </div>
         </div>
     )
