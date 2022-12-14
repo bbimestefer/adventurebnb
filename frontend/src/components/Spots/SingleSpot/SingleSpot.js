@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import * as spotActions from '../../../store/spots'
+import * as reviewActions from "../../../store/reviews";
 import ReserveForm from "./ReserveForm";
 import "./SingleSpot.css"
 
@@ -12,6 +13,7 @@ function SingleSpot () {
 
     useEffect(() => {
         dispatch(spotActions.getSpotById(id))
+        dispatch(reviewActions.spotReviews(id))
     }, [id, dispatch])
 
     const spot = useSelector(state => state.spots.singleSpot)

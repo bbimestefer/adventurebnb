@@ -75,7 +75,7 @@ export default function CreateSpotForm () {
     }
 
     return (
-        <div>
+        <div style={{"display":"flex", "alignItems":"center", "justifyContent":"center"}}>
             <form className="create-spot-form" onSubmit={handleSubmit}>
                 <h4>{user.firstName}, fill out this form to create your house!</h4>
                 <input style={{"borderRadius":"10px 10px 0px 0px"}}
