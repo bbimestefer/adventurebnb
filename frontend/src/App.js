@@ -26,7 +26,7 @@ function App() {
             <Spots />
           </Route>
 
-          <Route path='/api/spots/:id'>
+          <Route path='/spots/:id'>
             <SingleSpot isLoaded={isLoaded}/>
           </Route>
 

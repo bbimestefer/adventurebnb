@@ -1,10 +1,18 @@
 import { csrfFetch } from "./csrf";
 
+const CLEAR = 'reviews/CLEAR'
 const CREATE = 'reviews/CREATE'
 const USER = 'reviews/USER'
 const SPOT = 'reviews/SPOT'
 const UPDATE = 'reviews/UPDATE'
 const DELETE = 'reviews/DELETE'
+
+//temporarily fixes review state staying across different spots
+export const clearReviews = () => {
+    return {
+        type: CLEAR,
+    }
+}
 
 const createReview = (review) => {
     return {
@@ -107,6 +115,8 @@ const initialState = { spot: {}, user: {} }
 const reviewReducer = (state = initialState, action) => {
     let newState;
     switch(action.type) {
+        case CLEAR:
+            return { spot: {}, user: {} }
         case CREATE:
             return {...state, spot: {...state.spot, [action.review.id]: action.review}}
         case USER:

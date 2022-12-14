@@ -6,6 +6,7 @@ import * as reviewActions from "../../../store/reviews";
 import ReserveForm from "./ReserveForm";
 import "./SingleSpot.css"
 import ReviewDetails from "./Reviews/ReviewDetails";
+import Reviews from "./Reviews";
 
 function SingleSpot () {
 
@@ -19,6 +20,7 @@ function SingleSpot () {
 
     const spot = useSelector(state => state.spots.singleSpot)
     const reviews = Object.values(useSelector(state => state.reviews.spot))
+    console.log('reviews', reviews)
 
     if(!spot) return null
     return (
@@ -48,9 +50,12 @@ function SingleSpot () {
                 <div className="reserve-form"><ReserveForm {...spot} /></div>
             </div>
             <div>
-                {reviews.map(review => (
+                {/* {reviews.map(review => (
                     <ReviewDetails key={review.id} {...review}/>
-                ))}
+                ))} */}
+                {reviews.length ? (
+                    <Reviews reviews={reviews}/>
+                ) : (<div>No Reviews</div>)}
             </div>
         </div>
     )
