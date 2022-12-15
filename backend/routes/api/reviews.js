@@ -55,6 +55,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
 })
 
 router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
+    console.log('in review image post---------------------------------------------------')
     const userId = req.user.id
     const { url } = req.body
     const review = await Review.findOne({
