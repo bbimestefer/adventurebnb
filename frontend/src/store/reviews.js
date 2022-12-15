@@ -163,12 +163,10 @@ const reviewReducer = (state = initialState, action) => {
         case CLEAR:
             return { spot: {}, user: {} }
         case CREATE:
-            console.log('action.review inside of reducer', action.review)
             newState = {...state, spot: {...state.spot}}
             newState.spot[action.review.id] = action.review
             return newState
             // return {...state, spot: {...state.spot, [action.review.id]: action.review}}
-
         case USER:
             newState = {...state, user: {...state.user}}
             action.reviews.Reviews.forEach(review => {
@@ -185,7 +183,6 @@ const reviewReducer = (state = initialState, action) => {
             return {...state, spot: {...state.spot, [action.review.id]: action.review}}
         case DELETE:
             newState = {spot: {...state.spot}, user: {...state.user}}
-            console.log('this is the action.reviewId', action.reviewId)
             if(newState.spot[action.reviewId]) delete newState.spot[action.reviewId]
             if(newState.user[action.reviewId]) delete newState.user[action.reviewId]
             return newState

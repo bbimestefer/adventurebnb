@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react"
 import { useHistory, useParams } from "react-router-dom"
-import { updateSpot } from "../../../store/spots"
+import { getAllSpots, updateSpot } from "../../../store/spots"
 
 
 export default function EditUserSpot () {
@@ -56,10 +56,10 @@ export default function EditUserSpot () {
         //     preview: true
         // }
 
-        let updatedSpot = await dispatch(updateSpot(id, payload))
+        let updatedSpot = await dispatch(updateSpot(id, payload, url))
 
         if(updatedSpot){
-            history.push(`/api/spots/${updatedSpot.id}`)
+            history.push(`/spots/${updatedSpot.id}`)
             setAddress('')
             setCity('')
             setState('')

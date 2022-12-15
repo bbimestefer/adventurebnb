@@ -97,7 +97,7 @@ export const getSpotById = (id) => async dispatch => {
     }
 }
 
-export const updateSpot = (id, spot) => async dispatch => {
+export const updateSpot = (id, spot, url) => async dispatch => {
     const response = await csrfFetch(`/api/spots/${id}`, {
         method: 'PUT',
         headers: {"Content-Type": "application/json"},
@@ -106,6 +106,7 @@ export const updateSpot = (id, spot) => async dispatch => {
 
     if(response.ok) {
         const spot = await response.json()
+        spot.previewImage = url
         dispatch(update(spot))
         return spot
     }
@@ -119,7 +120,7 @@ export const removeSpot = (id) => async dispatch => {
 
     if(response.ok) {
         const spot = await response.json()
-        dispatch(remove(spot))
+        dispatch(remove(id))
         return spot
     }
 }
@@ -146,10 +147,11 @@ const spotsReducer = (state = initialState, action) => {
             return newState
         case UPDATE:
             newState = {...state, allSpots: {...state.allSpots}}
+            console.log('in the update case----------------',action.spot)
             newState.allSpots[action.spot.id] = action.spot
             return newState
         case DELETE:
-            newState = {...state, allSpots: {...state.allSpots}}
+            newState = {...state, allSpots: {...state.allSpots} }
             delete newState.allSpots[action.id]
             return newState
         default:

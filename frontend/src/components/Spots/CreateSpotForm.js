@@ -60,7 +60,7 @@ export default function CreateSpotForm () {
             if(!newImage){
                 alert('Invalid Image. Please edit your image url.')
             }
-            history.push(`/api/spots/${createdSpot.id}`)
+            history.push(`/spots/${createdSpot.id}`)
         }
 
         setAddress('')
@@ -74,8 +74,37 @@ export default function CreateSpotForm () {
         setPrice('')
     }
 
+    const demoSpot = async () => {
+        const payload = {
+            address: '2345 New Valley Way',
+            city: "Westminster",
+            state: "Maryland",
+            country: "United States",
+            lat: 34,
+            lng: 57,
+            name: "Hills & Home",
+            description: "Rolling hills",
+            price: 120
+        }
+        const spotImage = {
+            url: 'https://a0.muscache.com/im/pictures/e69b3403-3d09-4f3f-b997-1a21164d1ee7.jpg?im_w=720',
+            preview: true
+        }
+
+        let createdSpot = await dispatch(createSpot(payload))
+
+        if(createdSpot){
+            let newImage = await dispatch(createSpotImage(createdSpot.id, spotImage))
+            if(!newImage){
+                alert('Invalid Image. Please edit your image url.')
+            }
+            history.push(`/spots/${createdSpot.id}`)
+        }
+    }
+
     return (
         <div style={{"display":"flex", "alignItems":"center", "justifyContent":"center"}}>
+            <button onClick={demoSpot}>Demo spot</button>
             <form className="create-spot-form" onSubmit={handleSubmit}>
                 <h4>{user.firstName}, fill out this form to create your house!</h4>
                 <input style={{"borderRadius":"10px 10px 0px 0px"}}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import * as spotActions from './store/spots'
@@ -12,6 +12,7 @@ import Account from "./components/Account";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const spots = useSelector(state => state.spots.allSpots)
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
     dispatch(spotActions.getAllSpots());
