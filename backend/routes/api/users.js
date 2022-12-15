@@ -48,9 +48,6 @@ router.post('/', validateSignup, async (req, res, next) => {
       errors.push('Last Name is required')
     }
 
-
-    console.log(errors)
-
     if(errors.length) {
       console.log('in the errors.length')
       const error = new Error()

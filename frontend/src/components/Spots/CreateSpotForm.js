@@ -19,6 +19,7 @@ export default function CreateSpotForm () {
     const [ price, setPrice ] = useState('')
     const [ imageNumber, setImageNumber ] = useState('')
     const [ url, setURL ] = useState('')
+    const [ errors, setErrors ] = useState([])
     // const [ spotImages ] = useState([])
 
     const updateAddress = (e) => setAddress(e.target.value)
@@ -33,8 +34,24 @@ export default function CreateSpotForm () {
     const updateImageNumber = (e) => setImageNumber(e.target.value)
     const updateURL = (e) => setURL(e.target.value)
 
+    const clearData = (createdSpot) => {
+        setAddress('')
+        setCity('')
+        setState('')
+        setCountry('')
+        setLat('')
+        setLng('')
+        setName('')
+        setDescription('')
+        setPrice('')
+        setErrors([])
+
+        history.push(`/spots/${createdSpot.id}`)
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
+
 
         const payload = {
             address,
@@ -53,25 +70,20 @@ export default function CreateSpotForm () {
             preview: true
         }
 
-        let createdSpot = await dispatch(createSpot(payload))
+        let createdSpot = await dispatch(createSpot(payload)).then(createdSpot => clearData(createdSpot)).catch(
+            async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors);
+            });
 
-        if(createdSpot){
-            let newImage = await dispatch(createSpotImage(createdSpot.id, spotImage))
-            if(!newImage){
-                alert('Invalid Image. Please edit your image url.')
+        if(!errors.length) {
+            if(createdSpot){
+                let newImage = await dispatch(createSpotImage(createdSpot.id, spotImage))
+                if(!newImage){
+                    alert('Invalid Image. Please edit your image url.')
+                }
             }
-            history.push(`/spots/${createdSpot.id}`)
         }
-
-        setAddress('')
-        setCity('')
-        setState('')
-        setCountry('')
-        setLat('')
-        setLng('')
-        setName('')
-        setDescription('')
-        setPrice('')
     }
 
     const demoSpot = async () => {
@@ -106,6 +118,11 @@ export default function CreateSpotForm () {
         <div style={{"display":"flex", "alignItems":"center", "justifyContent":"center"}}>
             <button onClick={demoSpot}>Demo spot</button>
             <form className="create-spot-form" onSubmit={handleSubmit}>
+                <ul>
+                    {errors.map((error, idx) => (
+                        <li key={idx}>{error}</li>
+                    ))}
+                </ul>
                 <h4>{user.firstName}, fill out this form to create your house!</h4>
                 <input style={{"borderRadius":"10px 10px 0px 0px"}}
                     type={'text'}
@@ -144,7 +161,7 @@ export default function CreateSpotForm () {
                 <input
                     type={'number'}
                     placeholder={'Longitude'}
-                    required
+
                     value={lng}
                     onChange={updateLng}
                 />
