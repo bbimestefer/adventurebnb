@@ -41,8 +41,10 @@ const remove = (id) => {
     }
 }
 
-export const createSpot = (spot) => async dispatch => {
+export const createSpot = (spot, spotImage) => async dispatch => {
     // need to implement spotImage and seperate data
+    spot.lat = 32
+    spot.lng = 43
     const response = await csrfFetch(`/api/spots`, {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
@@ -51,22 +53,18 @@ export const createSpot = (spot) => async dispatch => {
 
     if(response.ok) {
         const spot = await response.json()
-        dispatch(create(spot))
-        return spot
-    }
-}
+        const imageResponse = await csrfFetch(`/api/spots/${spot.id}/images`, {
+            method: 'POST',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(spotImage)
+          })
 
-export const createSpotImage = (spotId, spotImage) => async dispatch => {
-    const response = await csrfFetch(`/api/spots/${spotId}/images`, {
-        method: 'POST',
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(spotImage)
-      })
-
-    if(response.ok) {
-        const image = await response.json()
-        dispatch(getAllSpots())
-        return image
+        if(imageResponse.ok){
+            const image = await imageResponse.json()
+            spot.previewImage = image.url
+            dispatch(create(spot))
+            return spot
+        }
     }
 }
 
@@ -106,7 +104,8 @@ export const updateSpot = (id, spot, url) => async dispatch => {
 
     if(response.ok) {
         const spot = await response.json()
-        spot.previewImage = url
+        console.log('spot', spot)
+        spot.previewImage = url || null
         dispatch(update(spot))
         return spot
     }
@@ -147,6 +146,7 @@ const spotsReducer = (state = initialState, action) => {
             return newState
         case UPDATE:
             newState = {...state, allSpots: {...state.allSpots}}
+            console.log('newState.allSpots ceratin spot', newState.allSpots[action.spot.id])
             console.log('in the update case----------------',action.spot)
             newState.allSpots[action.spot.id] = action.spot
             return newState

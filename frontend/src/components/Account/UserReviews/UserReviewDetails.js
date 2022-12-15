@@ -1,10 +1,11 @@
 // import { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { Link } from "react-router-dom"
-import { removeReview } from "../../../store/reviews"
+// import { useDispatch } from 'react-redux'
+import { useSelector } from "react-redux"
+// import { Link } from "react-router-dom"
+// import { removeReview } from "../../../store/reviews"
 
 export default function UserReviewDetails (review) {
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     const spot = useSelector(state => state.spots.allSpots[review.spotId])
     // const history = useHistory()
     // const [ check, setCheck ] = useState(true)
@@ -13,16 +14,16 @@ export default function UserReviewDetails (review) {
     //     history.push(`/account/reviews/edit/${review.id}`)
     // }
 
-    const deleteReview = async () => {
-        console.log(review.id)
-        // if(check){
-            // add modal here to make the check work to ask the user
-            // if they are sure they want to delete that review
-            // const deletedReview = await dispatch(removeReview(review.id))
+    // const deleteReview = async () => {
+    //     console.log(review.id)
+    //     // if(check){
+    //         // add modal here to make the check work to ask the user
+    //         // if they are sure they want to delete that review
+    //         // const deletedReview = await dispatch(removeReview(review.id))
 
-            // if(deletedReview) alert(deletedReview.message)
-        // }
-    }
+    //         // if(deletedReview) alert(deletedReview.message)
+    //     // }
+    // }
 
     if(!review) return null
     return (
@@ -33,8 +34,8 @@ export default function UserReviewDetails (review) {
             </div>
             <div style={{"display":"flex", "alignItems":"center", "gap":"10px"}}>
                 {/* <button onClick={editreview} >Edit</button> */}
-                <Link to={`/account/reviews/edit/${review.id}`}>Edit</Link>
-                <button onClick={deleteReview}>Delete</button>
+                {/* <Link to={`/account/reviews/edit/${review.id}`}>Edit</Link> */}
+                {/* <button onClick={deleteReview}>Delete</button> */}
             </div>
         </div>
     )

@@ -1,18 +1,10 @@
 import { csrfFetch } from "./csrf";
 
-const CLEAR = 'reviews/CLEAR'
 const CREATE = 'reviews/CREATE'
 const USER = 'reviews/USER'
 const SPOT = 'reviews/SPOT'
 const UPDATE = 'reviews/UPDATE'
 const DELETE = 'reviews/DELETE'
-
-//temporarily fixes review state staying across different spots
-export const clearReviews = () => {
-    return {
-        type: CLEAR,
-    }
-}
 
 const createReview = (review) => {
     return {
@@ -49,7 +41,7 @@ const deleteReview = (reviewId) => {
     }
 }
 
-export const reviewCreate = (spotId, review, user) => async dispatch => {
+export const reviewCreate = (spotId, review, user, imageUrl) => async dispatch => {
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
@@ -60,11 +52,27 @@ export const reviewCreate = (spotId, review, user) => async dispatch => {
 
       if(response.ok){
         const review = await response.json()
-        review.ReviewImages = []
-        review.User = user
-        console.log('IN THE THUNK', user)
-        dispatch(createReview(review))
-        return review
+        if(imageUrl){
+            const imageResponse = await csrfFetch(`/api/reviews/${review.id}/images`, {
+                method: 'POST',
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({url: imageUrl})
+            })
+
+            if(imageResponse.ok){
+                const image = await imageResponse.json()
+                review.ReviewImages = []
+                review.ReviewImages.push(image)
+                review.User = user
+                dispatch(createReview(review))
+                return review
+            }
+        } else {
+            review.ReviewImages = []
+            review.User = user
+            dispatch(createReview(review))
+            return review
+        }
       }
     // const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
     //     method: 'POST',
@@ -160,8 +168,6 @@ const initialState = { spot: {}, user: {} }
 const reviewReducer = (state = initialState, action) => {
     let newState;
     switch(action.type) {
-        case CLEAR:
-            return { spot: {}, user: {} }
         case CREATE:
             newState = {...state, spot: {...state.spot}}
             newState.spot[action.review.id] = action.review

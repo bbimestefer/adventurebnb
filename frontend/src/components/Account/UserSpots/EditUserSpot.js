@@ -19,8 +19,8 @@ export default function EditUserSpot () {
     const [ name, setName ] = useState(spot.name)
     const [ description, setDescription ] = useState(spot.description)
     const [ price, setPrice ] = useState(spot.price)
-    const [ imageNumber, setImageNumber ] = useState('')
-    const [ url, setURL ] = useState(spot.previewImage)
+    // const [ imageNumber, setImageNumber ] = useState('')
+    // const [ url, setURL ] = useState(spot.previewImage)
     // const [ spotImages ] = useState([])
 
     const updateAddress = (e) => setAddress(e.target.value)
@@ -32,8 +32,22 @@ export default function EditUserSpot () {
     const updateName = (e) => setName(e.target.value)
     const updateDescription = (e) => setDescription(e.target.value)
     const updatePrice = (e) => setPrice(e.target.value)
-    const updateImageNumber = (e) => setImageNumber(e.target.value)
-    const updateURL = (e) => setURL(e.target.value)
+    const [ errors, setErrors ] = useState([])
+    // const updateImageNumber = (e) => setImageNumber(e.target.value)
+    // const updateURL = (e) => setURL(e.target.value)
+
+    const clearData = (updatedSpot) => {
+        setAddress('')
+        setCity('')
+        setState('')
+        setCountry('')
+        setName('')
+        setDescription('')
+        setPrice('')
+        setErrors([])
+
+        history.push(`/spots/${updatedSpot.id}`)
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -50,12 +64,13 @@ export default function EditUserSpot () {
             price
         }
 
-        // const spotImage = {
-        //     url,
-        //     preview: true
-        // }
-
-        let updatedSpot = await dispatch(updateSpot(id, payload, url))
+        // let updatedSpot = await dispatch(updateSpot(id, payload, url))
+        let updatedSpot = await dispatch(updateSpot(id, payload, spot.previewImage)).then(updatedSpot => clearData(updatedSpot)).catch(
+            async (res) => {
+                const data = await res.json();
+                console.log(data)
+                if (data && data.errors) setErrors(data.errors);
+            });
 
         if(updatedSpot){
             history.push(`/spots/${updatedSpot.id}`)
@@ -68,14 +83,17 @@ export default function EditUserSpot () {
             setName('')
             setDescription('')
             setPrice('')
-        } else {
-            alert('Error: Spot couldn\'t update')
         }
 
     }
     return (
         <div>
             <form className="create-spot-form" onSubmit={handleSubmit}>
+                <ul>
+                    {errors.map((error, idx) => (
+                        <li key={idx}>{error}</li>
+                    ))}
+                </ul>
                 <h4>Update {spot.name}</h4>
                 <input style={{"borderRadius":"10px 10px 0px 0px"}}
                     type={'text'}
@@ -139,18 +157,18 @@ export default function EditUserSpot () {
                     value={price}
                     onChange={updatePrice}
                 />
-                <input style={{"borderRadius":"10px", "marginBottom": "10px"}}
+                {/* <input style={{"borderRadius":"10px", "marginBottom": "10px"}}
                     type={'number'}
                     placeholder={'Number of Spot images'}
                     value={imageNumber}
                     onChange={updateImageNumber}
-                />
-                <input style={{"borderRadius":"10px", "marginBottom": "10px"}}
+                /> */}
+                {/* <input style={{"borderRadius":"10px", "marginBottom": "10px"}}
                     type={'text'}
                     placeholder={'Cover image url'}
                     value={url}
                     onChange={updateURL}
-                />
+                /> */}
                 <button className="submitButton">Submit</button>
             </form>
         </div>

@@ -13,11 +13,11 @@ export default function CreateReviewForm ({ hideForm }) {
     const [ review, setReview ] = useState('')
     const [ stars, setStars ] = useState('')
     const [ errors, setErrors ] = useState([])
-    // const [ url, setURL ] = useState('')
+    const [ url, setURL ] = useState('')
 
     const updateReview = (e) => setReview(e.target.value)
     const updateStars = (e) => setStars(e.target.value)
-    // const updateURL = (e) => setURL(e.target.value)
+    const updateURL = (e) => setURL(e.target.value)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -28,7 +28,9 @@ export default function CreateReviewForm ({ hideForm }) {
             stars
         }
 
-        let createdReview = await dispatch(reviewCreate(id, payload, user)).catch(
+
+
+        let createdReview = await dispatch(reviewCreate(id, payload, user, url)).catch(
             async (res) => {
               const data = await res.json();
               if (data && data.message) setErrors([data.message]);
@@ -42,7 +44,7 @@ export default function CreateReviewForm ({ hideForm }) {
 
             setReview('')
             setStars('')
-            // setURL('')
+            setURL('')
         }
     }
 
@@ -74,12 +76,12 @@ export default function CreateReviewForm ({ hideForm }) {
                     value={stars}
                     onChange={updateStars}
                 />
-                {/* <input
+                <input
                     type={'text'}
                     placeholder={'Review image (optional)'}
                     value={url}
                     onChange={updateURL}
-                /> */}
+                />
                 <button type="submit">Submit</button>
                 <button type="button" onClick={handleCancelClick}>Cancel</button>
             </form>

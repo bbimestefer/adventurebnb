@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router-dom"
-import { createSpot, createSpotImage } from "../../store/spots"
+import { createSpot } from "../../store/spots"
 import './CreateSpotForm.css'
 
 export default function CreateSpotForm () {
@@ -12,12 +12,10 @@ export default function CreateSpotForm () {
     const [ city, setCity ] = useState('')
     const [ state, setState ] = useState('')
     const [ country, setCountry ] = useState('')
-    const [ lat, setLat ] = useState('')
-    const [ lng, setLng ] = useState('')
     const [ name, setName ] = useState('')
     const [ description, setDescription ] = useState('')
     const [ price, setPrice ] = useState('')
-    const [ imageNumber, setImageNumber ] = useState('')
+    // const [ imageNumber, setImageNumber ] = useState('')
     const [ url, setURL ] = useState('')
     const [ errors, setErrors ] = useState([])
     // const [ spotImages ] = useState([])
@@ -26,12 +24,10 @@ export default function CreateSpotForm () {
     const updateCity = (e) => setCity(e.target.value)
     const updateState = (e) => setState(e.target.value)
     const updateCountry = (e) => setCountry(e.target.value)
-    const updateLat = (e) => setLat(e.target.value)
-    const updateLng = (e) => setLng(e.target.value)
     const updateName = (e) => setName(e.target.value)
     const updateDescription = (e) => setDescription(e.target.value)
     const updatePrice = (e) => setPrice(e.target.value)
-    const updateImageNumber = (e) => setImageNumber(e.target.value)
+    // const updateImageNumber = (e) => setImageNumber(e.target.value)
     const updateURL = (e) => setURL(e.target.value)
 
     const clearData = (createdSpot) => {
@@ -39,8 +35,6 @@ export default function CreateSpotForm () {
         setCity('')
         setState('')
         setCountry('')
-        setLat('')
-        setLng('')
         setName('')
         setDescription('')
         setPrice('')
@@ -58,8 +52,6 @@ export default function CreateSpotForm () {
             city,
             state,
             country,
-            lat,
-            lng,
             name,
             description,
             price
@@ -70,20 +62,11 @@ export default function CreateSpotForm () {
             preview: true
         }
 
-        let createdSpot = await dispatch(createSpot(payload)).then(createdSpot => clearData(createdSpot)).catch(
+        await dispatch(createSpot(payload, spotImage)).then(createdSpot => clearData(createdSpot)).catch(
             async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors);
             });
-
-        if(!errors.length) {
-            if(createdSpot){
-                let newImage = await dispatch(createSpotImage(createdSpot.id, spotImage))
-                if(!newImage){
-                    alert('Invalid Image. Please edit your image url.')
-                }
-            }
-        }
     }
 
     const demoSpot = async () => {
@@ -92,8 +75,6 @@ export default function CreateSpotForm () {
             city: "Westminster",
             state: "Maryland",
             country: "United States",
-            lat: 34,
-            lng: 57,
             name: "Hills & Home",
             description: "Rolling hills",
             price: 120
@@ -103,15 +84,11 @@ export default function CreateSpotForm () {
             preview: true
         }
 
-        let createdSpot = await dispatch(createSpot(payload))
-
-        if(createdSpot){
-            let newImage = await dispatch(createSpotImage(createdSpot.id, spotImage))
-            if(!newImage){
-                alert('Invalid Image. Please edit your image url.')
-            }
-            history.push(`/spots/${createdSpot.id}`)
-        }
+        await dispatch(createSpot(payload, spotImage)).then(createdSpot => clearData(createdSpot)).catch(
+            async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors);
+            });
     }
 
     return (
@@ -153,19 +130,6 @@ export default function CreateSpotForm () {
                     onChange={updateCountry}
                 />
                 <input
-                    type={'number'}
-                    placeholder={'Latitude'}
-                    value={lat}
-                    onChange={updateLat}
-                />
-                <input
-                    type={'number'}
-                    placeholder={'Longitude'}
-
-                    value={lng}
-                    onChange={updateLng}
-                />
-                <input
                     type={'text'}
                     placeholder={'Name of House'}
                     required
@@ -186,12 +150,12 @@ export default function CreateSpotForm () {
                     value={price}
                     onChange={updatePrice}
                 />
-                <input style={{"borderRadius":"10px", "marginBottom": "10px"}}
+                {/* <input style={{"borderRadius":"10px", "marginBottom": "10px"}}
                     type={'number'}
                     placeholder={'Number of Spot images'}
                     value={imageNumber}
                     onChange={updateImageNumber}
-                />
+                /> */}
                 <input style={{"borderRadius":"10px", "marginBottom": "10px"}}
                     type={'text'}
                     placeholder={'Cover image url'}
