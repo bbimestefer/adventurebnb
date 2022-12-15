@@ -83,7 +83,7 @@ router.get('/', async (req, res, next) => {
         spot.Reviews.forEach(review => {
             total += review.stars
         })
-        spot.avgRating = total / spot.Reviews.length
+        spot.avgRating = (total / spot.Reviews.length).toFixed(2)
         delete spot.Reviews
     })
 
@@ -610,7 +610,7 @@ router.get('/:spotId', async (req, res, next) => {
         }
     })
 
-    spot.avgStarRating = starRatings / starCount
+    spot.avgStarRating = (starRatings / starCount).toFixed(2)
 
     spot.SpotImages = await SpotImage.findAll({
         attributes: ['id', 'url', 'preview'],

@@ -50,15 +50,15 @@ function ProfileButton({ user }) {
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
-          <>
+          <div className="account-buttons">
             <li>{user.username}</li>
             <li>{user.firstName} {user.lastName}</li>
-            <li>{user.email}</li>
+            <li style={{"paddingBottom":"10px", "borderBottom":"1px solid lightGray"}}>{user.email}</li>
             <NavLink onClick={closeMenu} to={'/account'}>Account</NavLink>
             <li>
               <button onClick={logout}>Log Out</button>
             </li>
-          </>
+          </div>
         ) : (
           <>
             <OpenModalMenuItem
