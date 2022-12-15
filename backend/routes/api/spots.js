@@ -83,7 +83,7 @@ router.get('/', async (req, res, next) => {
         spot.Reviews.forEach(review => {
             total += review.stars
         })
-        spot.avgRating = total / spot.Reviews.length
+        spot.avgRating = (total / spot.Reviews.length).toFixed(2)
         delete spot.Reviews
     })
 
@@ -109,7 +109,8 @@ router.post('/', requireAuth,  async (req, res, next) => {
     if(!country) errors.push("Country is required")
     if(!lat) errors.push("Latitude is not valid")
     if(!lng) errors.push("Longitude is not valid")
-    if(!name) errors.push("Name must be less than 50 characters")
+    if(name.length > 50) errors.push("Name must be less than 50 characters")
+    if(name.length < 3) errors.push("Name must be more than 3 characters")
     if(!description) errors.push("Description is required")
     if(!price) errors.push("Price per day is required")
 
@@ -299,6 +300,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
 })
 
 router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
+    const errors = []
     const { review, stars } = req.body
     const userId = req.user.id
     const spot = await Spot.findOne({
@@ -320,17 +322,18 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
             message: 'Spot could not be found',
             "statusCode": 404
         })
-    } else if(!review || stars > 5 || stars < 1){
-        res.status(400)
-        return res.json({
-            "message": "Validation error",
-            "statusCode": 400,
-            "errors": {
-                "review": "Review text is required",
-                "stars": "Stars must be an integer from 1 to 5",
-            }
-        })
     }
+    // else if(!review || stars > 5 || stars < 1){
+    //     res.status(400)
+    //     return res.json({
+    //         "message": "Validation error",
+    //         "statusCode": 400,
+    //         "errors": {
+    //             "review": "Review text is required",
+    //             "stars": "Stars must be an integer from 1 to 5",
+    //         }
+    //     })
+    // }
 
     const reviewOfUser = await Review.findAll({
         where: {
@@ -339,12 +342,24 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
         }
     })
 
-    if(reviewOfUser.length){
-        res.status(403)
-        return res.json({
-            "message": "User already has a review for this spot",
-            "statusCode": 403
-        })
+    // if(reviewOfUser.length){
+    //     res.status(403)
+    //     return res.json({
+    //         "message": "User already has a review for this spot",
+    //         "statusCode": 403
+    //     })
+    // }
+    
+    if(reviewOfUser.length) errors.push("User already has a review for this spot")
+    if(!review) errors.push("Review text is required")
+    if(stars > 5 || stars < 1) errors.push("Stars must be an integer from 1 to 5")
+
+    if(errors.length) {
+        const error = new Error()
+        error.errors = errors
+        error.status = reviewOfUser.length ? 403 : 400
+        error.message = "Validation error"
+        return next(error)
     }
 
     const createdReview = await Review.create({
@@ -610,7 +625,7 @@ router.get('/:spotId', async (req, res, next) => {
         }
     })
 
-    spot.avgStarRating = starRatings / starCount
+    spot.avgStarRating = (starRatings / starCount).toFixed(2)
 
     spot.SpotImages = await SpotImage.findAll({
         attributes: ['id', 'url', 'preview'],

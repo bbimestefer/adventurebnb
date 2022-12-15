@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 import { reviewCreate } from "../../../../store/reviews"
+import './CreateReviewForm.css'
 
 export default function CreateReviewForm ({ hideForm }) {
     const dispatch = useDispatch()
@@ -28,12 +29,10 @@ export default function CreateReviewForm ({ hideForm }) {
             stars
         }
 
-
-
         let createdReview = await dispatch(reviewCreate(id, payload, user, url)).catch(
             async (res) => {
               const data = await res.json();
-              if (data && data.message) setErrors([data.message]);
+              if (data && data.errors) setErrors(data.errors);
             }
           );
 
@@ -57,11 +56,11 @@ export default function CreateReviewForm ({ hideForm }) {
         <div>
             <h4>Review:</h4>
             <form onSubmit={handleSubmit}>
-                <ul>
+                <div className="errors">
                     {errors.map((error, idx) => (
                         <li key={idx}>{error}</li>
                     ))}
-                </ul>
+                </div>
                 <input
                     type={'text'}
                     placeholder={'Leave a review'}
