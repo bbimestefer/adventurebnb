@@ -13,6 +13,8 @@ function SingleSpot () {
     const dispatch = useDispatch()
     const { id } = useParams()
 
+    const user = useSelector(state => state.session.user)
+
     const [ showForm, setShowForm ] = useState(false)
 
     const formClick = () => {
@@ -23,6 +25,7 @@ function SingleSpot () {
     useEffect(() => {
         dispatch(spotActions.getSpotById(id))
         dispatch(reviewActions.spotReviews(id))
+        console.log('this should run')
     }, [id, dispatch])
 
     const spot = useSelector(state => state.spots.singleSpot)
@@ -41,13 +44,19 @@ function SingleSpot () {
                         <span>{spot.numReviews} reviews · </span>
                         <span>{spot.city}, {spot.state}, {spot.country}</span>
                     </div>
-                    <div className="share">
+                    {/* <div className="share">
                         <span><i className="fa-solid fa-arrow-up-from-bracket"></i> Share</span>
                         <span><i className="fa-regular fa-heart"></i> Save</span>
-                    </div>
+                    </div> */}
                 </div>
             </div>
-            <div>WHERE PICTURES GO</div>
+            <div className="image-container">
+                {spot.SpotImages?.map((image, i) => (
+                    (i === 0 ?
+                    <div key={i}><img className="first-spot-image" src={image.url} alt={i}/></div>
+                    : <img key={i} className="spot-image" src={image.url} alt={i}/>)
+                ))}
+            </div>
             <div className="details">
                 <div className="host">
                     <h3>This home hosted by </h3>
@@ -59,7 +68,7 @@ function SingleSpot () {
                 {showForm ? (
                     <CreateReviewForm hideForm={() => setShowForm(false)}/>
                 ) : (
-                    <button onClick={formClick}>Create a review</button>
+                    user && user.id !== spot.ownerId && <button onClick={formClick}>Create a review</button>
                 )}
                 {reviews.length ? (
                     <Reviews reviews={reviews}/>

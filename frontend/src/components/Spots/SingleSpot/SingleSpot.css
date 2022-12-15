@@ -1,8 +1,8 @@
 .wrapper-for-info {
     display: flex;
     flex-direction: column;
-    align-items: left;
-    padding: 0px 240px 0px 240px;
+    justify-content: center;
+    padding: 0px 275px 0px 275px;
     /* border: black solid 3px; */
 }
 
@@ -69,4 +69,27 @@
     align-items: center;
     gap: 100px;
     padding-top: 15px;
+}
+
+.image-container {
+    display: flex;
+    gap: 10px;
+    height: 100%;
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 10px;
+    flex-wrap: wrap;
+}
+
+.first-spot-image {
+    border-radius: 10px 0px 0px 10px;
+    width: 450px;
+    height: 450px;
+    object-fit: cover;
+}
+
+.spot-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
 }

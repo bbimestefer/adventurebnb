@@ -4,7 +4,7 @@ import { removeReview } from "../../../../store/reviews"
 export default function ReviewDetails (review) {
 
     const dispatch = useDispatch()
-    const userId = useSelector(state => state.session.user.id)
+    const user = useSelector(state => state.session.user)
 
     const deleteAReview = async () => {
         const deletedReview = await dispatch(removeReview(review.id))
@@ -27,7 +27,7 @@ export default function ReviewDetails (review) {
                 <img style={{"height":"100px", "width":"100px"}} src={review.ReviewImages[0].url} alt={'pic'}/>
             ) : (null)}
 
-            {userId === review.userId && (
+            {user && user.id === review.userId && (
                 <button onClick={deleteAReview}>Delete review</button>
             )}
         </div>

@@ -1,19 +1,19 @@
-import { useState } from "react"
+// import { useState } from "react"
 import "./SingleSpot.css"
 
 export default function ReserveForm (spot) {
-    const [ checkIn, setCheckIn ] = useState()
-    const [ checkout, setCheckout ] = useState()
-    const [ guest, setGuest ] = useState(1)
-    const date = new Date()
-    const today = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-    const futureDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + 5}`
+    // const [ checkIn, setCheckIn ] = useState()
+    // const [ checkout, setCheckout ] = useState()
+    // const [ guest, setGuest ] = useState(1)
+    // const date = new Date()
+    // const today = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    // const futureDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + 5}`
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    // const handleSubmit = (e) => {
+    //     e.preventDefault()
 
-        console.log(checkIn, checkout, guest)
-    }
+    //     console.log(checkIn, checkout, guest)
+    // }
     return (
         <div className="form-container" style={{"paddingRight": "10px", "paddingLeft": "10px"}}>
             <div>
@@ -24,7 +24,7 @@ export default function ReserveForm (spot) {
                         <span>{spot.numReviews} reviews</span>
                     </div>
                 </div>
-                <form
+                {/* <form
                 onSubmit={handleSubmit}
                 style={{"display":"flex","alignItems":"center", "flexDirection":"column"}}>
                     <div style={{"display":"flex"}}>
@@ -57,9 +57,9 @@ export default function ReserveForm (spot) {
                         />
                     </label>
                     <button>Reserve</button>
-                </form>
+                </form> */}
             </div>
-
+{/* 
             <div>
                 You will not be charged yet
             </div>
@@ -80,7 +80,7 @@ export default function ReserveForm (spot) {
                             </div>
                         </>
                     )}
-                </div>
+                </div> */}
         </div>
     )
 }
