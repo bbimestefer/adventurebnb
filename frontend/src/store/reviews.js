@@ -42,26 +42,70 @@ const updateReview = (review) => {
     }
 }
 
-const deleteReview = (review) => {
+const deleteReview = (reviewId) => {
     return {
         type: DELETE,
-        review
+        reviewId
     }
 }
 
-export const reviewCreate = (spotId, review) => async dispatch => {
+export const reviewCreate = (spotId, review, user) => async dispatch => {
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(review)
       })
+      //   ReviewImages:[]
+      //   User: {id: 1, firstName: 'Demo', lastName: 'lition'}
 
-    if(response.ok){
+      if(response.ok){
         const review = await response.json()
+        review.ReviewImages = []
+        review.User = user
+        console.log('IN THE THUNK', user)
         dispatch(createReview(review))
-        // return review
-    }
+        return review
+      }
+    // const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+    //     method: 'POST',
+    //     headers: {"Content-Type": "application/json"},
+    //     body: JSON.stringify(review)
+    //   })
+
+
+
+    // if(response.ok){
+    //     const review = await response.json()
+
+        // const imageResponse = await csrfFetch(`/api/reviews/${review.id}/images`, {
+        //     method: 'POST',
+        //     headers: {"Content-Type": "application/json"},
+        //     body: JSON.stringify(imageUrl)
+        //   })
+
+    //     if(imageResponse.ok) {
+    //         const image = await imageResponse.json()
+    //         review.ReviewImages = [...review.ReviewImages, image]
+    //         dispatch(createReview(review))
+    //         return review
+    //     }
+
+    // }
 }
+
+// export const createReviewImage = (reviewId, imageUrl) => async dispatch => {
+//     const response = await csrfFetch(`/api/reviews/${reviewId}/images`, {
+//         method: 'POST',
+//         headers: {"Content-Type": "application/json"},
+//         body: JSON.stringify(imageUrl)
+//       })
+
+//     if(response.ok) {
+//         const image = await response.json()
+//         dispatch(spotReviews())
+//         return image
+//     }
+// }
 
 export const userReviews = () => async dispatch => {
     const response = await csrfFetch(`/api/reviews/current`)
@@ -78,6 +122,7 @@ export const spotReviews = (spotId) => async dispatch => {
 
     if(response.ok){
         const reviews = await response.json()
+        console.log('in THUNK for SPOT reviews ------', reviews)
         dispatch(loadSpotReviews(reviews))
         // return reviews
     }
@@ -105,7 +150,7 @@ export const removeReview = (reviewId) => async dispatch => {
 
     if(response.ok) {
         const review = await response.json()
-        dispatch(deleteReview(review))
+        dispatch(deleteReview(reviewId))
         return review
     }
 }
@@ -118,7 +163,12 @@ const reviewReducer = (state = initialState, action) => {
         case CLEAR:
             return { spot: {}, user: {} }
         case CREATE:
-            return {...state, spot: {...state.spot, [action.review.id]: action.review}}
+            console.log('action.review inside of reducer', action.review)
+            newState = {...state, spot: {...state.spot}}
+            newState.spot[action.review.id] = action.review
+            return newState
+            // return {...state, spot: {...state.spot, [action.review.id]: action.review}}
+
         case USER:
             newState = {...state, user: {...state.user}}
             action.reviews.Reviews.forEach(review => {
@@ -126,7 +176,7 @@ const reviewReducer = (state = initialState, action) => {
             });
             return newState
         case SPOT:
-            newState = {...state, spot: {}, user: {...state.user}}
+            newState = {...state, spot: {}}
             action.reviews.Reviews.forEach(review => {
                 newState.spot[review.id] = review
             });
@@ -134,9 +184,10 @@ const reviewReducer = (state = initialState, action) => {
         case UPDATE:
             return {...state, spot: {...state.spot, [action.review.id]: action.review}}
         case DELETE:
-            newState = {...state, spot: {...state.spot}, user: {...state.user}}
-            if(newState.spot[action.review.id]) delete newState.spot[action.review.id]
-            if(newState.user[action.review.id]) delete newState.user[action.review.id]
+            newState = {spot: {...state.spot}, user: {...state.user}}
+            console.log('this is the action.reviewId', action.reviewId)
+            if(newState.spot[action.reviewId]) delete newState.spot[action.reviewId]
+            if(newState.user[action.reviewId]) delete newState.user[action.reviewId]
             return newState
         default:
             return state

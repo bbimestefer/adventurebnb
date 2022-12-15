@@ -1,17 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import * as spotActions from '../../../store/spots'
 import * as reviewActions from "../../../store/reviews";
 import ReserveForm from "./ReserveForm";
 import "./SingleSpot.css"
-import ReviewDetails from "./Reviews/ReviewDetails";
 import Reviews from "./Reviews";
+import CreateReviewForm from "./Reviews/CreateReviewForm";
 
 function SingleSpot () {
 
     const dispatch = useDispatch()
     const { id } = useParams()
+
+    const [ showForm, setShowForm ] = useState(false)
+
+    const formClick = () => {
+        if(showForm) setShowForm(false)
+        else setShowForm(true)
+    }
 
     useEffect(() => {
         dispatch(spotActions.getSpotById(id))
@@ -20,7 +27,6 @@ function SingleSpot () {
 
     const spot = useSelector(state => state.spots.singleSpot)
     const reviews = Object.values(useSelector(state => state.reviews.spot))
-    console.log('reviews', reviews)
 
     if(!spot) return null
     return (
@@ -50,9 +56,11 @@ function SingleSpot () {
                 <div className="reserve-form"><ReserveForm {...spot} /></div>
             </div>
             <div>
-                {/* {reviews.map(review => (
-                    <ReviewDetails key={review.id} {...review}/>
-                ))} */}
+                {showForm ? (
+                    <CreateReviewForm hideForm={() => setShowForm(false)}/>
+                ) : (
+                    <button onClick={formClick}>Create a review</button>
+                )}
                 {reviews.length ? (
                     <Reviews reviews={reviews}/>
                 ) : (<div>No Reviews</div>)}

@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import SpotDetailCard from './SpotDetailCard'
 import './index.css'
-import { clearReviews } from '../../store/reviews'
+// import { clearReviews } from '../../store/reviews'
 
 
 
 function Spots() {
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
     // this is so the reviews dont stay into the next spot you select
     useEffect(() => {
-        dispatch(clearReviews())
+        // dispatch(clearReviews())
     })
 
     const spotsObj = useSelector(state => state.spots.allSpots)
