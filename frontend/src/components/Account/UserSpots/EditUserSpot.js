@@ -1,14 +1,13 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react"
 import { useHistory, useParams } from "react-router-dom"
-import { getAllSpots, updateSpot } from "../../../store/spots"
+import { updateSpot } from "../../../store/spots"
 
 
 export default function EditUserSpot () {
     const dispatch = useDispatch()
     const history = useHistory()
     const { id } = useParams()
-    // const user = useSelector(state => state.session.user)
     const spot = useSelector(state => state.spots.allSpots[id])
 
     const [ address, setAddress ] = useState(spot.address)

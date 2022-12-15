@@ -1,10 +1,11 @@
 import { useSelector } from "react-redux"
+import './index.css'
 
 export default function Profile () {
     const user = useSelector(state => state.session.user)
 
     return (
-        <div style={{"display":"flex", "flexDirection":"column"}}>
+        <div className="profile-main-wrapper" >
             <h1>Your Profile:</h1>
             <div style={{"display":"flex", "flexDirection":"column"}}>
                 <div>

@@ -1,10 +1,10 @@
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { removeReview } from "../../../../store/reviews"
 
 export default function ReviewDetails (review) {
 
     const dispatch = useDispatch()
-    // console.log('review', review)
+    const userId = useSelector(state => state.session.user.id)
 
     const deleteAReview = async () => {
         const deletedReview = await dispatch(removeReview(review.id))
@@ -27,7 +27,9 @@ export default function ReviewDetails (review) {
                 <img style={{"height":"100px", "width":"100px"}} src={review.ReviewImages[0].url} alt={'pic'}/>
             ) : (null)}
 
-            <button onClick={deleteAReview}>Delete review</button>
+            {userId === review.userId && (
+                <button onClick={deleteAReview}>Delete review</button>
+            )}
         </div>
     )
 }

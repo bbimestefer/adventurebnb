@@ -9,7 +9,7 @@ function SpotDetailCard(spot) {
         <div className="spot-card">
         <Link to={`/spots/${spot.id}`}>
             <img className={'image'} src={spot.previewImage} alt="sample"></img>
-            <p style={{'fontWeight': 'bold', 'fontSize': '14px'}}>{spot.city}, {spot.state}</p>
+            <p className="location">{spot.city}, {spot.state}</p>
             <div style={{'fontSize': '12px'}}>
                 <span style={{'fontWeight': 'bold', 'fontSize': '13px'}}>
                     ${spot.price} {" "}

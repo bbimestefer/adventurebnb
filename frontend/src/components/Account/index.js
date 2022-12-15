@@ -4,6 +4,7 @@ import Profile from "./Profile/index"
 import EditUserSpot from "./UserSpots/EditUserSpot"
 import SpotsOfUser from './UserSpots'
 import UserReviews from "./UserReviews"
+import './index.css'
 
 export default function Account () {
 
@@ -13,15 +14,13 @@ export default function Account () {
 
 
     return (
-        <div style={{'display':'flex', "justifyContent":"space-around", "width":"50%" }}>
-            <div>
-                <nav style={{'display':'flex', 'flexDirection':'column', "gap":"25px", "marginTop":"10px" }}>
-                    <NavLink style={{"borderBottom":"lightGray 1px solid"}} to={'/account'}>Profile</NavLink>
-                    <NavLink style={{"borderBottom":"lightGray 1px solid"}} to={'/account/spots'}>Spots</NavLink>
-                    <NavLink style={{"borderBottom":"lightGray 1px solid"}} to={'/account/reviews'}>Reviews</NavLink>
-                </nav>
-            </div>
-            <div>
+        <div className="routeDiv">
+            <nav className="account-nav" style={{'display':'flex', 'flexDirection':'column', "gap":"25px", "marginTop":"10px", 'paddingTop':'25px' }}>
+                <NavLink style={{"borderBottom":"lightGray 1px solid"}} to={'/account'}>Profile</NavLink>
+                <NavLink style={{"borderBottom":"lightGray 1px solid"}} to={'/account/spots'}>Spots</NavLink>
+                <NavLink to={'/account/reviews'}>Reviews</NavLink>
+            </nav>
+            <div className="switch-wrapper">
 
             <Switch>
                 <Route exact path='/account'>
