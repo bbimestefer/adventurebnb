@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: space-between;
     position: relative;
-    padding: 0px 70px;
+    padding: 0px 75px;
     height: 60px;
     border-bottom: solid 1px rgb(200, 200, 200);
 }
@@ -27,3 +27,9 @@
     top: 40px;
 }
 
+/* .buttonns-for-profile {
+    style={{"display": 'flex', 'alignItems': 'center', 'gap':'20px'}}
+    display: flex;
+    align-items: center;
+    gap: 20px;
+} */

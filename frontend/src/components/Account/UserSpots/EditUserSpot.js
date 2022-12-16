@@ -81,13 +81,13 @@ export default function EditUserSpot () {
     return (
         <div>
             <form className="create-spot-form" onSubmit={handleSubmit}>
-            <button onClick={() => history.push('/account/spots')} style={{"position":"relative", "right":"163px", "border":"none", "background":"none", "cursor":"pointer"}}>X</button>
-                <ul>
-                    {errors.map((error, idx) => (
-                        <li key={idx}>{error}</li>
-                    ))}
+            <button onClick={() => history.push('/account/spots')} style={{"padding":"0px", "height":"0px","color":"black", "position":"relative", "right":"155px", "border":"none", "background":"none", "cursor":"pointer"}}>X</button>
+                {errors.length !== 0 &&
+                <ul style={{"marginBottom":"0px"}}>
+                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>
-                <h4>Update {spot.name}</h4>
+                }
+                <h4 style={{"marginTop":"0px"}}>Update {spot.name}</h4>
                 <input style={{"borderRadius":"10px 10px 0px 0px"}}
                     type={'text'}
                     placeholder={'Address'}

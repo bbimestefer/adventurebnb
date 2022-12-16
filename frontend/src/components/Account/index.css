@@ -10,7 +10,26 @@
 }
 
 .account-nav {
+    margin: 40px 0px 0px 65px;
+    display: flex;
+    flex-direction: column;
     width: 10%;
     border: 1px lightgray solid;
+    border-bottom: 0px;
     height: fit-content;
+
+}
+
+.account-nav-buttons {
+    padding: 10px;
+    border-bottom: 1px lightgray solid;
+}
+
+.account-nav-buttons:hover {
+    background-color: rgb(231, 231, 231);
+}
+
+.account-nav .active {
+    background-color: rgb(231, 231, 231);
+    font-weight: bold;
 }

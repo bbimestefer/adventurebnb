@@ -13,6 +13,7 @@ function Navigation({ isLoaded }){
       {/* <li> */}
         <NavLink exact to="/" className='home-link'>adventurebnb</NavLink>
       {/* </li> */}
+      <div style={{"width":"50px"}}></div>
       {isLoaded && (
         <div style={{"display": 'flex', 'alignItems': 'center', 'gap':'20px'}}>
           <div>

@@ -53,11 +53,12 @@ function SingleSpot () {
                 </div>
             </div>
             <div className="image-container">
-                {spot.SpotImages?.map((image, i) => (
+                <img className="first-spot-image" src={spot.SpotImages[0].url} alt='first'/>
+                {/* {spot.SpotImages?.map((image, i) => (
                     (i === 0 ?
                     <div key={i}><img className="first-spot-image" src={image.url} alt={i}/></div>
                     : <img key={i} className="spot-image" src={image.url} alt={i}/>)
-                ))}
+                ))} */}
             </div>
             <div className="details">
                 <div className="host">

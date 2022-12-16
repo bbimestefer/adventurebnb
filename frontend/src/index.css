@@ -3,6 +3,11 @@ button {
     cursor: pointer;
 }
 
+body {
+    margin: 0px;
+    margin-bottom: 20px;
+}
+
 body, p{
     font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
 }

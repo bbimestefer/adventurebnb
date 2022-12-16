@@ -76,7 +76,7 @@ export default function CreateReviewForm ({ hideForm }) {
                     onChange={updateStars}
                 />
                 <input
-                    type={'text'}
+                    type={'url'}
                     placeholder={'Review image (optional)'}
                     value={url}
                     onChange={updateURL}
