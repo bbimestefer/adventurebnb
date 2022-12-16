@@ -21,7 +21,6 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-      <div style={{"marginTop":"80px"}}>
       {isLoaded && (
         <Switch>
           <Route exact path='/'>
@@ -45,7 +44,6 @@ function App() {
           </Route>
         </Switch>
       )}
-      </div>
     </>
   );
 }
