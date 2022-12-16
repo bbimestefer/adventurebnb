@@ -14,13 +14,14 @@ export default function ReserveForm (spot) {
 
     //     console.log(checkIn, checkout, guest)
     // }
+    const rating = spot.avgStarRating
     return (
         <div className="form-container" style={{"paddingRight": "10px", "paddingLeft": "10px"}}>
             <div>
                 <div className="sub-info">
                     <div><span style={{"fontWeight": "bold"}}>${spot.price}</span> night</div>
                     <div>
-                        <span><i className="fa-sharp fa-solid fa-star"></i>{spot.avgStarRating} ·</span>
+                        <span><i className="fa-sharp fa-solid fa-star"></i>{isNaN(rating) ? 0 : rating} ·</span>
                         <span>{spot.numReviews} reviews</span>
                     </div>
                 </div>
@@ -59,7 +60,7 @@ export default function ReserveForm (spot) {
                     <button>Reserve</button>
                 </form> */}
             </div>
-{/* 
+{/*
             <div>
                 You will not be charged yet
             </div>

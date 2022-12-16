@@ -95,12 +95,13 @@ export default function CreateSpotForm () {
         <div style={{"display":"flex", "alignItems":"center", "justifyContent":"center"}}>
             <button onClick={demoSpot}>Demo spot</button>
             <form className="create-spot-form" onSubmit={handleSubmit}>
+            <button onClick={() => history.push('/')} style={{"position":"relative", "right":"163px", "border":"none", "background":"none", "cursor":"pointer"}}>X</button>
                 <ul>
                     {errors.map((error, idx) => (
                         <li key={idx}>{error}</li>
                     ))}
                 </ul>
-                <h4>{user.firstName}, fill out this form to create your house!</h4>
+                <h4>Create a listing</h4>
                 <input style={{"borderRadius":"10px 10px 0px 0px"}}
                     type={'text'}
                     placeholder={'Address'}
@@ -147,6 +148,7 @@ export default function CreateSpotForm () {
                     type={'number'}
                     placeholder={'Price per night'}
                     required
+                    min={1}
                     value={price}
                     onChange={updatePrice}
                 />
@@ -159,6 +161,7 @@ export default function CreateSpotForm () {
                 <input style={{"borderRadius":"10px", "marginBottom": "10px"}}
                     type={'text'}
                     placeholder={'Cover image url'}
+                    required
                     value={url}
                     onChange={updateURL}
                 />

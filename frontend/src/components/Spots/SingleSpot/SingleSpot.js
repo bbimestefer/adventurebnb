@@ -10,6 +10,7 @@ import CreateReviewForm from "./Reviews/CreateReviewForm";
 
 function SingleSpot () {
 
+
     const dispatch = useDispatch()
     const { id } = useParams()
 
@@ -29,6 +30,7 @@ function SingleSpot () {
     }, [id, dispatch])
 
     const spot = useSelector(state => state.spots.singleSpot)
+    const rating = spot.avgStarRating
     const reviews = Object.values(useSelector(state => state.reviews.spot))
 
     if(!spot) return null
@@ -40,7 +42,7 @@ function SingleSpot () {
                 </h2>
                 <div className="sub-info">
                     <div className='ratings'>
-                        <span><i className="fa-sharp fa-solid fa-star"></i>{spot.avgStarRating} ·</span>
+                        <span><i className="fa-sharp fa-solid fa-star"></i>{isNaN(rating) ? 0 : rating} ·</span>
                         <span>{spot.numReviews} reviews · </span>
                         <span>{spot.city}, {spot.state}, {spot.country}</span>
                     </div>

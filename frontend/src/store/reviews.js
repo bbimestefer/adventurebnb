@@ -1,4 +1,5 @@
 import { csrfFetch } from "./csrf";
+import { getSpotById } from "./spots"
 
 const CREATE = 'reviews/CREATE'
 const USER = 'reviews/USER'
@@ -65,40 +66,17 @@ export const reviewCreate = (spotId, review, user, imageUrl) => async dispatch =
                 review.ReviewImages.push(image)
                 review.User = user
                 dispatch(createReview(review))
+                dispatch(getSpotById(spotId))
                 return review
             }
         } else {
             review.ReviewImages = []
             review.User = user
             dispatch(createReview(review))
+            dispatch(getSpotById(spotId))
             return review
         }
       }
-    // const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
-    //     method: 'POST',
-    //     headers: {"Content-Type": "application/json"},
-    //     body: JSON.stringify(review)
-    //   })
-
-
-
-    // if(response.ok){
-    //     const review = await response.json()
-
-        // const imageResponse = await csrfFetch(`/api/reviews/${review.id}/images`, {
-        //     method: 'POST',
-        //     headers: {"Content-Type": "application/json"},
-        //     body: JSON.stringify(imageUrl)
-        //   })
-
-    //     if(imageResponse.ok) {
-    //         const image = await imageResponse.json()
-    //         review.ReviewImages = [...review.ReviewImages, image]
-    //         dispatch(createReview(review))
-    //         return review
-    //     }
-
-    // }
 }
 
 // export const createReviewImage = (reviewId, imageUrl) => async dispatch => {
@@ -150,7 +128,7 @@ export const reviewUpdate = (spotId, review) => async dispatch => {
     }
 }
 
-export const removeReview = (reviewId) => async dispatch => {
+export const removeReview = (reviewId, spotId) => async dispatch => {
     const response = await csrfFetch(`/api/reviews/${reviewId}`, {
         method: 'DELETE',
         headers: {"Content-Type": "application/json"}
@@ -159,6 +137,7 @@ export const removeReview = (reviewId) => async dispatch => {
     if(response.ok) {
         const review = await response.json()
         dispatch(deleteReview(reviewId))
+        dispatch(getSpotById(spotId))
         return review
     }
 }

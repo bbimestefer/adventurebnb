@@ -107,8 +107,8 @@ router.post('/', requireAuth,  async (req, res, next) => {
     if(!city) errors.push("City is required")
     if(!state) errors.push("State is required")
     if(!country) errors.push("Country is required")
-    if(!lat) errors.push("Latitude is not valid")
-    if(!lng) errors.push("Longitude is not valid")
+    // if(!lat) errors.push("Latitude is not valid")
+    // if(!lng) errors.push("Longitude is not valid")
     if(name.length > 50) errors.push("Name must be less than 50 characters")
     if(name.length < 3) errors.push("Name must be more than 3 characters")
     if(!description) errors.push("Description is required")
@@ -349,7 +349,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
     //         "statusCode": 403
     //     })
     // }
-    
+
     if(reviewOfUser.length) errors.push("User already has a review for this spot")
     if(!review) errors.push("Review text is required")
     if(stars > 5 || stars < 1) errors.push("Stars must be an integer from 1 to 5")
@@ -533,8 +533,8 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
     if(!city) errors.push("City is required")
     if(!state) errors.push("State is required")
     if(!country) errors.push("Country is required")
-    if(!lat) errors.push("Latitude is not valid")
-    if(!lng) errors.push("Longitude is not valid")
+    // if(!lat) errors.push("Latitude is not valid")
+    // if(!lng) errors.push("Longitude is not valid")
     if(!name) errors.push("Name must be less than 50 characters")
     if(!description) errors.push("Description is required")
     if(!price) errors.push("Price per day is required")

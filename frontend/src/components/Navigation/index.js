@@ -16,7 +16,7 @@ function Navigation({ isLoaded }){
         <div style={{"display": 'flex', 'alignItems': 'center', 'gap':'10px'}}>
           <div>
             { sessionUser && (
-              <NavLink to='/new'>Host your home</NavLink>
+              <NavLink to='/new'>adventurebnb your home</NavLink>
             )}
           </div>
           <ProfileButton user={sessionUser} />

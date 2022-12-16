@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from 'react-redux';
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
@@ -10,6 +10,7 @@ import DemoUserLogin from "./DemoUserLogin";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
+  const history = useHistory()
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
@@ -37,6 +38,7 @@ function ProfileButton({ user }) {
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
+    history.push('/')
     closeMenu();
   };
 
@@ -60,7 +62,7 @@ function ProfileButton({ user }) {
             </li>
           </div>
         ) : (
-          <>
+          <div className="account-buttons">
             <OpenModalMenuItem
               itemText="Log In"
               onItemClick={closeMenu}
@@ -72,7 +74,7 @@ function ProfileButton({ user }) {
               modalComponent={<SignupFormModal />}
             />
             <DemoUserLogin />
-          </>
+          </div>
         )}
       </ul>
     </>
