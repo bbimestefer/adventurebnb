@@ -33,7 +33,7 @@ function SingleSpot () {
     const rating = spot.avgStarRating
     const reviews = Object.values(useSelector(state => state.reviews.spot))
 
-    if(!spot) return null
+    if(!spot.Owner) return null
     return (
         <div className="wrapper-for-info">
             <div className="header">
@@ -61,7 +61,7 @@ function SingleSpot () {
             </div>
             <div className="details">
                 <div className="host">
-                    <h3>This home hosted by </h3>
+                    <h3>This home hosted by {spot.Owner.firstName}</h3>
                     <div>profile pic</div>
                 </div>
                 <div className="reserve-form"><ReserveForm {...spot} /></div>

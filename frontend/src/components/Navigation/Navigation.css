@@ -3,9 +3,13 @@
     align-items: center;
     justify-content: space-between;
     position: relative;
-    padding: 0px 80px;
+    padding: 0px 70px;
     height: 60px;
     border-bottom: solid 1px rgb(200, 200, 200);
+}
+
+.spot-id-padding {
+    padding: 0px 160px;
 }
 
 .profile-dropdown {
