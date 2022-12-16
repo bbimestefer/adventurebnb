@@ -5,8 +5,9 @@
 
 .switch-wrapper {
     display: flex;
-    width: 100%;
+    width: 70%;
     justify-content: center;
+
 }
 
 .account-nav {
@@ -17,7 +18,7 @@
     border: 1px lightgray solid;
     border-bottom: 0px;
     height: fit-content;
-
+    min-width: 105px;
 }
 
 .account-nav-buttons {

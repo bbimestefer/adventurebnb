@@ -4,7 +4,7 @@
     justify-content: space-between;
     position: sticky;
     top: 0px;
-    padding: 0px 75px;
+    padding: 0px 65px;
     height: 60px;
     border-bottom: solid 1px rgb(200, 200, 200);
     background-color: white;
@@ -37,6 +37,9 @@
 } */
 
 .home-link {
+    display: flex;
+    align-items: center;
+    gap: 5px;
     font-weight: bolder;
     color: rgb(255, 93, 93);
     font-size: 22px;
