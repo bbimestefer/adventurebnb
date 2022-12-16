@@ -95,13 +95,13 @@ export default function CreateSpotForm () {
         <div style={{"display":"flex", "alignItems":"center", "justifyContent":"center"}}>
             <button onClick={demoSpot}>Demo spot</button>
             <form className="create-spot-form" onSubmit={handleSubmit}>
-            <button onClick={() => history.push('/')} style={{"position":"relative", "right":"163px", "border":"none", "background":"none", "cursor":"pointer"}}>X</button>
-                <ul>
-                    {errors.map((error, idx) => (
-                        <li key={idx}>{error}</li>
-                    ))}
+                <button onClick={() => history.push('/')} style={{"padding":"0px", "height":"0px", "color":"black", "width":"20px", "position":"relative", "right":"163px", "border":"none", "background":"none", "cursor":"pointer"}}>X</button>
+                {errors.length !== 0 &&
+                <ul style={{"marginBottom":"0px"}}>
+                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>
-                <h4>Create a listing</h4>
+                }
+                <h4 style={{"marginTop":"0px"}}>Create a listing</h4>
                 <input style={{"borderRadius":"10px 10px 0px 0px"}}
                     type={'text'}
                     placeholder={'Address'}
@@ -159,7 +159,7 @@ export default function CreateSpotForm () {
                     onChange={updateImageNumber}
                 /> */}
                 <input style={{"borderRadius":"10px", "marginBottom": "10px"}}
-                    type={'text'}
+                    type={'url'}
                     placeholder={'Cover image url'}
                     required
                     value={url}

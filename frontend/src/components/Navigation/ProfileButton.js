@@ -56,10 +56,8 @@ function ProfileButton({ user }) {
             <ul>{user.username}</ul>
             <ul>{user.firstName} {user.lastName}</ul>
             <ul style={{"borderBottom":"1px solid lightGray"}}>{user.email}</ul>
-            <li><NavLink onClick={closeMenu} to={'/account'}>Account</NavLink></li>
-            <li>
-              <button style={{"border":"none", "background":"none", "fontSize":"16px", "padding":"0px"}} onClick={logout}>Log out</button>
-            </li>
+              <NavLink className="profile-actions" onClick={closeMenu} to={'/account'}>Account</NavLink>
+              <button className="profile-actions" onClick={logout}>Log out</button>
           </div>
         ) : (
           <div className="account-buttons">

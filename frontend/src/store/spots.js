@@ -146,8 +146,6 @@ const spotsReducer = (state = initialState, action) => {
             return newState
         case UPDATE:
             newState = {...state, allSpots: {...state.allSpots}}
-            console.log('newState.allSpots ceratin spot', newState.allSpots[action.spot.id])
-            console.log('in the update case----------------',action.spot)
             newState.allSpots[action.spot.id] = action.spot
             return newState
         case DELETE:

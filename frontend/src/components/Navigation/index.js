@@ -5,19 +5,19 @@ import ProfileButton from './ProfileButton';
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
-  
+
   const sessionUser = useSelector(state => state.session.user);
 
   return (
     <div className='nav-bar-wrapper'>
       {/* <li> */}
-        <NavLink exact to="/">adventurebnb</NavLink>
+        <NavLink exact to="/" className='home-link'>adventurebnb</NavLink>
       {/* </li> */}
       {isLoaded && (
-        <div style={{"display": 'flex', 'alignItems': 'center', 'gap':'10px'}}>
+        <div style={{"display": 'flex', 'alignItems': 'center', 'gap':'20px'}}>
           <div>
             { sessionUser && (
-              <NavLink to='/new'>adventurebnb your home</NavLink>
+              <NavLink to='/new' style={{"textDecoration":"underline"}}>adventurebnb your home</NavLink>
             )}
           </div>
           <ProfileButton user={sessionUser} />

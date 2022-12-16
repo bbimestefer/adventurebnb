@@ -62,7 +62,7 @@ function SingleSpot () {
             <div className="details">
                 <div className="host">
                     <h3>This home hosted by {spot.Owner.firstName}</h3>
-                    <div>profile pic</div>
+                    <div></div>
                 </div>
                 <div className="reserve-form"><ReserveForm {...spot} /></div>
             </div>
