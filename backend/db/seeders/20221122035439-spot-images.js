@@ -149,6 +149,41 @@ module.exports = {
         url: 'https://a0.muscache.com/im/pictures/miso/Hosting-50365235/original/d4c8d23f-8f40-4e53-8e06-b5fcb1b6d4cb.jpeg?im_w=720',
         preview: 'false'
       },
+      {
+        spotId: 12,
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-33193709/original/dab13298-7ba7-4808-9abd-7da54ec47a97.jpeg?im_w=720',
+        preview: 'true'
+      },
+      {
+        spotId: 13,
+        url: 'https://a0.muscache.com/im/pictures/dd13581b-3766-4b00-aa03-28d0c5cdb425.jpg?im_w=720',
+        preview: 'true'
+      },
+      {
+        spotId: 14,
+        url: 'https://a0.muscache.com/im/pictures/a642d46e-930a-483f-aa39-ff9d18cc03a7.jpg?im_w=720',
+        preview: 'true'
+      },
+      {
+        spotId: 15,
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-15235032/original/7749f61f-7214-47db-9869-9e444a181f30.jpeg?im_w=720',
+        preview: 'true'
+      },
+      {
+        spotId: 16,
+        url: 'https://a0.muscache.com/im/pictures/monet/Select-21148986/original/2f9093ab-51c8-44cd-b5dc-5850333202ce?im_w=720',
+        preview: 'true'
+      },
+      {
+        spotId: 17,
+        url: 'https://a0.muscache.com/im/pictures/d4abf136-1f8a-4f30-a1aa-2c7783547256.jpg?im_w=720',
+        preview: 'true'
+      },
+      {
+        spotId: 18,
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-40040863/original/0f1ce26b-206e-405e-b85c-f6009e1070ea.jpeg?im_w=720',
+        preview: 'true'
+      },
 
     ], {});
   },
@@ -157,7 +192,7 @@ module.exports = {
     options.tableName = 'SpotImages';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      spotId: { [Op.in]: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ] }
+      spotId: { [Op.in]: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 ] }
     }, {});
   }
 };
