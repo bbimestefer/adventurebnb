@@ -7,7 +7,7 @@ export default function ReviewDetails (review) {
     const user = useSelector(state => state.session.user)
 
     const deleteAReview = async () => {
-        const deletedReview = await dispatch(removeReview(review.id))
+        const deletedReview = await dispatch(removeReview(review.id, review.spotId))
         console.log(deletedReview)
         console.log('success')
     }
@@ -17,7 +17,7 @@ export default function ReviewDetails (review) {
         <div style={{"marginTop":"30px","display":"flex", "gap":"100px", "borderBottom":"lightGray 1px solid"}}>
             <div>
                 <h4 style={{"marginBottom":"0px"}}>
-                    {review.User.firstName} {review.User.lastName}
+                    {review.User.firstName} {review.User.lastName} {review.stars}
                 </h4>
                 <p style={{"marginTop":"0px"}}>
                     {review.review}

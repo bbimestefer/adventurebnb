@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { createSpot } from "../../store/spots"
 import './CreateSpotForm.css'
@@ -7,7 +7,6 @@ import './CreateSpotForm.css'
 export default function CreateSpotForm () {
     const dispatch = useDispatch()
     const history = useHistory()
-    const user = useSelector(state => state.session.user)
     const [ address, setAddress ] = useState('')
     const [ city, setCity ] = useState('')
     const [ state, setState ] = useState('')
@@ -95,12 +94,13 @@ export default function CreateSpotForm () {
         <div style={{"display":"flex", "alignItems":"center", "justifyContent":"center"}}>
             <button onClick={demoSpot}>Demo spot</button>
             <form className="create-spot-form" onSubmit={handleSubmit}>
-                <ul>
-                    {errors.map((error, idx) => (
-                        <li key={idx}>{error}</li>
-                    ))}
-                </ul>
-                <h4>{user.firstName}, fill out this form to create your house!</h4>
+                <button onClick={() => history.push('/')} style={{"padding":"0px", "height":"0px", "color":"black", "width":"20px", "position":"relative", "right":"163px", "border":"none", "background":"none", "cursor":"pointer"}}>X</button>
+                {errors.length !== 0 &&
+                    <ul style={{"marginBottom":"0px"}}>
+                    {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                    </ul>
+                }
+                <h4 style={{"marginTop":"0px"}}>Create a listing</h4>
                 <input style={{"borderRadius":"10px 10px 0px 0px"}}
                     type={'text'}
                     placeholder={'Address'}
@@ -147,6 +147,7 @@ export default function CreateSpotForm () {
                     type={'number'}
                     placeholder={'Price per night'}
                     required
+                    min={1}
                     value={price}
                     onChange={updatePrice}
                 />
@@ -157,8 +158,9 @@ export default function CreateSpotForm () {
                     onChange={updateImageNumber}
                 /> */}
                 <input style={{"borderRadius":"10px", "marginBottom": "10px"}}
-                    type={'text'}
+                    type={'url'}
                     placeholder={'Cover image url'}
+                    required
                     value={url}
                     onChange={updateURL}
                 />

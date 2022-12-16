@@ -10,6 +10,7 @@ import CreateReviewForm from "./Reviews/CreateReviewForm";
 
 function SingleSpot () {
 
+
     const dispatch = useDispatch()
     const { id } = useParams()
 
@@ -29,9 +30,10 @@ function SingleSpot () {
     }, [id, dispatch])
 
     const spot = useSelector(state => state.spots.singleSpot)
+    const rating = spot.avgStarRating
     const reviews = Object.values(useSelector(state => state.reviews.spot))
 
-    if(!spot) return null
+    if(!spot.Owner) return null
     return (
         <div className="wrapper-for-info">
             <div className="header">
@@ -40,7 +42,7 @@ function SingleSpot () {
                 </h2>
                 <div className="sub-info">
                     <div className='ratings'>
-                        <span><i className="fa-sharp fa-solid fa-star"></i>{spot.avgStarRating} ·</span>
+                        <span><i className="fa-sharp fa-solid fa-star"></i>{isNaN(rating) ? 0 : rating} ·</span>
                         <span>{spot.numReviews} reviews · </span>
                         <span>{spot.city}, {spot.state}, {spot.country}</span>
                     </div>
@@ -51,16 +53,17 @@ function SingleSpot () {
                 </div>
             </div>
             <div className="image-container">
-                {spot.SpotImages?.map((image, i) => (
+                <img className="first-spot-image" src={spot.SpotImages[0].url} alt='first'/>
+                {/* {spot.SpotImages?.map((image, i) => (
                     (i === 0 ?
                     <div key={i}><img className="first-spot-image" src={image.url} alt={i}/></div>
                     : <img key={i} className="spot-image" src={image.url} alt={i}/>)
-                ))}
+                ))} */}
             </div>
             <div className="details">
                 <div className="host">
-                    <h3>This home hosted by </h3>
-                    <div>profile pic</div>
+                    <h3>This home hosted by {spot.Owner.firstName}</h3>
+                    <div></div>
                 </div>
                 <div className="reserve-form"><ReserveForm {...spot} /></div>
             </div>

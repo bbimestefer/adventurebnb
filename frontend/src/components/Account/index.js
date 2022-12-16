@@ -15,10 +15,10 @@ export default function Account () {
 
     return (
         <div className="routeDiv">
-            <nav className="account-nav" style={{'display':'flex', 'flexDirection':'column', "gap":"25px", "marginTop":"10px", 'paddingTop':'25px' }}>
-                <NavLink style={{"borderBottom":"lightGray 1px solid"}} to={'/account'}>Profile</NavLink>
-                <NavLink style={{"borderBottom":"lightGray 1px solid"}} to={'/account/spots'}>Spots</NavLink>
-                <NavLink to={'/account/reviews'}>Reviews</NavLink>
+            <nav className="account-nav">
+                <NavLink className='account-nav-buttons' exact to={'/account'}>Profile</NavLink>
+                <NavLink className='account-nav-buttons' to={'/account/spots'}>Spots</NavLink>
+                <NavLink className='account-nav-buttons' to={'/account/reviews'}>Reviews</NavLink>
             </nav>
             <div className="switch-wrapper">
 

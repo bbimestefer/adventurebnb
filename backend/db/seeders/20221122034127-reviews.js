@@ -22,7 +22,7 @@ module.exports = {
         stars: 4,
       },
       {
-        spotId: 3,
+        spotId: 4,
         userId: 2,
         review: 'Such an exciting place and the weather is always great',
         stars: 4,
@@ -35,7 +35,7 @@ module.exports = {
       },
       {
         spotId: 3,
-        userId: 3,
+        userId: 1,
         review: 'my sons name is jackson and he loves hot tubs!',
         stars: 5,
       },
@@ -51,6 +51,78 @@ module.exports = {
         review: 'could be prettier',
         stars: 2,
       },
+      {
+        spotId: 5,
+        userId: 2,
+        review: 'has a nice lawn',
+        stars: 2,
+      },
+      {
+        spotId: 8,
+        userId: 3,
+        review: 'love the area',
+        stars: 2,
+      },
+      {
+        spotId: 8,
+        userId: 2,
+        review: 'the pool is nice',
+        stars: 2,
+      },
+      {
+        spotId: 11,
+        userId: 3,
+        review: 'its got everything',
+        stars: 2,
+      },
+      {
+        spotId: 11,
+        userId: 3,
+        review: 'its alright',
+        stars: 2,
+      },
+      {
+        spotId: 12,
+        userId: 3,
+        review: 'could be nicer',
+        stars: 2,
+      },
+      {
+        spotId: 13,
+        userId: 3,
+        review: 'could be more open',
+        stars: 2,
+      },
+      {
+        spotId: 14,
+        userId: 1,
+        review: 'could be cleaner',
+        stars: 2,
+      },
+      {
+        spotId: 15,
+        userId: 2,
+        review: 'great',
+        stars: 5,
+      },
+      {
+        spotId: 16,
+        userId: 1,
+        review: 'it was nice',
+        stars: 3,
+      },
+      {
+        spotId: 17,
+        userId: 2,
+        review: 'cool area',
+        stars: 4,
+      },
+      {
+        spotId: 18,
+        userId: 1,
+        review: 'happy to be gone',
+        stars: 1,
+      },
     ], {});
   },
 
@@ -58,7 +130,7 @@ module.exports = {
     options.tableName = 'Reviews';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      id: { [Op.in]: [1, 2, 3, 4, 5, 6, 7] }
+      id: { [Op.in]: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] }
     }, {});
   }
 };

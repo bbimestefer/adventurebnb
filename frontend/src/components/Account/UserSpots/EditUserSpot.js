@@ -14,8 +14,6 @@ export default function EditUserSpot () {
     const [ city, setCity ] = useState(spot.city)
     const [ state, setState ] = useState(spot.state)
     const [ country, setCountry ] = useState(spot.country)
-    const [ lat, setLat ] = useState(spot.lat)
-    const [ lng, setLng ] = useState(spot.lng)
     const [ name, setName ] = useState(spot.name)
     const [ description, setDescription ] = useState(spot.description)
     const [ price, setPrice ] = useState(spot.price)
@@ -27,8 +25,6 @@ export default function EditUserSpot () {
     const updateCity = (e) => setCity(e.target.value)
     const updateState = (e) => setState(e.target.value)
     const updateCountry = (e) => setCountry(e.target.value)
-    const updateLat = (e) => setLat(e.target.value)
-    const updateLng = (e) => setLng(e.target.value)
     const updateName = (e) => setName(e.target.value)
     const updateDescription = (e) => setDescription(e.target.value)
     const updatePrice = (e) => setPrice(e.target.value)
@@ -57,8 +53,6 @@ export default function EditUserSpot () {
             city,
             state,
             country,
-            lat,
-            lng,
             name,
             description,
             price
@@ -78,8 +72,6 @@ export default function EditUserSpot () {
             setCity('')
             setState('')
             setCountry('')
-            setLat('')
-            setLng('')
             setName('')
             setDescription('')
             setPrice('')
@@ -89,12 +81,13 @@ export default function EditUserSpot () {
     return (
         <div>
             <form className="create-spot-form" onSubmit={handleSubmit}>
-                <ul>
-                    {errors.map((error, idx) => (
-                        <li key={idx}>{error}</li>
-                    ))}
+            <button onClick={() => history.push('/account/spots')} style={{"padding":"0px", "height":"0px","color":"black", "position":"relative", "right":"155px", "border":"none", "background":"none", "cursor":"pointer"}}>X</button>
+                {errors.length !== 0 &&
+                <ul style={{"marginBottom":"0px"}}>
+                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>
-                <h4>Update {spot.name}</h4>
+                }
+                <h4 style={{"marginTop":"0px"}}>Update {spot.name}</h4>
                 <input style={{"borderRadius":"10px 10px 0px 0px"}}
                     type={'text'}
                     placeholder={'Address'}
@@ -124,19 +117,6 @@ export default function EditUserSpot () {
                     onChange={updateCountry}
                 />
                 <input
-                    type={'number'}
-                    placeholder={'Latitude'}
-                    value={lat}
-                    onChange={updateLat}
-                />
-                <input
-                    type={'number'}
-                    placeholder={'Longitude'}
-                    required
-                    value={lng}
-                    onChange={updateLng}
-                />
-                <input
                     type={'text'}
                     placeholder={'Name of House'}
                     required
@@ -154,6 +134,7 @@ export default function EditUserSpot () {
                     type={'number'}
                     placeholder={'Price per night'}
                     required
+                    min={1}
                     value={price}
                     onChange={updatePrice}
                 />

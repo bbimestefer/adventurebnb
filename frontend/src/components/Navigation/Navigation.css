@@ -2,10 +2,16 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: relative;
-    padding: 0px 80px;
+    position: sticky;
+    top: 0px;
+    padding: 0px 65px;
     height: 60px;
     border-bottom: solid 1px rgb(200, 200, 200);
+    background-color: white;
+}
+
+.spot-id-padding {
+    padding: 0px 160px;
 }
 
 .profile-dropdown {
@@ -21,4 +27,20 @@
     right: 80px;
     top: 50%;
     top: 40px;
+}
+
+/* .buttonns-for-profile {
+    style={{"display": 'flex', 'alignItems': 'center', 'gap':'20px'}}
+    display: flex;
+    align-items: center;
+    gap: 20px;
+} */
+
+.home-link {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: bolder;
+    color: rgb(255, 93, 93);
+    font-size: 22px;
 }

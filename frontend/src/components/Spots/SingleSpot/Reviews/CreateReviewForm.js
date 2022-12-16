@@ -57,9 +57,11 @@ export default function CreateReviewForm ({ hideForm }) {
             <h4>Review:</h4>
             <form onSubmit={handleSubmit}>
                 <div className="errors">
-                    {errors.map((error, idx) => (
-                        <li key={idx}>{error}</li>
-                    ))}
+                {errors.length !== 0 &&
+                    <ul className="ul-errors">
+                        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                    </ul>
+                }
                 </div>
                 <input
                     type={'text'}
@@ -76,7 +78,7 @@ export default function CreateReviewForm ({ hideForm }) {
                     onChange={updateStars}
                 />
                 <input
-                    type={'text'}
+                    type={'url'}
                     placeholder={'Review image (optional)'}
                     value={url}
                     onChange={updateURL}
