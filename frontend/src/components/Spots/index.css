@@ -1,6 +1,6 @@
 .main-wrapper {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     flex-direction: row;
     font-family: system-ui, -apple-system,
     BlinkMacSystemFont, 'Segoe UI', Roboto,
@@ -15,4 +15,5 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    width: 100%;
 }

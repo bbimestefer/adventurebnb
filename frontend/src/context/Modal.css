@@ -21,4 +21,15 @@
   #modal-content {
     position: absolute;
     background-color:white;
+    border-radius: 10px;
+  }
+
+  #modal-content .exit-button {
+    position: relative;
+    top: 18px;
+    left: 25px;
+    border-radius: 20px;
+    border: none;
+    width: 1.5rem;
+    background: none;
   }

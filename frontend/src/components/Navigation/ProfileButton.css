@@ -23,6 +23,16 @@
 .account-buttons {
     display: flex;
     flex-direction: column;
-    gap: 30px;
-    padding: 10px;
+}
+.account-buttons:hover {
+    cursor: pointer;
+}
+
+.account-buttons ul, li {
+    padding: 15px;
+}
+
+.account-buttons li:hover {
+    background-color: rgb(231, 231, 231);
+    /* cursor: pointer; */
 }

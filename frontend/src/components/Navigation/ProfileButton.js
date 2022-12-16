@@ -53,12 +53,12 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <div className="account-buttons">
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
-            <li style={{"paddingBottom":"10px", "borderBottom":"1px solid lightGray"}}>{user.email}</li>
-            <NavLink onClick={closeMenu} to={'/account'}>Account</NavLink>
+            <ul>{user.username}</ul>
+            <ul>{user.firstName} {user.lastName}</ul>
+            <ul style={{"borderBottom":"1px solid lightGray"}}>{user.email}</ul>
+            <li><NavLink onClick={closeMenu} to={'/account'}>Account</NavLink></li>
             <li>
-              <button onClick={logout}>Log Out</button>
+              <button style={{"border":"none", "background":"none", "fontSize":"16px", "padding":"0px"}} onClick={logout}>Log out</button>
             </li>
           </div>
         ) : (
