@@ -36,7 +36,7 @@ function SignupFormModal() {
       <form className="form-of-sign" onSubmit={handleSubmit}>
         <h2>Welcome to Adventurebnb</h2>
         {errors.length !== 0 &&
-          <ul>
+          <ul className="ul-errors">
             {errors.map((error, idx) => <li key={idx}>{error}</li>)}
           </ul>
         }

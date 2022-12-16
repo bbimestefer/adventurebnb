@@ -18,6 +18,7 @@
     display: flex;
     flex-direction: column;
     padding: 25px;
+    padding-bottom: 0px;
 }
 
 .fields-for-input {

@@ -11,6 +11,22 @@ function LoginFormModal() {
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
 
+  const loginDemoUser = (e) => {
+    setCredential('')
+    setPassword('')
+    let user = {
+      credential: 'commonUser',
+      password: 'password'
+    }
+    return dispatch(sessionActions.login(user)).then(closeModal)
+      .catch(
+        async (res) => {
+          const data = await res.json();
+          if (data && data.errors) setErrors(data.errors);
+        }
+      );;
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
@@ -31,7 +47,7 @@ function LoginFormModal() {
       <form className="form-of-login" onSubmit={handleSubmit}>
       <h2>Welcome to Adventurebnb</h2>
         {errors.length !== 0 &&
-            <ul>
+            <ul className="ul-errors">
               {errors.map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>
         }
@@ -57,8 +73,9 @@ function LoginFormModal() {
               />
             {/* </label> */}
           </div>
-        <button type="submit">Log In</button>
+        <button style={{"marginBottom":"10px"}} type="submit">Log In</button>
       </form>
+        <button style={{"marginBottom":"10px", "width":"430px", "position":"relative", "left":"25px"}} className="demo-user-button" type="submit" onClick={loginDemoUser}>Demo User</button>
     </div>
   );
 }

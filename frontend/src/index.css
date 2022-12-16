@@ -17,7 +17,7 @@ a {
     text-decoration: none;
 }
 
-form button {
+form button, .demo-user-button {
     background: linear-gradient(90deg,#e61e4d 0,#e31c5f 50%,#d70466);
     height: 3rem;
     border-radius: 10px;
@@ -25,4 +25,8 @@ form button {
     color: white;
     font-weight: bolder;
     box-sizing: border-box;
+}
+
+.ul-errors {
+    margin-top: 0px;
 }

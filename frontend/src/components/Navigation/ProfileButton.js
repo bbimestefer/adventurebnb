@@ -6,7 +6,6 @@ import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import './ProfileButton.css'
-import DemoUserLogin from "./DemoUserLogin";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -71,7 +70,6 @@ function ProfileButton({ user }) {
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}
             />
-            <DemoUserLogin />
           </div>
         )}
       </ul>
