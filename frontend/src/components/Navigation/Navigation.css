@@ -1,12 +1,21 @@
 .nav-bar-wrapper {
     display: flex;
+    justify-content: center;
+    width: 100%;
+    height: fit-content;
+    border-bottom: solid 1px #c8c8c8;
+}
+
+.nav-bar {
+    display: flex;
     align-items: center;
     justify-content: space-between;
     position: sticky;
     top: 0px;
-    padding: 0px 65px;
+    width: 93%;
+    /* padding: 0px 65px; */
     height: 60px;
-    border-bottom: solid 1px rgb(200, 200, 200);
+    /* border-bottom: solid 1px #c8c8c8; */
     background-color: white;
 }
 

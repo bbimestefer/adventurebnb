@@ -68,31 +68,31 @@ export default function CreateSpotForm () {
             });
     }
 
-    const demoSpot = async () => {
-        const payload = {
-            address: '2345 New Valley Way',
-            city: "Westminster",
-            state: "Maryland",
-            country: "United States",
-            name: "Hills & Home",
-            description: "Rolling hills",
-            price: 120
-        }
-        const spotImage = {
-            url: 'https://a0.muscache.com/im/pictures/e69b3403-3d09-4f3f-b997-1a21164d1ee7.jpg?im_w=720',
-            preview: true
-        }
+    // const demoSpot = async () => {
+    //     const payload = {
+    //         address: '2345 New Valley Way',
+    //         city: "Westminster",
+    //         state: "Maryland",
+    //         country: "United States",
+    //         name: "Hills & Home",
+    //         description: "Rolling hills",
+    //         price: 120
+    //     }
+    //     const spotImage = {
+    //         url: 'https://a0.muscache.com/im/pictures/e69b3403-3d09-4f3f-b997-1a21164d1ee7.jpg?im_w=720',
+    //         preview: true
+    //     }
 
-        await dispatch(createSpot(payload, spotImage)).then(createdSpot => clearData(createdSpot)).catch(
-            async (res) => {
-                const data = await res.json();
-                if (data && data.errors) setErrors(data.errors);
-            });
-    }
+    //     await dispatch(createSpot(payload, spotImage)).then(createdSpot => clearData(createdSpot)).catch(
+    //         async (res) => {
+    //             const data = await res.json();
+    //             if (data && data.errors) setErrors(data.errors);
+    //         });
+    // }
 
     return (
         <div style={{"display":"flex", "alignItems":"center", "justifyContent":"center"}}>
-            <button onClick={demoSpot}>Demo spot</button>
+            {/* <button onClick={demoSpot}>Demo spot</button> */}
             <form className="create-spot-form" onSubmit={handleSubmit}>
                 <button onClick={() => history.push('/')} style={{"padding":"0px", "height":"0px", "color":"black", "width":"20px", "position":"relative", "right":"163px", "border":"none", "background":"none", "cursor":"pointer"}}>X</button>
                 {errors.length !== 0 &&
