@@ -4,18 +4,16 @@
     width: 100%;
     height: fit-content;
     border-bottom: solid 1px #c8c8c8;
+    position: sticky;
+    top: 0px;
 }
 
 .nav-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: sticky;
-    top: 0px;
     width: 93%;
-    /* padding: 0px 65px; */
     height: 60px;
-    /* border-bottom: solid 1px #c8c8c8; */
     background-color: white;
 }
 
