@@ -66,16 +66,16 @@ export const reviewCreate = (spotId, review, user, imageUrl) => async dispatch =
                 review.ReviewImages.push(image)
                 review.User = user
                 dispatch(createReview(review))
-                // dispatch(getSpotById(spotId))
-                // dispatch(getAllSpots())
+                dispatch(getSpotById(spotId))
+                dispatch(getAllSpots())
                 return review
             }
         } else {
             review.ReviewImages = []
             review.User = user
             dispatch(createReview(review))
-            // dispatch(getSpotById(spotId))
-            // dispatch(getAllSpots())
+            dispatch(getSpotById(spotId))
+            dispatch(getAllSpots())
             return review
         }
       }
