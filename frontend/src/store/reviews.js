@@ -110,7 +110,6 @@ export const spotReviews = (spotId) => async dispatch => {
 
     if(response.ok){
         const reviews = await response.json()
-        console.log('in THUNK for SPOT reviews ------', reviews)
         dispatch(loadSpotReviews(reviews))
         // return reviews
     }

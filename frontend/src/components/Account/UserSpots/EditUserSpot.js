@@ -59,11 +59,9 @@ export default function EditUserSpot () {
         }
 
         // let updatedSpot = await dispatch(updateSpot(id, payload, url))
-        console.log('the spot rating',spot.avgRating)
         let updatedSpot = await dispatch(updateSpot(id, payload, spot.previewImage, spot.avgRating)).then(updatedSpot => clearData(updatedSpot)).catch(
             async (res) => {
                 const data = await res.json();
-                console.log(data)
                 if (data && data.errors) setErrors(data.errors);
             });
 

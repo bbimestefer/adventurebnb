@@ -26,7 +26,6 @@ function SingleSpot () {
     useEffect(() => {
         dispatch(spotActions.getSpotById(id))
         dispatch(reviewActions.spotReviews(id))
-        console.log('this should run')
     }, [id, dispatch])
 
     const spot = useSelector(state => state.spots.singleSpot)

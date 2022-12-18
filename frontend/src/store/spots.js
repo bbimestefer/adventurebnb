@@ -104,7 +104,6 @@ export const updateSpot = (id, spot, url, avgRating) => async dispatch => {
 
     if(response.ok) {
         const spot = await response.json()
-        console.log('spot', spot)
         spot.previewImage = url || null
         spot.avgRating = avgRating
         dispatch(update(spot))
