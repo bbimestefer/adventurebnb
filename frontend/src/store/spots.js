@@ -95,7 +95,7 @@ export const getSpotById = (id) => async dispatch => {
     }
 }
 
-export const updateSpot = (id, spot, url) => async dispatch => {
+export const updateSpot = (id, spot, url, avgRating) => async dispatch => {
     const response = await csrfFetch(`/api/spots/${id}`, {
         method: 'PUT',
         headers: {"Content-Type": "application/json"},
@@ -106,6 +106,7 @@ export const updateSpot = (id, spot, url) => async dispatch => {
         const spot = await response.json()
         console.log('spot', spot)
         spot.previewImage = url || null
+        spot.avgRating = avgRating
         dispatch(update(spot))
         return spot
     }
