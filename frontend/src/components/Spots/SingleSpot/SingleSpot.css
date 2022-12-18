@@ -53,10 +53,13 @@
 }
 
 .form-container {
+    margin-top: 10px;
     display: flex;
     align-items: center;
     flex-direction: column;
+    justify-content: center;
     width: fit-content;
+    height: 75%;
     border: 1px solid gray;
     border-radius: 10px;
     box-sizing: border-box;
