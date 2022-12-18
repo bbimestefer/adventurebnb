@@ -1,5 +1,5 @@
 import { csrfFetch } from "./csrf";
-import { getSpotById } from "./spots"
+import { getAllSpots, getSpotById } from "./spots"
 
 const CREATE = 'reviews/CREATE'
 const USER = 'reviews/USER'
@@ -67,6 +67,7 @@ export const reviewCreate = (spotId, review, user, imageUrl) => async dispatch =
                 review.User = user
                 dispatch(createReview(review))
                 dispatch(getSpotById(spotId))
+                dispatch(getAllSpots())
                 return review
             }
         } else {
@@ -74,6 +75,7 @@ export const reviewCreate = (spotId, review, user, imageUrl) => async dispatch =
             review.User = user
             dispatch(createReview(review))
             dispatch(getSpotById(spotId))
+            dispatch(getAllSpots())
             return review
         }
       }
@@ -108,7 +110,6 @@ export const spotReviews = (spotId) => async dispatch => {
 
     if(response.ok){
         const reviews = await response.json()
-        console.log('in THUNK for SPOT reviews ------', reviews)
         dispatch(loadSpotReviews(reviews))
         // return reviews
     }
@@ -138,6 +139,7 @@ export const removeReview = (reviewId, spotId) => async dispatch => {
         const review = await response.json()
         dispatch(deleteReview(reviewId))
         dispatch(getSpotById(spotId))
+        dispatch(getAllSpots())
         return review
     }
 }

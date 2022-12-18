@@ -36,8 +36,6 @@ export default function CreateReviewForm ({ hideForm }) {
             }
           );
 
-        console.log('createdReview', createdReview)
-
         if(createdReview){
             hideForm()
 

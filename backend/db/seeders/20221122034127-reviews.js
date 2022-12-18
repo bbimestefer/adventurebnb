@@ -58,10 +58,16 @@ module.exports = {
         stars: 2,
       },
       {
+        spotId: 7,
+        userId: 2,
+        review: 'love the kitchen',
+        stars: 2,
+      },
+      {
         spotId: 8,
         userId: 3,
         review: 'love the area',
-        stars: 2,
+        stars: 5,
       },
       {
         spotId: 8,
@@ -70,8 +76,14 @@ module.exports = {
         stars: 2,
       },
       {
+        spotId: 10,
+        userId: 2,
+        review: 'pretty good area',
+        stars: 3,
+      },
+      {
         spotId: 11,
-        userId: 3,
+        userId: 2,
         review: 'its got everything',
         stars: 2,
       },
