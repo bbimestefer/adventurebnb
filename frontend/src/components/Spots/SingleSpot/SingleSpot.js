@@ -70,7 +70,7 @@ function SingleSpot () {
                 {showForm ? (
                     <CreateReviewForm hideForm={() => setShowForm(false)}/>
                 ) : (
-                    user && user.id !== spot.ownerId && <button onClick={formClick}>Create a review</button>
+                    user && user.id !== spot.ownerId && <button className="create-review-button" onClick={formClick}>Create a review</button>
                 )}
                 {reviews.length ? (
                     <Reviews reviews={reviews}/>
