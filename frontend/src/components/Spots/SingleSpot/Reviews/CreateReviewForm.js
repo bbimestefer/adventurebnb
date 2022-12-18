@@ -52,8 +52,8 @@ export default function CreateReviewForm ({ hideForm }) {
     }
     return (
         <div>
-            <h4>Review:</h4>
-            <form onSubmit={handleSubmit}>
+            <h4 style={{"marginBottom":"0px"}}>Create Review:</h4>
+            <form className="review-form" onSubmit={handleSubmit}>
                 <div className="errors">
                 {errors.length !== 0 &&
                     <ul className="ul-errors">
@@ -61,26 +61,28 @@ export default function CreateReviewForm ({ hideForm }) {
                     </ul>
                 }
                 </div>
-                <input
-                    type={'text'}
-                    placeholder={'Leave a review'}
-                    required
-                    value={review}
-                    onChange={updateReview}
-                />
-                <input
-                    type={'number'}
-                    placeholder={'Stars'}
-                    required
-                    value={stars}
-                    onChange={updateStars}
-                />
-                <input
-                    type={'url'}
-                    placeholder={'Review image (optional)'}
-                    value={url}
-                    onChange={updateURL}
-                />
+                <div>
+                    <input style={{"borderRadius":"10px 10px 0px 0px"}}
+                        type={'text'}
+                        placeholder={'Leave a review'}
+                        required
+                        value={review}
+                        onChange={updateReview}
+                    />
+                    <input
+                        type={'number'}
+                        placeholder={'Stars'}
+                        required
+                        value={stars}
+                        onChange={updateStars}
+                    />
+                    <input style={{"borderRadius":"0px 0px 10px 10px"}}
+                        type={'url'}
+                        placeholder={'Review image (optional)'}
+                        value={url}
+                        onChange={updateURL}
+                    />
+                </div>
                 <button type="submit">Submit</button>
                 <button type="button" onClick={handleCancelClick}>Cancel</button>
             </form>
