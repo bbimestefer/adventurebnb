@@ -15,7 +15,7 @@ export default function ReviewDetails (review) {
 
     if(!review.User) return null
     return (
-        <div style={{"marginTop":"30px","display":"flex", "gap":"100px", "borderBottom":"lightGray 1px solid"}}>
+        <div style={{"display":"flex", "gap":"100px", "borderBottom":"lightGray 1px solid"}}>
             <div>
                 <h4 style={{"marginBottom":"0px"}}>
                     {review.User.firstName} {review.User.lastName} {review.stars}
