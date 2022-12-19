@@ -37,3 +37,5 @@ You can access the Login Page, Signup Page here. There is also a demo user butto
   - cd into out of the backend and into the frontend directory, run npm install, then npm start to start the 
   frontend application
 - Your ready to demo Adventurebnb!
+## Contact Information
+- Email: brandon.bim13@gmail.com
