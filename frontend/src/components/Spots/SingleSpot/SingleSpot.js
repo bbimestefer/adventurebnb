@@ -41,9 +41,9 @@ function SingleSpot () {
                 </h2>
                 <div className="sub-info width-for-info">
                     <div className='ratings'>
-                        <span><i className="fa-sharp fa-solid fa-star"></i>{isNaN(rating) ? 0 : rating} ·</span>
-                        {spot.numReviews === 1 ? <span>{spot.numReviews} review · </span> : <span>{spot.numReviews} reviews · </span>}
-                        <span>{spot.city}, {spot.state}, {spot.country}</span>
+                        <span style={{"width":"4rem"}}><i className="fa-sharp fa-solid fa-star"></i>{isNaN(rating) ? 0 : rating}</span>
+                        {spot.numReviews === 1 ? <span style={{"width":"5rem"}}>{spot.numReviews} review </span> : <span style={{"width":"5rem"}}>{spot.numReviews} reviews </span>}
+                        <span style={{"width":"20rem"}}>{spot.city}, {spot.state}, {spot.country}</span>
                     </div>
                     {/* <div className="share">
                         <span><i className="fa-solid fa-arrow-up-from-bracket"></i> Share</span>
