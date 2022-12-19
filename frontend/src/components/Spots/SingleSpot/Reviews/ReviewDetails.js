@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { removeReview } from "../../../../store/reviews"
+import './ReviewDetails.css'
 
 export default function ReviewDetails (review) {
 
@@ -19,16 +20,20 @@ export default function ReviewDetails (review) {
                 <h4 style={{"marginBottom":"0px"}}>
                     {review.User.firstName} {review.User.lastName} {review.stars}
                 </h4>
-                <p style={{"marginTop":"0px"}}>
+                <p style={{"marginTop":"0px", "width":"10rem"}}>
                     {review.review}
                 </p>
             </div>
             {review.ReviewImages.length ? (
-                <img style={{"height":"100px", "width":"100px"}} src={review.ReviewImages[0].url} alt={'pic'}/>
+                <div style={{"display":"flex", "alignItems":"center"}}>
+                    <img style={{"height":"100px", "width":"100px"}} src={review.ReviewImages[0].url} alt={'pic'}/>
+                </div>
             ) : (null)}
 
             {user && user.id === review.userId && (
-                <button onClick={deleteAReview}>Delete review</button>
+                <div style={{"display":"flex", "alignItems":"center"}}>
+                    <button className="delete-review-button" onClick={deleteAReview}>Delete review</button>
+                </div>
             )}
         </div>
     )
