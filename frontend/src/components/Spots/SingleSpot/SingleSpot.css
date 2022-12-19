@@ -20,6 +20,14 @@
     align-items: center;
 }
 
+.width-for-info {
+    width: 25rem;
+}
+
+.gap-for-reserve {
+    gap: 1rem;
+}
+
 .share {
     display: flex;
     gap: 5px;

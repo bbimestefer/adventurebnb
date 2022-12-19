@@ -18,11 +18,11 @@ export default function ReserveForm (spot) {
     return (
         <div className="form-container" style={{"paddingRight": "10px", "paddingLeft": "10px"}}>
             <div>
-                <div className="sub-info">
+                <div className="sub-info gap-for-reserve">
                     <div><span style={{"fontWeight": "bold"}}>${spot.price}</span> night</div>
                     <div>
                         <span><i className="fa-sharp fa-solid fa-star"></i>{isNaN(rating) ? 0 : rating} ·</span>
-                        <span>{spot.numReviews} reviews</span>
+                        {spot.numReviews === 1 ? <span>{spot.numReviews} review </span> : <span>{spot.numReviews} reviews </span>}
                     </div>
                 </div>
                 {/* <form

@@ -39,10 +39,10 @@ function SingleSpot () {
                 <h2 className="text spot-header">
                     {spot.name}
                 </h2>
-                <div className="sub-info">
+                <div className="sub-info width-for-info">
                     <div className='ratings'>
                         <span><i className="fa-sharp fa-solid fa-star"></i>{isNaN(rating) ? 0 : rating} ·</span>
-                        <span>{spot.numReviews} reviews · </span>
+                        {spot.numReviews === 1 ? <span>{spot.numReviews} review · </span> : <span>{spot.numReviews} reviews · </span>}
                         <span>{spot.city}, {spot.state}, {spot.country}</span>
                     </div>
                     {/* <div className="share">
@@ -61,7 +61,7 @@ function SingleSpot () {
             </div>
             <div className="details">
                 <div className="host">
-                    <h3>This home hosted by {spot.Owner.firstName}</h3>
+                    <h3 style={{"width":"20.15rem"}}>This home hosted by {spot.Owner.firstName}</h3>
                     <div></div>
                 </div>
                 <div className="reserve-form"><ReserveForm {...spot} /></div>
