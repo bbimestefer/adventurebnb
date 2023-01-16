@@ -2,6 +2,7 @@
 import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 import { getAllSpots, removeSpot } from "../../../store/spots"
+import "./UserSpotDetails.css"
 
 export default function UserSpotDetails (spot) {
     const dispatch = useDispatch()
@@ -32,8 +33,8 @@ export default function UserSpotDetails (spot) {
             </div>
             <div style={{"display":"flex", "alignItems":"center", "gap":"10px"}}>
                 {/* <button onClick={editSpot} >Edit</button> */}
-                <Link to={`/account/spots/edit/${spot.id}`}>Edit</Link>
-                <button onClick={deleteSpot}>Delete</button>
+                <Link style={{"textDecoration":"underline"}} to={`/account/spots/edit/${spot.id}`}>Edit</Link>
+                <button className="delete-spot-button" onClick={deleteSpot}>Delete</button>
             </div>
         </div>
     )
