@@ -150,7 +150,7 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
     const bookingStartDate = new Date(booking.startDate)
     const today = new Date()
 
-    if (userId !== booking.userId && userId !== spotOwnerId){
+    if (userId !== booking.userId){
         res.status(403)
         return res.json({
             "message": "Forbidden",

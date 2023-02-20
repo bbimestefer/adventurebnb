@@ -1,14 +1,18 @@
 import { useState } from "react"
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { bookingCreate } from "../../../store/bookings"
 import "./SingleSpot.css"
 
 export default function ReserveForm (spot) {
+    const dispatch = useDispatch()
     const user = useSelector(state => state.session.user)
     const [ guest, setGuest ] = useState(1)
     const date = new Date()
     const month = date.getMonth() + 1
     const today = `${date.getFullYear()}-${month < 9 ? '0' + String(month) : month}-${date.getDate()}`
     const futureDate = `${date.getFullYear()}-${month < 9 ? '0' + String(month) : month}-${date.getDate() + 5}`
+    const totalDays = futureDate - today
+    console.log()
     const [ checkIn, setCheckIn ] = useState(today)
     const [ checkout, setCheckout ] = useState(futureDate)
 
@@ -18,7 +22,7 @@ export default function ReserveForm (spot) {
             startDate: checkIn,
             endDate: checkout
         }
-        console.log(payload)
+        dispatch(bookingCreate(spot.id, payload))
     }
     const rating = spot.avgStarRating
     return (
@@ -63,7 +67,7 @@ export default function ReserveForm (spot) {
                         onChange={(e) => setGuest(e.target.value)}
                         />
                     </label>
-                    {user ? <button className="reserveFormButton">Reserve</button> : null}
+                    {user && user.id !== spot.ownerId ? <button className="reserveFormButton">Reserve</button> : null}
                 </form>
             </div>
 
