@@ -1,19 +1,33 @@
-// import { useState } from "react"
+import { useState } from "react"
+import { useDispatch, useSelector } from 'react-redux'
+import { bookingCreate } from "../../../store/bookings"
 import "./SingleSpot.css"
 
 export default function ReserveForm (spot) {
-    // const [ checkIn, setCheckIn ] = useState()
-    // const [ checkout, setCheckout ] = useState()
-    // const [ guest, setGuest ] = useState(1)
-    // const date = new Date()
-    // const today = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-    // const futureDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + 5}`
+    const dispatch = useDispatch()
+    const user = useSelector(state => state.session.user)
+    const [ guest, setGuest ] = useState(1)
+    const date = new Date()
+    const month = date.getMonth() + 1
+    const today = `${date.getFullYear()}-${month < 9 ? '0' + String(month) : month}-${date.getDate()}`
+    const futureDate = `${date.getFullYear()}-${month < 9 ? '0' + String(month) : month}-${date.getDate() + 5}`
+    const [ checkIn, setCheckIn ] = useState(today)
+    const [ checkout, setCheckout ] = useState(futureDate)
 
-    // const handleSubmit = (e) => {
-    //     e.preventDefault()
+    const thisDate = new Date(checkout) - new Date(checkIn)
+    const numDays = Math.ceil(thisDate / (1000 * 3600 * 24));
 
-    //     console.log(checkIn, checkout, guest)
-    // }
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const payload = {
+            startDate: checkIn,
+            endDate: checkout
+        }
+        dispatch(bookingCreate(spot.id, payload))
+        alert('Your booking has been reserved!')
+        setCheckIn(today)
+        setCheckout(futureDate)
+    }
     const rating = spot.avgStarRating
     return (
         <div className="form-container" style={{"paddingRight": "10px", "paddingLeft": "10px"}}>
@@ -25,28 +39,28 @@ export default function ReserveForm (spot) {
                         {spot.numReviews === 1 ? <span>{spot.numReviews} review </span> : <span>{spot.numReviews} reviews </span>}
                     </div>
                 </div>
-                {/* <form
+                <form
                 onSubmit={handleSubmit}
                 style={{"display":"flex","alignItems":"center", "flexDirection":"column"}}>
                     <div style={{"display":"flex"}}>
-                    <label>
-                        CHECK-IN
-                        <input type={'date'}
-                        name={'check-in'}
-                        placeholder={'Add date'}
-                        value={checkIn ? checkIn : today.toString()}
-                        onChange={(e) => setCheckIn(e.target.value)}
-                        />
-                    </label>
-                    <label>
-                        CHECKOUT
-                        <input type={'date'}
-                        name={'checkout'}
-                        placeholder={'Add date'}
-                        value={checkout ? checkout : futureDate.toString()}
-                        onChange={(e) => setCheckout(e.target.value)}
-                        />
-                    </label>
+                        <label className="reserveFormLabels">
+                            CHECK-IN
+                            <input type={'date'}
+                            name={'check-in'}
+                            placeholder={'Add date'}
+                            value={checkIn}
+                            onChange={(e) => setCheckIn(e.target.value)}
+                            />
+                        </label>
+                        <label className="reserveFormLabels">
+                            CHECKOUT
+                            <input type={'date'}
+                            name={'checkout'}
+                            placeholder={'Add date'}
+                            value={checkout}
+                            onChange={(e) => setCheckout(e.target.value)}
+                            />
+                        </label>
                     </div>
                     <label>
                         Guest
@@ -57,10 +71,10 @@ export default function ReserveForm (spot) {
                         onChange={(e) => setGuest(e.target.value)}
                         />
                     </label>
-                    <button>Reserve</button>
-                </form> */}
+                    {user && user.id !== spot.ownerId ? <button className="reserveFormButton">Reserve</button> : null}
+                </form>
             </div>
-{/*
+
             <div>
                 You will not be charged yet
             </div>
@@ -68,20 +82,20 @@ export default function ReserveForm (spot) {
                     {checkIn && checkout && (
                         <>
                             <div className="spacing">
-                                <span>${spot.price} x 5 nights</span>
-                                <span>${spot.price * 5}</span>
+                                <span>${spot.price} x {numDays} nights</span>
+                                <span>${spot.price * numDays}</span>
                             </div>
                             <div className="spacing">
                                 <span>Cleaning Fee</span>
-                                <span>${35 * 5}</span>
+                                <span>${35 * numDays}</span>
                             </div>
                             <div className="spacing">
                                 <span>Service Fee</span>
-                                <span>${25 * 5}</span>
+                                <span>${25 * numDays}</span>
                             </div>
                         </>
                     )}
-                </div> */}
+                </div>
         </div>
     )
 }

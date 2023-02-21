@@ -46,7 +46,7 @@ export default function CreateSpotForm () {
         e.preventDefault()
 
 
-        const payload = {
+       const payload = {
             address,
             city,
             state,

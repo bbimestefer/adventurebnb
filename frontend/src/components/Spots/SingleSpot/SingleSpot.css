@@ -3,12 +3,13 @@
     flex-direction: column;
     justify-content: center;
     padding: 0px 275px 0px 275px;
+    min-width: 600px;
     /* border: black solid 3px; */
 }
 
 .header {
     padding-top: 20px;
-    width: 28rem;
+    width: 100%;
 }
 
 .spot-header {
@@ -19,10 +20,24 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
-.width-for-info {
-    width: 25rem;
+.imageFormButton {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    gap: 1em;
+    min-width: 17em;
+    align-items: center;
+}
+
+.cur {
+    cursor: pointer;
+}
+
+#modalButtonImage {
+    border: 1px solid red;
 }
 
 .gap-for-reserve {
@@ -61,18 +76,31 @@
     width: 100%;
 }
 
+.reserveFormButton {
+    width: 7em;
+    height: 3em;
+    margin: 7px;
+}
+
 .form-container {
     margin-top: 10px;
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
+    min-width: 22em;
     width: fit-content;
-    height: 75%;
+    height: fit-content;
     border: 1px solid gray;
     border-radius: 10px;
     box-sizing: border-box;
     box-shadow: 1px 1px 5px gray;
+}
+
+.reserveFormLabels {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .spacing {
@@ -84,20 +112,36 @@
 }
 
 .image-container {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr ;
+    grid-template-rows: 15em 15em;
     gap: 10px;
     height: 100%;
     width: 100%;
     margin-top: 10px;
     border-radius: 10px;
-    flex-wrap: wrap;
 }
 
-.first-spot-image {
-    border-radius: 10px 0px 0px 10px;
-    width: 450px;
-    height: 450px;
+.grid_item {
+    width: inherit;
+    height: inherit;
     object-fit: cover;
+}
+
+.first_grid_item {
+    border-radius: 10px 0px 0px 10px;
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+    width: inherit;
+    height: inherit;
+}
+
+.border_2 {
+    border-radius: 0px 10px 0px 0px;
+}
+
+.border_4 {
+   border-radius: 0px 0px 10px 0px;
 }
 
 .spot-image {
