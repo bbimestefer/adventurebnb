@@ -9,7 +9,7 @@
 
 .header {
     padding-top: 20px;
-    width: 28rem;
+    width: 100%;
 }
 
 .spot-header {
@@ -20,10 +20,24 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
-.width-for-info {
-    width: 25rem;
+.imageFormButton {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    gap: 1em;
+    min-width: 17em;
+    align-items: center;
+}
+
+.cur {
+    cursor: pointer;
+}
+
+#modalButtonImage {
+    border: 1px solid red;
 }
 
 .gap-for-reserve {
@@ -100,7 +114,7 @@
 .image-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr ;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 15em 15em;
     gap: 10px;
     height: 100%;
     width: 100%;
