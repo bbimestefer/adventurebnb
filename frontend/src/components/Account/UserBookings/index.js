@@ -7,7 +7,6 @@ import UserBookingDetails from './UserBookingDetails'
 
 function UserBookings() {
     const dispatch = useDispatch()
-    const [ usersBookings, setUsersBookings ] = useState('')
     const bookings = Object.values(useSelector(state => state.bookings.user))
 
     useEffect(() => {

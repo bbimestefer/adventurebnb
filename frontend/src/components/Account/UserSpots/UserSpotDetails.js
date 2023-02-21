@@ -27,13 +27,13 @@ export default function UserSpotDetails (spot) {
     return (
         <div style={{"display":"flex", "justifyContent":"space-between", "alignContent":"center", "gap":"40px", "borderBottom":"lightGray 1px solid"}}>
             <div>
-                <h3 style={{"marginBottom":"0px"}}>{spot.name}</h3>
+                <h3 style={{"marginBottom":"0px", "color": "#ff5d5d"}}>{spot.name}</h3>
                 <p style={{"marginTop":"0px"}}>{spot.city}, {spot.state}</p>
             </div>
             <div style={{"display":"flex", "alignItems":"center", "gap":"10px"}}>
                 {/* <button onClick={editSpot} >Edit</button> */}
                 <Link to={`/account/spots/edit/${spot.id}`}>Edit</Link>
-                <button onClick={deleteSpot}>Delete</button>
+                <button className="demo-user-button" onClick={deleteSpot}>Delete</button>
             </div>
         </div>
     )
