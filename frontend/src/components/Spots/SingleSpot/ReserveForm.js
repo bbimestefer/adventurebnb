@@ -11,10 +11,11 @@ export default function ReserveForm (spot) {
     const month = date.getMonth() + 1
     const today = `${date.getFullYear()}-${month < 9 ? '0' + String(month) : month}-${date.getDate()}`
     const futureDate = `${date.getFullYear()}-${month < 9 ? '0' + String(month) : month}-${date.getDate() + 5}`
-    const totalDays = futureDate - today
-    console.log()
     const [ checkIn, setCheckIn ] = useState(today)
     const [ checkout, setCheckout ] = useState(futureDate)
+
+    const thisDate = new Date(checkout) - new Date(checkIn)
+    const numDays = Math.ceil(thisDate / (1000 * 3600 * 24));
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -23,6 +24,9 @@ export default function ReserveForm (spot) {
             endDate: checkout
         }
         dispatch(bookingCreate(spot.id, payload))
+        alert('Your booking has been reserved!')
+        setCheckIn(today)
+        setCheckout(futureDate)
     }
     const rating = spot.avgStarRating
     return (
@@ -78,16 +82,16 @@ export default function ReserveForm (spot) {
                     {checkIn && checkout && (
                         <>
                             <div className="spacing">
-                                <span>${spot.price} x 5 nights</span>
-                                <span>${spot.price * 5}</span>
+                                <span>${spot.price} x {numDays} nights</span>
+                                <span>${spot.price * numDays}</span>
                             </div>
                             <div className="spacing">
                                 <span>Cleaning Fee</span>
-                                <span>${35 * 5}</span>
+                                <span>${35 * numDays}</span>
                             </div>
                             <div className="spacing">
                                 <span>Service Fee</span>
-                                <span>${25 * 5}</span>
+                                <span>${25 * numDays}</span>
                             </div>
                         </>
                     )}
