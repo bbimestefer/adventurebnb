@@ -18,7 +18,10 @@ export default function CreateReviewForm ({ hideForm }) {
 
     const updateReview = (e) => setReview(e.target.value)
     const updateStars = (e) => setStars(e.target.value)
-    const updateURL = (e) => setURL(e.target.value)
+    const updateFile = (e) => {
+        const file = e.target.files[0];
+        if (file) setURL(file);
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -77,10 +80,8 @@ export default function CreateReviewForm ({ hideForm }) {
                         onChange={updateStars}
                     />
                     <input style={{"borderRadius":"0px 0px 10px 10px"}}
-                        type={'url'}
-                        placeholder={'Review image (optional)'}
-                        value={url}
-                        onChange={updateURL}
+                        type='file'
+                        onChange={updateFile}
                     />
                 </div>
                 <button type="submit">Submit</button>

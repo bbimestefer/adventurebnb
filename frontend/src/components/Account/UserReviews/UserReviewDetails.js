@@ -14,7 +14,6 @@ export default function UserReviewDetails (review) {
     // }
 
     const deleteReview = async () => {
-        console.log(review.id)
         await dispatch(removeReview(review.id, review.spotId))
         // if(check){
             // add modal here to make the check work to ask the user

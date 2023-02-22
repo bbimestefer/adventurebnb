@@ -4,9 +4,10 @@
   "description": "## Database Schema Design",
   "main": "index.js",
   "dependencies": {
-    "bcryptjs": "^2.4.3"
+    "aws-sdk": "^2.1320.0",
+    "bcryptjs": "^2.4.3",
+    "multer": "^1.4.5-lts.1"
   },
-  "devDependencies": {},
   "scripts": {
     "render-postbuild": "npm run build --prefix frontend",
     "install": "npm --prefix backend install backend && npm --prefix frontend install frontend",
