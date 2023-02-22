@@ -31,7 +31,6 @@ function ImageForm({spotId}) {
             async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors);
-                console.log(data)
             });
         // dispatch(bookingCreate(spot.id, payload))
         // alert('Your booking has been reserved!')

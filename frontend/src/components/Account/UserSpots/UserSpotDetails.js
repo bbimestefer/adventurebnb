@@ -16,10 +16,9 @@ export default function UserSpotDetails (spot) {
         // if(check){
             // add modal here to make the check work to ask the user
             // if they are sure they want to delete that spot
-            const deletedSpot = await dispatch(removeSpot(spot.id))
+            await dispatch(removeSpot(spot.id))
             await dispatch(getAllSpots())
 
-            if(deletedSpot) console.log('deleted')
         // }
     }
 

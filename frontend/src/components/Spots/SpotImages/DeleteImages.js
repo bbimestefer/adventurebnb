@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { useModal } from '../../../context/Modal';
 import { csrfFetch } from '../../../store/csrf';
 import { getSpotById } from '../../../store/spots';
 import './DeleteImages.css'
 
 function DeleteImages({images, spotId}) {
-    const history = useHistory()
     const dispatch = useDispatch()
     const { closeModal } = useModal();
     const [ selectedImages, setSelectedImages ] = useState([])
@@ -22,7 +20,7 @@ function DeleteImages({images, spotId}) {
             .catch(
                 async (res) => {
                     const data = await res.json();
-                    if (data && data.errors) console.log(data.errors);
+                    if (data && data.errors) return;
                 }
             );
         });
