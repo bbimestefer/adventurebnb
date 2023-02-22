@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { useModal } from '../../../context/Modal'
 import { csrfFetch } from '../../../store/csrf'
 import { getSpotById } from '../../../store/spots'
 import './ImageForm.css'
@@ -8,6 +9,7 @@ import './ImageForm.css'
 function ImageForm({spotId}) {
     const dispatch = useDispatch()
     const history = useHistory()
+    const { closeModal } = useModal()
     // const [ numImages, setNumImages ] = useState(1)
     const [ image, setImage ] = useState('')
     const [ errors, setErrors ] = useState([])
@@ -19,24 +21,48 @@ function ImageForm({spotId}) {
     }
 
     const handleSubmit = async (e) => {
+        const formData = new FormData();
         e.preventDefault()
-        await csrfFetch(`/api/spots/${spotId}/images`, {
-            method: 'POST',
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({url: image, preview: false})
-          })
-          .then(createdImage => dispatch(getSpotById(spotId)))
-          .then(() => clearData())
-          .catch(
-            async (res) => {
-                const data = await res.json();
-                if (data && data.errors) setErrors(data.errors);
-            });
-        // dispatch(bookingCreate(spot.id, payload))
-        // alert('Your booking has been reserved!')
-        // setCheckIn(today)
-        // setCheckout(futureDate)
+        if (image) formData.append("image", image);
+        formData.append('preview', false)
+
+        const res = await csrfFetch(`/api/spots/${spotId}/images`, {
+            method: "POST",
+            headers: {
+            "Content-Type": "multipart/form-data",
+            },
+            body: formData,
+        })
+        .then(() => dispatch(getSpotById(spotId)))
+        .then(() => clearData())
+        .then(closeModal)
+        .catch(
+          async (res) => {
+              const data = await res.json();
+              if (data && data.errors) setErrors(data.errors);
+          });
+        // e.preventDefault()
+        // await csrfFetch(`/api/spots/${spotId}/images`, {
+        //     method: 'POST',
+        //     headers: {"Content-Type": "application/json"},
+        //     body: JSON.stringify({url: image, preview: false})
+        //   })
+        //   .then(createdImage => dispatch(getSpotById(spotId)))
+        //   .then(() => clearData())
+        //   .catch(
+        //     async (res) => {
+        //         const data = await res.json();
+        //         if (data && data.errors) setErrors(data.errors);
+        //     });
     }
+
+    const updateFile = (e) => {
+        const file = e.target.files[0];
+        if (file) setImage(file);
+    }
+
+
+
     return (
         <div>
             <form className='imageForm' onSubmit={handleSubmit}>
@@ -47,11 +73,8 @@ function ImageForm({spotId}) {
                 }
                 <label className="reserveFormLabels">
                     {'Add your Image'}
-                    <input type={'url'}
-                    name={`image${1}`}
-                    placeholder={'Add image url'}
-                    value={image}
-                    onChange={(e) => setImage(e.target.value)}
+                    <input type='file'
+                    onChange={updateFile}
                     />
                 </label>
                 <button className='demo-user-button' style={{"width":"fitContent"}}>Submit</button>

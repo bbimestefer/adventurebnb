@@ -22,6 +22,10 @@ app.use(cookieParser());
 //parsing JSON
 app.use(express.json());
 
+// AWS
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
 // Security Middleware
 if (!isProduction) {
     // enable cors only in development

@@ -4,6 +4,7 @@ const sequelize = require('sequelize');
 const { Op } = require('sequelize');
 const { requireAuth } = require("../../utils/auth.js");
 const { User, Spot, Booking, SpotImage, ReviewImage, Review } = require('../../db/models');
+const { singlePublicFileUpload, singleMulterUpload } = require('../../awsS3')
 
 router.get('/', async (req, res, next) => {
 
@@ -457,9 +458,11 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
 })
 
 
-router.post('/:spotId/images', requireAuth, async (req, res, next) => {
+router.post('/:spotId/images', singleMulterUpload("image"), requireAuth, async (req, res, next) => {
     const spot = await Spot.findByPk(req.params.spotId)
-    const { url, preview } = req.body
+    const { preview } = req.body
+
+    const imageURL = await singlePublicFileUpload(req.file);
 
     if(!spot){
         res.status(404)
@@ -475,10 +478,11 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
         })
     }
 
+
     const createdSpotImage = await SpotImage.create({
         spotId: spot.id,
-        url,
-        preview
+        url: imageURL,
+        preview: preview || false
     })
 
     if(!createdSpotImage){
