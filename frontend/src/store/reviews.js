@@ -54,10 +54,13 @@ export const reviewCreate = (spotId, review, user, imageUrl) => async dispatch =
       if(response.ok){
         const review = await response.json()
         if(imageUrl){
+            const formData = new FormData();
+            formData.append("image", imageUrl);
             const imageResponse = await csrfFetch(`/api/reviews/${review.id}/images`, {
                 method: 'POST',
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({url: imageUrl})
+                headers: {"Content-Type": "multipart/form-data"},
+                body: formData
+                // body: JSON.stringify({url: imageUrl})
             })
 
             if(imageResponse.ok){

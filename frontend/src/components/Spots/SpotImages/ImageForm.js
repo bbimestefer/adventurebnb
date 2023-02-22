@@ -26,7 +26,7 @@ function ImageForm({spotId}) {
         if (image) formData.append("image", image);
         formData.append('preview', false)
 
-        const res = await csrfFetch(`/api/spots/${spotId}/images`, {
+        await csrfFetch(`/api/spots/${spotId}/images`, {
             method: "POST",
             headers: {
             "Content-Type": "multipart/form-data",

@@ -13,20 +13,36 @@ export default function ReserveForm (spot) {
     const futureDate = `${date.getFullYear()}-${month < 9 ? '0' + String(month) : month}-${date.getDate() + 5}`
     const [ checkIn, setCheckIn ] = useState(today)
     const [ checkout, setCheckout ] = useState(futureDate)
+    const [ errors, setErrors ] = useState([])
 
     const thisDate = new Date(checkout) - new Date(checkIn)
     const numDays = Math.ceil(thisDate / (1000 * 3600 * 24));
 
-    const handleSubmit = (e) => {
+    const updateCheckIn = (e) => setCheckIn(e.target.value)
+    const updateCheckout = (e) => setCheckout(e.target.value)
+
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
         const payload = {
             startDate: checkIn,
             endDate: checkout
         }
-        dispatch(bookingCreate(spot.id, payload))
-        alert('Your booking has been reserved!')
-        setCheckIn(today)
-        setCheckout(futureDate)
+        await dispatch(bookingCreate(spot.id, payload))
+        .then(() => {
+            setErrors([])
+            alert('Your booking has been reserved!')
+            setCheckIn(today)
+            setCheckout(futureDate)
+        })
+        .catch(
+            async (res) => {
+                const data = await res.json();
+                console.log(data)
+                console.log(data.errors)
+                if (data && data.errors) setErrors(Object.values(data.errors));
+            }
+        );
     }
     const rating = spot.avgStarRating
     return (
@@ -42,23 +58,30 @@ export default function ReserveForm (spot) {
                 <form
                 onSubmit={handleSubmit}
                 style={{"display":"flex","alignItems":"center", "flexDirection":"column"}}>
+                    {errors.length !== 0 &&
+                        <ul style={{"marginBottom":"0px"}}>
+                        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                        </ul>
+                    }
                     <div style={{"display":"flex"}}>
                         <label className="reserveFormLabels">
                             CHECK-IN
                             <input type={'date'}
                             name={'check-in'}
                             placeholder={'Add date'}
+                            min={today}
                             value={checkIn}
-                            onChange={(e) => setCheckIn(e.target.value)}
+                            onChange={updateCheckIn}
                             />
                         </label>
                         <label className="reserveFormLabels">
                             CHECKOUT
                             <input type={'date'}
                             name={'checkout'}
+                            min={checkIn}
                             placeholder={'Add date'}
                             value={checkout}
-                            onChange={(e) => setCheckout(e.target.value)}
+                            onChange={updateCheckout}
                             />
                         </label>
                     </div>

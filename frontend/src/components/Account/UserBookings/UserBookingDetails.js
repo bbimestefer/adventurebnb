@@ -4,6 +4,7 @@ import { removeBooking } from '../../../store/bookings'
 
 function UserBookingDetails(booking) {
     const dispatch = useDispatch()
+    const today = new Date(Date.now())
     const startDate = new Date(booking.startDate).toUTCString().slice(0, 16)
     const endDate = new Date(booking.endDate).toUTCString().slice(0, 16)
     const deleteBooking = async () => {
@@ -25,7 +26,7 @@ function UserBookingDetails(booking) {
             <div style={{"display":"flex", "alignItems":"center", "gap":"10px"}}>
                 {/* <button onClick={editreview} >Edit</button> */}
                 {/* <Link to={`/account/reviews/edit/${review.id}`}>Edit</Link> */}
-                <button className='demo-user-button' onClick={deleteBooking}>Delete</button>
+                { new Date(booking.startDate) > today && <button className='demo-user-button' onClick={deleteBooking}>Delete</button>}
             </div>
         </div>
     )
