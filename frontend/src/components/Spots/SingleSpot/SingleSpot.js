@@ -92,22 +92,64 @@ function SingleSpot () {
             <div className="image-container">
                 {spot.SpotImages?.map((image, i) => (
                     (i < 5 && (i === 0 ?
-                    <img key={i} className="first_grid_item" src={image.url} alt={i}/>
-                    : <img key={i} className={`grid_item border_${i}`} src={image.url} alt={i}/>))
+                    <img key={i} style={{"objectFit":"cover"}} className="first_grid_item" src={image.url} alt={i}/>
+                    : <img key={i} style={{"objectFit":"cover"}} className={`grid_item border_${i}`} src={image.url} alt={i}/>))
                 ))}
             </div>
             <div className="spotInfo">
                 <div className="details">
                     <div className="houseInfo">
-                        <div className="host">
+                        <div className="host bb pb">
                             <h3 style={{"margin":"0", "minWidth":"13em"}}>
                                 This home hosted by {spot.Owner.firstName}
                             </h3>
-                            <i style={{"fontSize":"30px"}} class="fa-solid fa-user"></i>
+                            <i style={{"fontSize":"30px"}} className="fa-solid fa-user"></i>
+                        </div>
+                        <div className="bb ptb">
+                            <div className="fdc pb">
+                                <span className="fwb">Self check-in</span>
+                                <span className="fclg">Check yourself in with the keypad.</span>
+                            </div>
+                            <div className="fdc pb">
+                                <span className="fwb">Great location</span>
+                                <span className="fclg">100% of recent guests loved the area</span>
+                            </div>
+                            <div className="fdc">
+
+                                <span className="fwb">Great experience</span>
+                                <span className="fclg">100% of recent guests love to come back</span>
+                            </div>
+                        </div>
+                        <div className="bb ptb fdc">
+                            <img style={{"width":"9em"}} className='pb' src="https://a0.muscache.com/im/pictures/54e427bb-9cb7-4a81-94cf-78f19156faad.jpg" alt="AirCover"></img>
+                            <span className="fclg">
+                                Every booking includes free protection from Host cancellations,
+                                listing inaccuracies, and other issues like trouble checking in.
+                            </span>
+                        </div>
+                        <div className="bb ptb fdc">
+                            <span className="fclg">{spot.description}</span>
+                        </div>
+                        <div className="bb ptb fdc g1">
+                            <span style={{"fontSize":"20px", "fontWeight":"500"}}>What this place offers</span>
+                            <div className="fdr g1">
+                                <div className="fdc g1" style={{"gap":"1.37em"}}>
+                                    <i className="fa-solid fa-fire-burner cb"></i>
+                                    <i class="fa-solid fa-car"></i>
+                                    <i class="fa-solid fa-wifi"></i>
+                                    <i class="fa-solid fa-temperature-three-quarters"></i>
+                                </div>
+                                <div className="fdc g1">
+                                    <span>Kitchen</span>
+                                    <span>Parking on premises</span>
+                                    <span>Wifi</span>
+                                    <span>Air conditioning</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="reserveFormContainer">
-                        <div className="reserve-form"><ReserveForm {...spot} /></div>
+                        <ReserveForm {...spot} />
                     </div>
                 </div>
             </div>
