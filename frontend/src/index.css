@@ -9,6 +9,11 @@ button {
     cursor: pointer;
 }
 
+html {
+    width: 100%;
+    height: 100%;
+}
+
 body {
     margin: 0px;
     margin-bottom: 20px;
@@ -35,4 +40,71 @@ form button, .demo-user-button {
 
 .ul-errors {
     margin-top: 0px;
+}
+
+
+.bb {
+    border-bottom: 1px solid lightgray;
+}
+
+.ptb {
+    padding: 2em 0em;
+}
+
+.pb {
+    padding-bottom: 1em;
+}
+
+.fdc {
+    display: flex;
+    flex-direction: column;
+}
+
+.fdr {
+    display: flex;
+    flex-direction: row;
+}
+
+.fwb {
+    font-weight: bold;
+}
+
+.fclg {
+    color: rgb(122, 122, 122);
+}
+
+.cb {
+    color: black;
+}
+
+.g1 {
+    display: flex;
+    gap: 1em;
+}
+
+.jcc {
+    display: flex;
+    justify-content: center;
+}
+
+.jcse {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.aic {
+    display: flex;
+    align-items: center;
+}
+
+.p1 {
+    padding: 1em;
+}
+
+.fss {
+    font-size: 10px;
+}
+
+.tdu {
+    text-decoration: underline;
 }

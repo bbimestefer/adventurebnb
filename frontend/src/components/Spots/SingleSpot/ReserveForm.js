@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { bookingCreate } from "../../../store/bookings"
 import "./SingleSpot.css"
+import "./ReserveForm.css"
 
 export default function ReserveForm (spot) {
     const dispatch = useDispatch()
@@ -38,62 +39,72 @@ export default function ReserveForm (spot) {
         .catch(
             async (res) => {
                 const data = await res.json();
-                console.log(data)
-                console.log(data.errors)
                 if (data && data.errors) setErrors(Object.values(data.errors));
             }
         );
     }
     const rating = spot.avgStarRating
     return (
-        <div className="form-container" style={{"paddingRight": "10px", "paddingLeft": "10px"}}>
+        <div className="form-container p1">
             <div>
-                <div className="sub-info gap-for-reserve">
+                <div className="sub-info g1 aic">
                     <div><span style={{"fontWeight": "bold"}}>${spot.price}</span> night</div>
-                    <div>
-                        <span><i className="fa-sharp fa-solid fa-star"></i>{isNaN(rating) ? 0 : rating} ·</span>
-                        {spot.numReviews === 1 ? <span>{spot.numReviews} review </span> : <span>{spot.numReviews} reviews </span>}
+                    <div className="reserveReviewInfo">
+                        <span className="aic"><i className="fa-sharp fa-solid fa-star" style={{"fontSize":"12px"}}></i>{isNaN(rating) ? 0 : rating} ·</span>
+                        <span>{spot.numReviews} {spot.numReviews === 1 ? 'review' : 'reviews'} </span>
                     </div>
                 </div>
                 <form
-                onSubmit={handleSubmit}
-                style={{"display":"flex","alignItems":"center", "flexDirection":"column"}}>
+                className="formReserve"
+                onSubmit={handleSubmit}>
                     {errors.length !== 0 &&
                         <ul style={{"marginBottom":"0px"}}>
                         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                         </ul>
                     }
-                    <div style={{"display":"flex"}}>
-                        <label className="reserveFormLabels">
-                            CHECK-IN
-                            <input type={'date'}
-                            name={'check-in'}
-                            placeholder={'Add date'}
-                            min={today}
-                            value={checkIn}
-                            onChange={updateCheckIn}
+                    <div className="inputContainer">
+                        <div>
+                            <label className="reserveFormLabels fss fwb">
+                                CHECK-IN
+                            </label>
+                                <input
+                                    className="reserveFormInputs"
+                                    type={'date'}
+                                    name={'check-in'}
+                                    placeholder={'Add date'}
+                                    min={today}
+                                    value={checkIn}
+                                    onChange={updateCheckIn}
+                                />
+                        </div>
+                        <div>
+                            <label className="reserveFormLabels fss fwb">
+                                CHECKOUT
+                            </label>
+                            <input
+                                className="reserveFormInputs"
+                                type={'date'}
+                                name={'checkout'}
+                                min={checkIn}
+                                placeholder={'Add date'}
+                                value={checkout}
+                                onChange={updateCheckout}
                             />
-                        </label>
-                        <label className="reserveFormLabels">
-                            CHECKOUT
-                            <input type={'date'}
-                            name={'checkout'}
-                            min={checkIn}
-                            placeholder={'Add date'}
-                            value={checkout}
-                            onChange={updateCheckout}
-                            />
-                        </label>
+                        </div>
                     </div>
-                    <label>
-                        Guest
-                        <input type={'number'}
-                        name={'guest'}
-                        placeholder={'1 guest'}
-                        value={guest}
-                        onChange={(e) => setGuest(e.target.value)}
+                    <div>
+                        <label className="reserveFormLabels fss fwb">
+                            GUEST
+                        </label>
+                        <input
+                        className="reserveFormInputs"
+                            type={'number'}
+                            name={'guest'}
+                            placeholder={'1 guest'}
+                            value={guest}
+                            onChange={(e) => setGuest(e.target.value)}
                         />
-                    </label>
+                    </div>
                     {user && user.id !== spot.ownerId ? <button className="reserveFormButton">Reserve</button> : null}
                 </form>
             </div>
@@ -105,15 +116,15 @@ export default function ReserveForm (spot) {
                     {checkIn && checkout && (
                         <>
                             <div className="spacing">
-                                <span>${spot.price} x {numDays} nights</span>
+                                <span className="tdu">${spot.price} x {numDays} nights</span>
                                 <span>${spot.price * numDays}</span>
                             </div>
                             <div className="spacing">
-                                <span>Cleaning Fee</span>
+                                <span className="tdu">Cleaning Fee</span>
                                 <span>${35 * numDays}</span>
                             </div>
                             <div className="spacing">
-                                <span>Service Fee</span>
+                                <span className="tdu">Service Fee</span>
                                 <span>${25 * numDays}</span>
                             </div>
                         </>

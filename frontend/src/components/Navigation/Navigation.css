@@ -2,10 +2,12 @@
     display: flex;
     justify-content: center;
     width: 100%;
+    background-color: white;
     height: fit-content;
     border-bottom: solid 1px #c8c8c8;
     position: sticky;
     top: 0px;
+    z-index: 100;
 }
 
 .nav-bar {

@@ -278,7 +278,6 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
         Bookings: bookings
     })
 
-    // console.log(spot.toJSON())
     // bookingsInfo = []
     // spot.Bookings.forEach(booking => {
     //     const info = {}
@@ -379,9 +378,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const userId = req.user.id
     const today = new Date(Date.now())
 
-    console.log(dateStart.toDateString(),'\n', dateEnd.toDateString(),'\n', today.toDateString())
-    console.log(dateStart < today)
-
     const spot = await Spot.findOne({
         where: {
             id: req.params.spotId
@@ -392,6 +388,8 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         //     }
         // ]
     })
+
+    console.log("\n\n\n\nHOURS---------------------------------------",today.getHours(), today.getHours() > 16, dateStart < today && today.getHours() > 16)
 
     if(!spot){
         res.status(404)
@@ -417,7 +415,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
               "endDate": "Dates cannot be the same"
             }
         })
-    } else if (dateStart < today) {
+    } else if (dateStart < today && today.getHours() > 16) {
         res.status(400)
         return res.json({
             "message": "Validation error",

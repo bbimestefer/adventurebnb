@@ -70,8 +70,6 @@ router.post('/:reviewId/images', singleMulterUpload("image"), requireAuth, async
         ]
     })
 
-    console.log('HERE_----------------------------------------------------------------\n\n\n\n\n')
-
     if (!review){
         res.status(404)
         return res.json({
@@ -112,8 +110,6 @@ router.put('/:reviewId', requireAuth, async (req, res, next) => {
             id: req.params.reviewId
         }
     })
-
-    // console.log(reviewToFind.userId, userId)
 
     if (!reviewToFind){
         res.status(404)

@@ -1,3 +1,7 @@
+.singleReviewContainer {
+    padding: 1em 0em;
+}
+
 .delete-review-button {
     /* margin-top: 1rem; */
     background: linear-gradient(90deg,#e61e4d 0,#e31c5f 50%,#d70466);
@@ -8,4 +12,9 @@
     font-weight: bolder;
     box-sizing: border-box;
     width: 7rem;
+}
+
+.imagesModalButton {
+    text-decoration: underline;
+    padding-left: 0px;
 }
