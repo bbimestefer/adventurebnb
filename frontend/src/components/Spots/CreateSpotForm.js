@@ -27,7 +27,7 @@ export default function CreateSpotForm () {
     const updateDescription = (e) => setDescription(e.target.value)
     const updatePrice = (e) => setPrice(e.target.value)
     // const updateImageNumber = (e) => setImageNumber(e.target.value)
-    const updateURL = (e) => setURL(e.target.value)
+
 
     const clearData = (createdSpot) => {
         setAddress('')
@@ -66,6 +66,11 @@ export default function CreateSpotForm () {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors);
             });
+    }
+
+    const updateURL = (e) => {
+        const file = e.target.files[0];
+        if (file) setURL(file);
     }
 
     // const demoSpot = async () => {
@@ -158,11 +163,9 @@ export default function CreateSpotForm () {
                     onChange={updateImageNumber}
                 /> */}
                 <input style={{"borderRadius":"10px", "marginBottom": "10px"}}
-                    type={'url'}
-                    placeholder={'Cover image url'}
-                    required
-                    value={url}
+                    type='file'
                     onChange={updateURL}
+                    required
                 />
                 <button className="submitButton">Submit</button>
             </form>

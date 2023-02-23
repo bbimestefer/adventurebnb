@@ -161,7 +161,7 @@ function SingleSpot () {
                 )}
                 {reviews.length ? (
                     <Reviews reviews={reviews}/>
-                ) : (<div>No Reviews</div>)}
+                ) : (<div className="tdu fwb" style={{"marginTop":"1em"}}>No Reviews</div>)}
             </div>
         </div>
     )
