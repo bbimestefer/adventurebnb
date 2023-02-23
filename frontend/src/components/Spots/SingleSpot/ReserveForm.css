@@ -53,3 +53,8 @@
     height: 3em;
     margin: 7px;
 }
+
+.reserveReviewInfo {
+    display: flex;
+    gap: 0.5em;
+}

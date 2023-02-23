@@ -92,7 +92,7 @@
 .image-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr ;
-    grid-template-rows: 15em 15em;
+    grid-template-rows: minmax(10em, 1fr) minmax(10em, 1fr);
     gap: 10px;
     height: 100%;
     width: 100%;

@@ -49,8 +49,8 @@ export default function ReserveForm (spot) {
             <div>
                 <div className="sub-info g1 aic">
                     <div><span style={{"fontWeight": "bold"}}>${spot.price}</span> night</div>
-                    <div>
-                        <span><i className="fa-sharp fa-solid fa-star" style={{"fontSize":"12px"}}></i>{isNaN(rating) ? 0 : rating} ·</span>
+                    <div className="reserveReviewInfo">
+                        <span className="aic"><i className="fa-sharp fa-solid fa-star" style={{"fontSize":"12px"}}></i>{isNaN(rating) ? 0 : rating} ·</span>
                         <span>{spot.numReviews} {spot.numReviews === 1 ? 'review' : 'reviews'} </span>
                     </div>
                 </div>
@@ -116,15 +116,15 @@ export default function ReserveForm (spot) {
                     {checkIn && checkout && (
                         <>
                             <div className="spacing">
-                                <span>${spot.price} x {numDays} nights</span>
+                                <span className="tdu">${spot.price} x {numDays} nights</span>
                                 <span>${spot.price * numDays}</span>
                             </div>
                             <div className="spacing">
-                                <span>Cleaning Fee</span>
+                                <span className="tdu">Cleaning Fee</span>
                                 <span>${35 * numDays}</span>
                             </div>
                             <div className="spacing">
-                                <span>Service Fee</span>
+                                <span className="tdu">Service Fee</span>
                                 <span>${25 * numDays}</span>
                             </div>
                         </>

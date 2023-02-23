@@ -133,11 +133,11 @@ function SingleSpot () {
                         <div className="bb ptb fdc g1">
                             <span style={{"fontSize":"20px", "fontWeight":"500"}}>What this place offers</span>
                             <div className="fdr g1">
-                                <div className="fdc g1" style={{"gap":"1.37em"}}>
+                                <div className="fdc aic g1" style={{"gap":"1.37em"}}>
                                     <i className="fa-solid fa-fire-burner cb"></i>
-                                    <i class="fa-solid fa-car"></i>
-                                    <i class="fa-solid fa-wifi"></i>
-                                    <i class="fa-solid fa-temperature-three-quarters"></i>
+                                    <i className="fa-solid fa-car"></i>
+                                    <i className="fa-solid fa-wifi"></i>
+                                    <i className="fa-solid fa-temperature-three-quarters"></i>
                                 </div>
                                 <div className="fdc g1">
                                     <span>Kitchen</span>
