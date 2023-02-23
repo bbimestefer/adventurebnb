@@ -389,6 +389,8 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         // ]
     })
 
+    console.log("\n\n\n\nHOURS---------------------------------------",today.getHours(), today.getHours() > 16, dateStart < today && today.getHours() > 16)
+
     if(!spot){
         res.status(404)
         return res.json({
@@ -413,7 +415,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
               "endDate": "Dates cannot be the same"
             }
         })
-    } else if (dateStart < today) {
+    } else if (dateStart < today && today.getHours() > 16) {
         res.status(400)
         return res.json({
             "message": "Validation error",

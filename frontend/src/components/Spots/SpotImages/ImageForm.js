@@ -64,20 +64,21 @@ function ImageForm({spotId}) {
 
 
     return (
-        <div>
+        <div className='createImageFormContainer'>
             <form className='imageForm' onSubmit={handleSubmit}>
                 {errors.length !== 0 &&
                     <ul style={{"marginBottom":"0px"}}>
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                     </ul>
                 }
-                <label className="reserveFormLabels">
-                    {'Add your Image'}
+                <label className="fwb g1 fdc">
+                    Add your Image
                     <input type='file'
+                    style={{"width":"100%"}}
                     onChange={updateFile}
                     />
                 </label>
-                <button className='demo-user-button' style={{"width":"fitContent"}}>Submit</button>
+                <button className='demo-user-button'>Submit</button>
             </form>
         </div>
     )

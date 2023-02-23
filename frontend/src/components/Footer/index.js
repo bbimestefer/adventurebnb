@@ -61,10 +61,10 @@ const Footer = () => {
                 <div className="my-information-creators">
                     <div className="single-creator">
                     <div className='fwb p1' style={{"fontSize":"18px"}}>Brandon Bimestefer</div>
-                        <a className="user-link" href="https://github.com/bbimestefer" target="_blank">
+                        <a className="user-link" rel="noreferrer" href="https://github.com/bbimestefer" target="_blank">
                             <i className="fa-brands fa-github" style={{"fontSize":"30px"}}></i>
                         </a>
-                        <a className="user-link" href="https://www.linkedin.com/in/brandon-bimestefer-a01924250/" target="_blank">
+                        <a className="user-link" rel="noreferrer" href="https://www.linkedin.com/in/brandon-bimestefer-a01924250/" target="_blank">
                             <i className="fa-brands fa-linkedin" style={{"fontSize":"30px"}}></i>
                         </a>
                     </div>

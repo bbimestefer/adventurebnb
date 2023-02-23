@@ -155,7 +155,7 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
             "message": "Forbidden",
             "statusCode": 403
         })
-    } else if(today.getTime() >= bookingStartDate.getTime()) {
+    } else if(today.getTime() >= bookingStartDate.getTime() && today.getHours() > 16) {
         res.status(403)
         return res.json({
             "message": "Past bookings can't be modified",

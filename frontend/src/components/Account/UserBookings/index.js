@@ -11,11 +11,11 @@ function UserBookings() {
     const bookings = Object.values(useSelector(state => state.bookings.user))
     const [ showPast, setShowPast ] = useState(false)
     const pastBookings = bookings.filter(booking => {
-        if (new Date(booking.startDate) <= today) return booking
+        if (new Date(booking.startDate) <= today && new Date(booking.startDate).getDate() + 1 !== today.getDate() && today.getHours() < 16) return booking
         else return null
     })
     const futureBookings = bookings.filter(booking => {
-        if (new Date(booking.startDate) >= today) return booking
+        if (new Date(booking.startDate) > today || (new Date(booking.startDate).getDate() + 1 === today.getDate() && today.getHours() < 16)) return booking
         else return null
     })
 

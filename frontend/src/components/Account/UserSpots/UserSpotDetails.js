@@ -1,26 +1,8 @@
-// import { useState } from "react"
-import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
-import { getAllSpots, removeSpot } from "../../../store/spots"
+import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem"
+import DeleteSpot from "./DeleteSpot";
 
 export default function UserSpotDetails (spot) {
-    const dispatch = useDispatch()
-    // const history = useHistory()
-    // const [ check, setCheck ] = useState(true)
-
-    // const editSpot = () => {
-    //     history.push(`/account/spots/edit/${spot.id}`)
-    // }
-
-    const deleteSpot = async () => {
-        // if(check){
-            // add modal here to make the check work to ask the user
-            // if they are sure they want to delete that spot
-            await dispatch(removeSpot(spot.id))
-            await dispatch(getAllSpots())
-
-        // }
-    }
 
     if(!spot) return null
     return (
@@ -32,7 +14,14 @@ export default function UserSpotDetails (spot) {
             <div style={{"display":"flex", "alignItems":"center", "gap":"10px"}}>
                 {/* <button onClick={editSpot} >Edit</button> */}
                 <Link to={`/account/spots/edit/${spot.id}`}>Edit</Link>
-                <button className="demo-user-button" onClick={deleteSpot}>Delete</button>
+                <div style={{"listStyleType":"none"}} className='demo-user-button'>
+                    <OpenModalMenuItem
+                        className='imageFormButton'
+                        style={{"minWidth":"10em"}}
+                        itemText="Delete"
+                        modalComponent={<DeleteSpot spot={spot}/>}
+                    />
+                </div>
             </div>
         </div>
     )
