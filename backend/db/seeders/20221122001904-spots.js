@@ -162,7 +162,7 @@ module.exports = {
         lat: 37,
         lng: 119,
         name: 'Cabin with a Hot Tub!',
-        description: "Need a lakeside getaway? Sitting across the street from Clarke Lake, this Wrightsville cabin is complete with an open living space, fully equipped kitchen, and a deck perfect for summer days spent outdoors.",
+        description: "Need a lakeside getaway? Sitting across the street from Clarke Lake, this Wrightsville cabin is complete with an open living space and a fully equipped kitchen.",
         price: 354,
       },
       {
@@ -174,7 +174,7 @@ module.exports = {
         lat: 37,
         lng: 119,
         name: 'The Deep',
-        description: "Unique experience, secluded. Enjoy a weekend or a few days eco-friendly retreat in an architectural, geometric masterpiece on 30 preserved acres just minutes from all that Rhinebeck and the Hudson Valley have to offer.",
+        description: "Unique experience, secluded. Enjoy a weekend or a few days eco-friendly retreat just minutes from all that Rhinebeck and the Hudson Valley have to offer.",
         price: 472,
       },
       {
@@ -186,7 +186,7 @@ module.exports = {
         lat: 37,
         lng: 119,
         name: 'Treehouse Daydreams',
-        description: 'Why do people travel thousands of miles from around the world to stay in our treehouse? Come and see for yourself!! Transport your spirit, and feel a thrill that can only be discovered in the treetops!',
+        description: 'Why do people travel thousands of miles from around the world to stay in our treehouse? Come and see for yourself!! Feel a thrill that can only be discovered in the treetops!',
         price: 535,
       },
       {
@@ -198,7 +198,7 @@ module.exports = {
         lat: 37,
         lng: 119,
         name: 'The Smurf Layer',
-        description: "Owl Hill House is an organically shaped structure built by sculptors in the early 1980's and recently renovated by one of its original creators. Its 570 square feet interior is cozy with hand-plastered, white walls and custom built-in furniture.",
+        description: "Owl Hill House is an organically shaped structure built in the early 1980's and recently renovated. Its 570 square feet interior is cozy with hand-plastered, white walls and custom built-in furniture.",
         price: 199,
       },
       {
@@ -210,7 +210,7 @@ module.exports = {
         lat: 37,
         lng: 119,
         name: 'Spaceship House',
-        description: "Are you ready for a vacation that's out of this world?!  Come stay in our newly-remodeled spaceship-on-the-beach! Whether you're a Trekkie, a Star-Wars buff, or just the *coolest* grandparents on planet Earth--You're sure to find something delightful in this deep-space dome. ",
+        description: "Are you ready for a vacation that's out of this world?! Come stay in our newly-remodeled spaceship-on-the-beach! You're sure to find something delightful in this deep-space dome.",
         price: 168,
       },
       {
@@ -222,7 +222,7 @@ module.exports = {
         lat: 37,
         lng: 119,
         name: 'Early Risers',
-        description: "This house in Italy is nestled at the base of the stunning mountains, offering breathtaking views of the surrounding natural beauty. With its rustic architecture and cozy interior, it's the perfect retreat for nature lovers looking to escape the hustle and bustle of city life.",
+        description: "This house in Italy is nestled at the base of the stunning mountains, offering breathtaking views of the surrounding natural beauty.",
         price: 146,
       },
     ], {});
