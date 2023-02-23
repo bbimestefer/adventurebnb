@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     padding: 0px 275px 0px 275px;
-    min-width: 600px;
+    min-width: fit-content;
     /* border: black solid 3px; */
 }
 
@@ -56,23 +56,31 @@
 }
 
 .details {
+    width: 100%;
     display: flex;
     flex-direction: row;
+    padding-top: 3em;
+}
+.details-wrapper {
+    border: 1px solid red;
+}
+
+.houseInfo {
+    width: 70%;
 }
 
 .host {
     display: flex;
+    flex-direction: row;
+    align-items: center;
     justify-content: space-between;
-    margin: 0px;
-    width: 1200px;
-    padding-top: 40px;
-    padding-bottom: 20px;
-    border-bottom: solid 1px rgb(192, 192, 192);
+}
+
+.reserveFormContainer {
+    width: 30%;
 }
 
 .reserve-form {
-    display: flex;
-    justify-content: right;
     width: 100%;
 }
 
@@ -83,18 +91,15 @@
 }
 
 .form-container {
-    margin-top: 10px;
     display: flex;
     align-items: center;
+    min-width: fit-content;
     flex-direction: column;
     justify-content: center;
-    min-width: 22em;
-    width: fit-content;
-    height: fit-content;
-    border: 1px solid gray;
+    border: 1px solid rgb(212, 212, 212);
     border-radius: 10px;
     box-sizing: border-box;
-    box-shadow: 1px 1px 5px gray;
+    box-shadow: 1px 1px 5px rgb(182, 182, 182);
 }
 
 .reserveFormLabels {

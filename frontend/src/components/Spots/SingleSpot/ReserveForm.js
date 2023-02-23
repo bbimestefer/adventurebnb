@@ -38,15 +38,13 @@ export default function ReserveForm (spot) {
         .catch(
             async (res) => {
                 const data = await res.json();
-                console.log(data)
-                console.log(data.errors)
                 if (data && data.errors) setErrors(Object.values(data.errors));
             }
         );
     }
     const rating = spot.avgStarRating
     return (
-        <div className="form-container" style={{"paddingRight": "10px", "paddingLeft": "10px"}}>
+        <div className="form-container">
             <div>
                 <div className="sub-info gap-for-reserve">
                     <div><span style={{"fontWeight": "bold"}}>${spot.price}</span> night</div>

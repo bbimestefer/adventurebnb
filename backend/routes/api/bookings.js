@@ -39,7 +39,6 @@ router.get('/current', requireAuth, async (req, res, next) => {
         }
 
         delete booking.Spot.SpotImages
-        console.log(booking)
         newBookings.push(booking)
     });
 

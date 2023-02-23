@@ -59,7 +59,12 @@ function SingleSpot () {
                 <div className="sub-info">
                     <div className='ratings'>
                         <span style={{"width":"4rem"}}><i className="fa-sharp fa-solid fa-star"></i>{isNaN(rating) ? 0 : rating}</span>
-                        {spot.numReviews === 1 ? <span style={{"width":"5rem"}}>{spot.numReviews} review </span> : <span style={{"width":"5rem"}}>{spot.numReviews} reviews </span>}
+                        {spot.numReviews === 1 ?
+                            <span style={{"width":"5rem"}}>{spot.numReviews} review </span>
+                            :
+                            <span style={{"width":"5rem"}}>{spot.numReviews} reviews </span>
+                        }
+
                         <span style={{"width":"20rem"}}>{spot.city}, {spot.state}, {spot.country}</span>
                     </div>
                     {user.id === spot.ownerId && <div className="imageFormButton">
@@ -91,11 +96,20 @@ function SingleSpot () {
                     : <img key={i} className={`grid_item border_${i}`} src={image.url} alt={i}/>))
                 ))}
             </div>
-            <div className="details">
-                <div className="host">
-                    <h3 style={{"width":"20.15rem"}}>This home hosted by {spot.Owner.firstName}</h3>
+            <div className="spotInfo">
+                <div className="details">
+                    <div className="houseInfo">
+                        <div className="host">
+                            <h3 style={{"margin":"0", "minWidth":"13em"}}>
+                                This home hosted by {spot.Owner.firstName}
+                            </h3>
+                            <i style={{"fontSize":"30px"}} class="fa-solid fa-user"></i>
+                        </div>
+                    </div>
+                    <div className="reserveFormContainer">
+                        <div className="reserve-form"><ReserveForm {...spot} /></div>
+                    </div>
                 </div>
-                <div className="reserve-form"><ReserveForm {...spot} /></div>
             </div>
             <div>
                 {showForm ? (

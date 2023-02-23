@@ -12,14 +12,16 @@ function UserBookings() {
     const [ showPast, setShowPast ] = useState(false)
     const pastBookings = bookings.filter(booking => {
         if (new Date(booking.startDate) <= today) return booking
+        else return null
     })
     const futureBookings = bookings.filter(booking => {
         if (new Date(booking.startDate) >= today) return booking
+        else return null
     })
 
     useEffect(() => {
         dispatch(userBooking())
-    }, [])
+    }, [dispatch])
     if(!bookings) return null
     return (
         <div style={{"display":"flex", "flexDirection":"row"}}>

@@ -278,7 +278,6 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
         Bookings: bookings
     })
 
-    // console.log(spot.toJSON())
     // bookingsInfo = []
     // spot.Bookings.forEach(booking => {
     //     const info = {}
@@ -378,9 +377,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const dateEnd = new Date(endDate)
     const userId = req.user.id
     const today = new Date(Date.now())
-
-    console.log(dateStart.toDateString(),'\n', dateEnd.toDateString(),'\n', today.toDateString())
-    console.log(dateStart < today)
 
     const spot = await Spot.findOne({
         where: {

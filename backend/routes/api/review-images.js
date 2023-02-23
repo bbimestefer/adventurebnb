@@ -17,8 +17,6 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
         ]
     })
 
-    // console.log(reviewImage.toJSON())
-    // console.log(reviewImage.Review.userId, req.user.id)
 
     if(!reviewImage){
         res.status(404)
