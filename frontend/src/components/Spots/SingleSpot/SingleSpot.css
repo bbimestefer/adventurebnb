@@ -24,12 +24,6 @@
     margin: 0px;
 }
 
-.sub-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
 
 .imageFormButton {
     display: flex;
@@ -48,9 +42,6 @@
     border: 1px solid red;
 }
 
-.gap-for-reserve {
-    gap: 1rem;
-}
 
 .share {
     display: flex;
@@ -67,6 +58,7 @@
     width: 100%;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     padding-top: 3em;
 }
 .details-wrapper {
@@ -74,8 +66,8 @@
 }
 
 .houseInfo {
-    width: 70%;
-    padding-right: 5em;
+    width: 50%;
+    padding-right: 5%;
 }
 
 .host {
@@ -85,35 +77,8 @@
     justify-content: space-between;
 }
 
-.reserveFormContainer {
-    width: 30%;
-}
-
 .reserve-form {
     width: 100%;
-}
-
-.reserveFormButton {
-    width: 7em;
-    height: 3em;
-    margin: 7px;
-}
-
-.form-container {
-    display: flex;
-    align-items: center;
-    min-width: fit-content;
-    flex-direction: column;
-    border: 1px solid rgb(212, 212, 212);
-    border-radius: 10px;
-    box-sizing: border-box;
-    box-shadow: 1px 1px 5px rgb(182, 182, 182);
-}
-
-.reserveFormLabels {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .spacing {

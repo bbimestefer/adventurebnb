@@ -91,3 +91,11 @@ form button, .demo-user-button {
     display: flex;
     align-items: center;
 }
+
+.p1 {
+    padding: 1em;
+}
+
+.fss {
+    font-size: 10px;
+}

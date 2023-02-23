@@ -148,7 +148,7 @@ function SingleSpot () {
                             </div>
                         </div>
                     </div>
-                    <div className="reserveFormContainer">
+                    <div>
                         <ReserveForm {...spot} />
                     </div>
                 </div>
