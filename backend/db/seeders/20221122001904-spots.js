@@ -162,7 +162,7 @@ module.exports = {
         lat: 37,
         lng: 119,
         name: 'Cabin with a Hot Tub!',
-        description: "Need a lakeside getaway? Look no further than this 3-bedroom, 2-bath vacation rental! Sitting across the street from Clarke Lake, this Wrightsville cabin is complete with an open living space, fully equipped kitchen, and a deck perfect for summer days spent outdoors. When you aren't out on the water, grab a delicious ice cream at the Turkey Hill Experience or stroll the stalls of the Lancaster Central Market.",
+        description: "Need a lakeside getaway? Sitting across the street from Clarke Lake, this Wrightsville cabin is complete with an open living space, fully equipped kitchen, and a deck perfect for summer days spent outdoors.",
         price: 354,
       },
       {
@@ -186,7 +186,7 @@ module.exports = {
         lat: 37,
         lng: 119,
         name: 'Treehouse Daydreams',
-        description: 'Why do people travel thousands of miles from around the world to stay in our treehouse? Come and see for yourself!! Transport your spirit, and feel a thrill that can only be discovered in the treetops! Experience the one-of-a-kind blend of youthful bliss and grown-up luxury for yourself. The faster you get here, the sooner you change your pace and unwind in our wooden paradise.',
+        description: 'Why do people travel thousands of miles from around the world to stay in our treehouse? Come and see for yourself!! Transport your spirit, and feel a thrill that can only be discovered in the treetops!',
         price: 535,
       },
       {
@@ -198,7 +198,7 @@ module.exports = {
         lat: 37,
         lng: 119,
         name: 'The Smurf Layer',
-        description: "Owl Hill House is an organically shaped structure built by a group of sculptors in the early 1980's and recently renovated by one of its original creators. Its 570 square feet interior is bright, airy and cozy with hand-plastered, sculptural, white walls and custom built-in furniture. It is set in a tranquil clearing surrounded by beautiful trees on a private Vermont dirt road, and is the perfect base for exploring northern Berkshire County's cultural gems and southern Vermont’s picturesque towns and natural beauty, or to just relax and leave the rectilinear world behind.",
+        description: "Owl Hill House is an organically shaped structure built by sculptors in the early 1980's and recently renovated by one of its original creators. Its 570 square feet interior is cozy with hand-plastered, white walls and custom built-in furniture.",
         price: 199,
       },
       {
@@ -222,7 +222,7 @@ module.exports = {
         lat: 37,
         lng: 119,
         name: 'Early Risers',
-        description: "This house in Italy is nestled at the base of the stunning mountains, offering breathtaking views of the surrounding natural beauty. With its rustic architecture and cozy interior, it's the perfect retreat for nature lovers looking to escape the hustle and bustle of city life. Whether you're looking to hike the nearby trails, enjoy local cuisine, or simply unwind in peaceful seclusion, this mountain-side abode is sure to exceed your expectations.",
+        description: "This house in Italy is nestled at the base of the stunning mountains, offering breathtaking views of the surrounding natural beauty. With its rustic architecture and cozy interior, it's the perfect retreat for nature lovers looking to escape the hustle and bustle of city life.",
         price: 146,
       },
     ], {});
