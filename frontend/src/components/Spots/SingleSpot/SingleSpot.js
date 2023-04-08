@@ -67,7 +67,7 @@ function SingleSpot () {
 
                         <span style={{"width":"20rem"}}>{spot.city}, {spot.state}, {spot.country}</span>
                     </div>
-                    {user.id === spot.ownerId && <div className="imageFormButton">
+                    {/* {user.id === spot.ownerId && <div className="imageFormButton">
                         <div className="demo-user-button cur">
                             <OpenModalMenuItem
                             className='imageFormButton'
@@ -86,7 +86,7 @@ function SingleSpot () {
                             modalComponent={<DeleteImages images={spot.SpotImages} closeMenu={closeMenu} spotId={spot.id}/>}
                             />
                         </div>
-                    </div>}
+                    </div>} */}
                 </div>
             </div>
             <div className="image-container">
